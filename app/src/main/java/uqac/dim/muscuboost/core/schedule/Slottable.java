@@ -6,7 +6,7 @@ package uqac.dim.muscuboost.core.schedule;
 public interface Slottable {
 
     /**
-     * The label of the slotted element.
+     * Returns the slotted element's label.
      *
      * @return Label of the element
      */

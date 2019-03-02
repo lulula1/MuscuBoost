@@ -3,7 +3,7 @@ package uqac.dim.muscuboost.core.schedule;
 import java.util.ArrayList;
 
 /**
- * Represents a day of week
+ * Represents a day of week.
  */
 public enum Day {
     MONDAY    ("monday"),

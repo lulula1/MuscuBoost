@@ -13,7 +13,7 @@ public class ScheduleSlot<T extends Slottable> {
     /**
      * A schedule temporal slot.
      *
-     * @param day  Day of the week of the slot
+     * @param day  Day of week of the slot
      * @param hour Hour of the slot
      * @param minute Minute of the slot
      * @param item Item contained in the slot
@@ -28,7 +28,7 @@ public class ScheduleSlot<T extends Slottable> {
     /**
      * A schedule temporal slot without a specific time.
      *
-     * @param day  Day of the week of the slot
+     * @param day  Day of week of the slot
      * @param item Item contained in the slot
      */
     public ScheduleSlot(Day day, T item) {
@@ -36,25 +36,25 @@ public class ScheduleSlot<T extends Slottable> {
     }
 
     /**
-     * Defines the day of the week of the slot.
+     * Defines the slot's day of week.
      *
-     * @param day New day of the week of the slot
+     * @param day New day of week of the slot
      */
     public void setDay(Day day) {
         this.day = day;
     }
 
     /**
-     * Returns the day of the week of the slot.
+     * Returns the slot's day of week.
      *
-     * @return Day of the week of the slot
+     * @return Day of week of the slot
      */
     public Day getDay() {
         return day;
     }
 
     /**
-     * Defines the hour of the slot.
+     * Defines the slot's hour.
      *
      * @param hour New hour of the slot
      */
@@ -65,7 +65,7 @@ public class ScheduleSlot<T extends Slottable> {
     }
 
     /**
-     * Returns the hour of the slot.
+     * Returns the slot's hour.
      *
      * @return Hour of the slot
      */
@@ -74,7 +74,7 @@ public class ScheduleSlot<T extends Slottable> {
     }
 
     /**
-     * Defines the minute of the slot.
+     * Defines the minute's slot.
      *
      * @param minute New minute of the slot
      */
@@ -85,7 +85,7 @@ public class ScheduleSlot<T extends Slottable> {
     }
 
     /**
-     * Returns the minute of the slot.
+     * Returns the minute's slot.
      *
      * @return Minute of the slot
      */
@@ -96,7 +96,7 @@ public class ScheduleSlot<T extends Slottable> {
     /**
      * Returns the time (hour and minute) in the 'hh:mm' formatted way
      *
-     * @return Formatted hour and minute
+     * @return Formatted hour and minute time
      */
     public String getFormattedTime() {
         return (hour != null ? (hour <= 9 ? "0" : "") + hour : "--")
