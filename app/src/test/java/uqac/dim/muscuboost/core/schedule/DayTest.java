@@ -2,7 +2,7 @@ package uqac.dim.muscuboost.core.schedule;
 
 import org.junit.Test;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -10,7 +10,7 @@ public class DayTest {
 
     @Test
     public void getWeekTest() {
-        ArrayList<Day> week = Day.getWeek();
+        List<Day> week = Day.getWeek();
         assertEquals(7, week.size());
         assertEquals(Day.MONDAY, week.get(0));
         assertEquals(Day.TUESDAY, week.get(1));
