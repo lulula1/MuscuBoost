@@ -2,7 +2,6 @@ package uqac.dim.muscuboost.core.schedule;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
 
 /**
  * A schedule with daily (and hourly) temporized slots.
@@ -36,9 +35,9 @@ public class Schedule<T extends Slottable> {
      * @param day The day on which to filter slots
      * @return Slots matching the given day
      */
-    public List<ScheduleSlot<?>> getSlotsByDay(Day day) {
-        List<ScheduleSlot<?>> slotsByDay = new ArrayList<>();
-        for(ScheduleSlot<?> slot : slots)
+    public List<ScheduleSlot<T>> getSlotsByDay(Day day) {
+        List<ScheduleSlot<T>> slotsByDay = new ArrayList<>();
+        for(ScheduleSlot<T> slot : slots)
             if(slot.getDay() == day)
                 slotsByDay.add(slot);
         return slotsByDay;

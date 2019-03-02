@@ -2,4 +2,12 @@
     <string name="app_name">MuscuBoost</string>
     <string name="action_settings">Settings</string>
     <string name="schedule_name">Planning</string>
+    <string name="monday">Lundi</string>
+    <string name="tuesday">Mardi</string>
+    <string name="wednesday">Mercredi</string>
+    <string name="thursday">Jeudi</string>
+    <string name="friday">Vendredi</string>
+    <string name="saturday">Samedi</string>
+    <string name="sunday">Dimanche</string>
+    <string name="empty_row">Repos</string>
 </resources>
