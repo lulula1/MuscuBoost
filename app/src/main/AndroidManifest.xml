@@ -22,7 +22,9 @@
             android:label="@string/schedule_name"
             android:screenOrientation="sensorPortrait"
             android:theme="@style/AppTheme.NoActionBar">
-
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
         </activity>
     </application>
 
