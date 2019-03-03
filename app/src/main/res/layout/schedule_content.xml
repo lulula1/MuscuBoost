@@ -11,6 +11,6 @@
     <TableLayout
         android:id="@+id/schedule"
         style="@style/schedule"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:paddingBottom="88dp"
+        android:background="@color/colorPrimaryDark"/>
 </ScrollView>

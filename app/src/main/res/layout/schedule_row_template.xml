@@ -10,4 +10,8 @@
     <TextView
         android:id="@+id/label"
         style="@style/schedule.data.label" />
+
+    <Button
+        android:id="@+id/menu_btn"
+        style="@style/schedule.data.menuBtn"/>
 </TableRow>

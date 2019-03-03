@@ -17,50 +17,64 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
-    <style name="schedule"></style>
-
-    <style name="schedule.header">
+    <style name="schedule">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="schedule.header">
         <item name="android:layout_span">2</item>
         <item name="android:layout_weight">1</item>
+        <item name="android:textColor">@android:color/white</item>
         <item name="android:paddingLeft">8dp</item>
-        <item name="android:textSize">32sp</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:paddingBottom">4dp</item>
+        <item name="android:textSize">24sp</item>
         <item name="android:background">@color/colorPrimary</item>
     </style>
 
     <style name="schedule.data">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:minHeight">48dp</item>
-        <item name="android:padding">8dp</item>
+        <item name="android:minHeight">72dp</item>
     </style>
 
     <style name="schedule.data.time">
         <item name="android:width">128dp</item>
+        <item name="android:gravity">center</item>
         <item name="android:textSize">32sp</item>
+        <item name="android:textStyle">bold</item>
         <item name="android:fontFamily">monospace</item>
         <item name="android:letterSpacing">-.05</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:gravity">center</item>
+        <item name="android:background">@android:color/white</item>
     </style>
 
     <style name="schedule.data.label">
         <item name="android:layout_weight">1</item>
         <item name="android:gravity">center_vertical</item>
-        <item name="android:textSize">24sp</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:paddingLeft">8dp</item>
         <item name="android:ellipsize">end</item>
         <item name="android:maxLines">2</item>
+        <item name="android:background">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="schedule.data.menuBtn">
+        <item name="android:layout_width">50dp</item>
+        <item name="android:text">&#8942;</item>
+        <item name="android:textSize">32sp</item>
+        <item name="android:textColor">@android:color/white</item>
         <item name="android:background">@color/colorPrimaryDark</item>
     </style>
 
     <style name="schedule.data.empty">
         <item name="android:layout_span">2</item>
         <item name="android:layout_weight">1</item>
-        <item name="android:padding">16dp</item>
-        <item name="android:textAllCaps">true</item>
-        <item name="android:textSize">24sp</item>
         <item name="android:gravity">center</item>
+        <item name="android:textColor">#AAA</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:background">@color/colorPrimaryDark</item>
     </style>
 
 </resources>
