@@ -2,13 +2,13 @@ package uqac.dim.muscuboost;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import uqac.dim.muscuboost.core.schedule.Day;
 import uqac.dim.muscuboost.core.schedule.Schedule;
@@ -30,8 +30,13 @@ public class ScheduleActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Soit patient, cette fonctionnalité n'est pas encore implémentée...", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                // TODO - Handle fab properly
+                Toast.makeText(getBaseContext(),
+                        "Soit patient, cette fonctionnalité n'est pas encore implémentée...",
+                        Toast.LENGTH_SHORT).show();
+                schedule.addSlot(new ScheduleSlot<>(Day.WEDNESDAY, 12, 34,
+                        new Training(0, "TrainingX")));
+                drawSchedule(schedule);
             }
         });
 
@@ -56,17 +61,14 @@ public class ScheduleActivity extends AppCompatActivity {
                 getResources().getIdentifier(resName, "string", getPackageName()));
     }
 
-    private <T extends View> T inflateTemplate(int resId) {
-        return (T) getLayoutInflater().inflate(resId, null);
-    }
-
     private void drawSchedule(Schedule<?> schedule) {
         TableLayout scheduleView = findViewById(R.id.schedule);
         scheduleView.removeAllViewsInLayout();
 
         for(Day day : Day.getWeek()) {
             // Create day header template
-            TableRow headerTemplate = inflateTemplate(R.layout.schedule_header_template);
+            TableRow headerTemplate = (TableRow) getLayoutInflater()
+                    .inflate(R.layout.schedule_header_template, scheduleView, false);
             ((TextView) headerTemplate.findViewById(R.id.day))
                     .setText(getStringResource(day.toString()));
             scheduleView.addView(headerTemplate);
@@ -74,18 +76,26 @@ public class ScheduleActivity extends AppCompatActivity {
             if(schedule.getSlotsByDay(day).size() > 0) {
                 for(ScheduleSlot<?> slot : schedule.getSlotsByDay(day)) {
                     // Create schedule slot row template
-                    TableRow rowTemplate = inflateTemplate(R.layout.schedule_row_template);
+                    TableRow rowTemplate = (TableRow) getLayoutInflater()
+                            .inflate(R.layout.schedule_row_template, scheduleView, false);
 
                     ((TextView) rowTemplate.findViewById(R.id.time))
                             .setText(slot.getFormattedTime());
                     ((TextView) rowTemplate.findViewById(R.id.label))
                             .setText(slot.getLabel());
+                    rowTemplate.findViewById(R.id.menu_btn)
+                            .setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    // TODO - Implement onClick
+                                }
+                            });
 
                     scheduleView.addView(rowTemplate);
                 }
             }else {
                 // Create empty row template
-                scheduleView.addView(inflateTemplate(R.layout.schedule_empty_template));
+                getLayoutInflater().inflate(R.layout.schedule_empty_template, scheduleView);
             }
         }
     }
