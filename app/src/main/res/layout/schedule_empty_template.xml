@@ -2,6 +2,6 @@
 <TableRow xmlns:android="http://schemas.android.com/apk/res/android">
 
     <TextView
-        style="@style/schedule.row.empty"
+        style="@style/schedule.data.empty"
         android:text="@string/empty_row" />
 </TableRow>

@@ -12,6 +12,5 @@
         android:id="@+id/schedule"
         style="@style/schedule"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:stretchColumns="1" />
+        android:layout_height="wrap_content" />
 </ScrollView>

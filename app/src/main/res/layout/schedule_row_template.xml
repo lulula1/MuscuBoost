@@ -5,9 +5,9 @@
 
     <TextView
         android:id="@+id/time"
-        style="@style/schedule.row" />
+        style="@style/schedule.data.time" />
 
     <TextView
         android:id="@+id/label"
-        style="@style/schedule.row" />
+        style="@style/schedule.data.label" />
 </TableRow>
