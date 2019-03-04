@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TableRow xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingBottom="2dp"
+    android:background="@color/colorPrimary">
 
     <TextView
         android:id="@+id/time"
         style="@style/schedule.data.time" />
 
-    <TextView
+    <Button
         android:id="@+id/label"
         style="@style/schedule.data.label" />
 
     <Button
         android:id="@+id/menu_btn"
-        style="@style/schedule.data.menuBtn"/>
+        style="@style/schedule.data.menuBtn" />
 </TableRow>

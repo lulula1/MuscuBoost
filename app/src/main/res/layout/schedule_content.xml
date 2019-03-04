@@ -12,5 +12,5 @@
         android:id="@+id/schedule"
         style="@style/schedule"
         android:paddingBottom="88dp"
-        android:background="@color/colorPrimaryDark"/>
+        android:background="@color/colorPrimary"/>
 </ScrollView>
