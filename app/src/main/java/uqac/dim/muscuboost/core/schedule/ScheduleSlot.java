@@ -117,7 +117,7 @@ public class ScheduleSlot<T extends Slottable> {
      *
      * @return Item contained in the slot
      */
-    public Slottable getItem() {
+    public T getItem() {
         return item;
     }
 
