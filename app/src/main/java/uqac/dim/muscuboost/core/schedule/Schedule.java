@@ -6,16 +6,16 @@ import java.util.List;
 /**
  * A schedule with daily (and hourly) temporized slots.
  */
-public class Schedule<T extends ISlottable> {
+public class Schedule {
 
-    private List<ScheduleSlot<T>> slots = new ArrayList<>();
+    private List<ScheduleSlot> slots = new ArrayList<>();
 
     /**
      * Adds a new schedule slot.
      *
      * @param slot Schedule slot to be added
      */
-    public void addSlot(ScheduleSlot<T> slot) {
+    public void addSlot(ScheduleSlot slot) {
         slots.add(slot);
     }
 
@@ -24,7 +24,7 @@ public class Schedule<T extends ISlottable> {
      *
      * @param slot Schedule slot to be removed
      */
-    public void removeSlot(ScheduleSlot<T> slot) {
+    public void removeSlot(ScheduleSlot slot) {
         slots.remove(slot);
     }
 
@@ -33,7 +33,7 @@ public class Schedule<T extends ISlottable> {
      *
      * @return Schedule slots
      */
-    public List<ScheduleSlot<T>> getSlots() {
+    public List<ScheduleSlot> getSlots() {
         return slots;
     }
 
@@ -43,9 +43,9 @@ public class Schedule<T extends ISlottable> {
      * @param day The day on which to filter slots
      * @return Slots matching the given day
      */
-    public List<ScheduleSlot<T>> getSlotsByDay(Day day) {
-        List<ScheduleSlot<T>> slotsByDay = new ArrayList<>();
-        for(ScheduleSlot<T> slot : slots)
+    public List<ScheduleSlot> getSlotsByDay(Day day) {
+        List<ScheduleSlot> slotsByDay = new ArrayList<>();
+        for(ScheduleSlot slot : slots)
             if(slot.getDay() == day)
                 slotsByDay.add(slot);
         return slotsByDay;

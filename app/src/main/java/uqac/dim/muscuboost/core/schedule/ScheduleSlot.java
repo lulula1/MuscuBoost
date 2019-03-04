@@ -3,12 +3,12 @@ package uqac.dim.muscuboost.core.schedule;
 /**
  * A temporal slot of a schedule.
  */
-public class ScheduleSlot<T extends ISlottable> {
+public class ScheduleSlot {
 
     private Day day;
     private Integer hour;
     private Integer minute;
-    private T item;
+    private ISlottable item;
 
     /**
      * A schedule temporal slot.
@@ -18,7 +18,7 @@ public class ScheduleSlot<T extends ISlottable> {
      * @param minute Minute of the slot
      * @param item Item contained in the slot
      */
-    public ScheduleSlot(Day day, Integer hour, Integer minute, T item) {
+    public ScheduleSlot(Day day, Integer hour, Integer minute, ISlottable item) {
         setDay(day);
         setHour(hour);
         setMinute(minute);
@@ -31,7 +31,7 @@ public class ScheduleSlot<T extends ISlottable> {
      * @param day  Day of week of the slot
      * @param item Item contained in the slot
      */
-    public ScheduleSlot(Day day, T item) {
+    public ScheduleSlot(Day day, ISlottable item) {
         this(day, null, null, item);
     }
 
@@ -108,7 +108,7 @@ public class ScheduleSlot<T extends ISlottable> {
      *
      * @param item New item contained in the slot
      */
-    public void setItem(T item) {
+    public void setItem(ISlottable item) {
         this.item = item;
     }
 
@@ -117,7 +117,7 @@ public class ScheduleSlot<T extends ISlottable> {
      *
      * @return Item contained in the slot
      */
-    public T getItem() {
+    public ISlottable getItem() {
         return item;
     }
 

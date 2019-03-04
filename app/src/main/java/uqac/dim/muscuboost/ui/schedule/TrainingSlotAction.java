@@ -11,22 +11,32 @@ import uqac.dim.muscuboost.core.training.Training;
 
 public class TrainingSlotAction implements IScheduleSlotAction {
 
+    private Training getTraining(ScheduleSlot slot) {
+        return slot.getItem() instanceof Training
+                ? (Training) slot.getItem()
+                : null;
+    }
+
     @Override
     public int getMenuResId() {
         return R.menu.schedule_data_menu;
     }
 
     @Override
-    public void onLabelClick(Context context, View view, ScheduleSlot<?> slot) {
+    public void onLabelClick(Context context, View view, ScheduleSlot slot) {
         // TODO - Implement the training display action
-        Training training = (Training) slot.getItem();
+        Training training = getTraining(slot);
+        if(training == null)
+            return;
         Toast.makeText(context, "Afficher l'entrainement #" + training.getId(),
                 Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public boolean onMenuItemClick(Context context, MenuItem item, ScheduleSlot<?> slot) {
-        Training training = (Training) slot.getItem();
+    public boolean onMenuItemClick(Context context, MenuItem item, ScheduleSlot slot) {
+        Training training = getTraining(slot);
+        if(training == null)
+            return false;
         switch(item.getItemId()) {
             case R.id.edit:
                 // TODO - Implement the training edit action

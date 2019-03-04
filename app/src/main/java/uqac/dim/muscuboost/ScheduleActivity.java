@@ -24,7 +24,7 @@ import uqac.dim.muscuboost.ui.schedule.TrainingSlotAction;
 
 public class ScheduleActivity extends AppCompatActivity {
 
-    private Schedule<Training> schedule;
+    private Schedule schedule;
     private IScheduleSlotAction slotAction = new TrainingSlotAction();
 
     @Override
@@ -44,19 +44,19 @@ public class ScheduleActivity extends AppCompatActivity {
                 Toast.makeText(getBaseContext(),
                         "Soit patient, cette fonctionnalité n'est pas encore implémentée...",
                         Toast.LENGTH_SHORT).show();
-                schedule.addSlot(new ScheduleSlot<>(Day.WEDNESDAY, 12, 34,
+                schedule.addSlot(new ScheduleSlot(Day.WEDNESDAY, 12, 34,
                         new Training(0, "TrainingX")));
                 drawSchedule(schedule);
             }
         });
 
         // TODO - Remove test values
-        schedule = new Schedule<>();
-        schedule.addSlot(new ScheduleSlot<>(Day.MONDAY,
+        schedule = new Schedule();
+        schedule.addSlot(new ScheduleSlot(Day.MONDAY,
                 new Training(0, "Training1")));
-        schedule.addSlot(new ScheduleSlot<>(Day.MONDAY, 9, 0,
+        schedule.addSlot(new ScheduleSlot(Day.MONDAY, 9, 0,
                 new Training(1, "Training2")));
-        schedule.addSlot(new ScheduleSlot<>(Day.SUNDAY, 19, null,
+        schedule.addSlot(new ScheduleSlot(Day.SUNDAY, 19, null,
                 new Training(2, "Training3")));
     }
 
@@ -71,14 +71,14 @@ public class ScheduleActivity extends AppCompatActivity {
                 getResources().getIdentifier(resName, "string", getPackageName()));
     }
 
-    private void drawSchedule(Schedule<?> schedule) {
+    private void drawSchedule(Schedule schedule) {
         TableLayout scheduleView = findViewById(R.id.schedule);
         scheduleView.removeAllViewsInLayout();
 
         for(Day day : Day.getWeek()) {
             createHeader(scheduleView, day);
             if(schedule.getSlotsByDay(day).size() > 0)
-                for(ScheduleSlot<?> slot : schedule.getSlotsByDay(day))
+                for(ScheduleSlot slot : schedule.getSlotsByDay(day))
                     createRow(scheduleView, slot);
             else
                 createEmptyRow(scheduleView);
@@ -97,7 +97,7 @@ public class ScheduleActivity extends AppCompatActivity {
     }
 
     // Create schedule slot row
-    private void createRow(ViewGroup root, final ScheduleSlot<?> slot) {
+    private void createRow(ViewGroup root, final ScheduleSlot slot) {
         TableRow row = (TableRow) getLayoutInflater()
                 .inflate(R.layout.schedule_row_template, root, false);
 

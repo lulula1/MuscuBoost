@@ -8,8 +8,8 @@ import static org.junit.Assert.*;
 public class ScheduleSlotTest {
 
     private ISlottable slottable;
-    private ScheduleSlot<ISlottable> slotDay;
-    private ScheduleSlot<ISlottable> slotDayTime;
+    private ScheduleSlot slotDay;
+    private ScheduleSlot slotDayTime;
 
     @Before
     public void setUp() throws Exception {
@@ -19,8 +19,8 @@ public class ScheduleSlotTest {
                 return null;
             }
         };
-        slotDay = new ScheduleSlot<>(Day.MONDAY, slottable);
-        slotDayTime = new ScheduleSlot<>(Day.WEDNESDAY, 15, 30, slottable);
+        slotDay = new ScheduleSlot(Day.MONDAY, slottable);
+        slotDayTime = new ScheduleSlot(Day.WEDNESDAY, 15, 30, slottable);
     }
 
     @Test

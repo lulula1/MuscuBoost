@@ -9,7 +9,7 @@ import uqac.dim.muscuboost.core.schedule.ScheduleSlot;
 public interface IScheduleSlotAction {
 
     int getMenuResId();
-    void onLabelClick(Context context, View view, ScheduleSlot<?> slot);
-    boolean onMenuItemClick(Context context, MenuItem item, ScheduleSlot<?> slot);
+    void onLabelClick(Context context, View view, ScheduleSlot slot);
+    boolean onMenuItemClick(Context context, MenuItem item, ScheduleSlot slot);
 
 }
