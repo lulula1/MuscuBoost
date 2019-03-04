@@ -10,4 +10,6 @@
     <string name="saturday">Samedi</string>
     <string name="sunday">Dimanche</string>
     <string name="empty_row">Repos</string>
+    <string name="edit">Modifier</string>
+    <string name="delete">Supprimer</string>
 </resources>

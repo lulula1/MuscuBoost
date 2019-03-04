@@ -14,6 +14,6 @@
         style="@style/schedule.data.label" />
 
     <Button
-        android:id="@+id/menu_btn"
-        style="@style/schedule.data.menuBtn" />
+        android:id="@+id/menu"
+        style="@style/schedule.data.menu" />
 </TableRow>
