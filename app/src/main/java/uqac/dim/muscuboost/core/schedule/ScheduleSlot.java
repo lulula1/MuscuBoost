@@ -3,7 +3,7 @@ package uqac.dim.muscuboost.core.schedule;
 /**
  * A temporal slot of a schedule.
  */
-public class ScheduleSlot<T extends Slottable> {
+public class ScheduleSlot<T extends ISlottable> {
 
     private Day day;
     private Integer hour;

@@ -3,13 +3,13 @@ package uqac.dim.muscuboost.core.training;
 import java.util.ArrayList;
 import java.util.List;
 
-import uqac.dim.muscuboost.core.schedule.Slottable;
+import uqac.dim.muscuboost.core.schedule.ISlottable;
 
 /**
  * A training that contains exercises.
  * It can be slotted in a {@link uqac.dim.muscuboost.core.schedule.ScheduleSlot}.
  */
-public class Training implements Slottable {
+public class Training implements ISlottable {
 
     private final long ID;
     private String name;

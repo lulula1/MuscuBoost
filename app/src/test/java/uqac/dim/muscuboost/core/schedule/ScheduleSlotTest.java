@@ -7,20 +7,20 @@ import static org.junit.Assert.*;
 
 public class ScheduleSlotTest {
 
-    private Slottable slottable;
-    private ScheduleSlot slotDay;
-    private ScheduleSlot slotDayTime;
+    private ISlottable slottable;
+    private ScheduleSlot<ISlottable> slotDay;
+    private ScheduleSlot<ISlottable> slotDayTime;
 
     @Before
     public void setUp() throws Exception {
-        slottable = new Slottable() {
+        slottable = new ISlottable() {
             @Override
             public String getSlotLabel() {
                 return null;
             }
         };
-        slotDay = new ScheduleSlot(Day.MONDAY, slottable);
-        slotDayTime = new ScheduleSlot(Day.WEDNESDAY, 15, 30, slottable);
+        slotDay = new ScheduleSlot<>(Day.MONDAY, slottable);
+        slotDayTime = new ScheduleSlot<>(Day.WEDNESDAY, 15, 30, slottable);
     }
 
     @Test
@@ -108,7 +108,7 @@ public class ScheduleSlotTest {
 
     @Test
     public void setItemTest() {
-        Slottable sc = new Slottable() {
+        ISlottable sc = new ISlottable() {
             @Override
             public String getSlotLabel() {
                 return null;

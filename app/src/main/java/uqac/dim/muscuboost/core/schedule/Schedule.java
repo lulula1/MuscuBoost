@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * A schedule with daily (and hourly) temporized slots.
  */
-public class Schedule<T extends Slottable> {
+public class Schedule<T extends ISlottable> {
 
     private List<ScheduleSlot<T>> slots = new ArrayList<>();
 

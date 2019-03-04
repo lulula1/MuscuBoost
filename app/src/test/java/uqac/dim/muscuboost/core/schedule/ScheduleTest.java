@@ -6,13 +6,13 @@ import static org.junit.Assert.*;
 
 public class ScheduleTest {
 
-    private Schedule schedule;
-    private ScheduleSlot slot;
+    private Schedule<ISlottable> schedule;
+    private ScheduleSlot<ISlottable> slot;
 
     @Before
     public void setUp() {
-        schedule = new Schedule();
-        slot = new ScheduleSlot(Day.MONDAY, new Slottable() {
+        schedule = new Schedule<>();
+        slot = new ScheduleSlot<ISlottable>(Day.MONDAY, new ISlottable() {
             @Override
             public String getSlotLabel() {
                 return null;

@@ -3,7 +3,7 @@ package uqac.dim.muscuboost.core.schedule;
 /**
  * An element that can be included in a ScheduleSlot.
  */
-public interface Slottable {
+public interface ISlottable {
 
     /**
      * Returns the slotted element's label.
