@@ -19,6 +19,14 @@ public class Schedule<T extends Slottable> {
         slots.add(slot);
     }
 
+    /**
+     * Removes a scedule slot.
+     *
+     * @param slot Schedule slot to be removed
+     */
+    public void removeSlot(ScheduleSlot<T> slot) {
+        slots.remove(slot);
+    }
 
     /**
      * Returns schedule slots.

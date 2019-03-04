@@ -36,6 +36,14 @@ public class ScheduleTest {
     }
 
     @Test
+    public void removeSlotTest() {
+        schedule.addSlot(slot);
+        assertEquals(1, schedule.getSlots().size());
+        schedule.removeSlot(slot);
+        assertEquals(0, schedule.getSlots().size());
+    }
+
+    @Test
     public void getSlotsByDay() {
         schedule.addSlot(slot);
         assertEquals(1, schedule.getSlotsByDay(Day.MONDAY).size());
