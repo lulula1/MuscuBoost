@@ -2,6 +2,7 @@ package uqac.dim.muscuboost;
 
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -13,7 +14,6 @@ import android.widget.PopupMenu;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import uqac.dim.muscuboost.core.schedule.Day;
 import uqac.dim.muscuboost.core.schedule.Schedule;
@@ -21,11 +21,14 @@ import uqac.dim.muscuboost.core.schedule.ScheduleSlot;
 import uqac.dim.muscuboost.core.training.Training;
 import uqac.dim.muscuboost.ui.schedule.IScheduleSlotAction;
 import uqac.dim.muscuboost.ui.schedule.TrainingSlotAction;
+import uqac.dim.muscuboost.ui.schedule.fragment.AddSlotDialogFragment;
 
 public class ScheduleActivity extends AppCompatActivity {
 
     private Schedule schedule;
     private IScheduleSlotAction slotAction = new TrainingSlotAction();
+
+    private BottomSheetDialogFragment addSlotFragment = new AddSlotDialogFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,24 +43,23 @@ public class ScheduleActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO - Handle fab properly
-                Toast.makeText(getBaseContext(),
-                        "Soit patient, cette fonctionnalité n'est pas encore implémentée...",
-                        Toast.LENGTH_SHORT).show();
-                schedule.addSlot(new ScheduleSlot(Day.WEDNESDAY, 12, 34,
-                        new Training(0, "TrainingX")));
-                drawSchedule(schedule);
+                if(!addSlotFragment.isAdded())
+                    addSlotFragment.show(getSupportFragmentManager(), "addSlot");
             }
         });
 
         // TODO - Remove test values
         schedule = new Schedule();
-        schedule.addSlot(new ScheduleSlot(Day.MONDAY,
-                new Training(0, "Training1")));
-        schedule.addSlot(new ScheduleSlot(Day.MONDAY, 9, 0,
-                new Training(1, "Training2")));
-        schedule.addSlot(new ScheduleSlot(Day.SUNDAY, 19, null,
-                new Training(2, "Training3")));
+        schedule.addSlot(new ScheduleSlot(Day.MONDAY, 19, 0,
+                new Training(0, "Jambes")));
+        schedule.addSlot(new ScheduleSlot(Day.TUESDAY, 19, 0,
+                new Training(1, "Pectoraux")));
+        schedule.addSlot(new ScheduleSlot(Day.THURSDAY, 19, 0,
+                new Training(2, "Bras")));
+        schedule.addSlot(new ScheduleSlot(Day.FRIDAY, 19, 0,
+                new Training(3, "Dos")));
+        schedule.addSlot(new ScheduleSlot(Day.SUNDAY, 17, 0,
+                new Training(4, "Epaules")));
     }
 
     @Override
