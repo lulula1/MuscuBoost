@@ -14,8 +14,11 @@ import java.util.List;
 
 import uqac.dim.muscuboost.R;
 import uqac.dim.muscuboost.core.schedule.Day;
+import uqac.dim.muscuboost.core.schedule.ISlottable;
 
 public class AddSlotDialogFragment extends BottomSheetDialogFragment {
+
+    private OnSlotAdded onSlotAdded;
 
     private Spinner daysSpinner;
     private TimePicker timePicker;
@@ -42,12 +45,19 @@ public class AddSlotDialogFragment extends BottomSheetDialogFragment {
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Day selectedDay = ((Wrapper<Day>) daysSpinner.getSelectedItem()).getItem();
-                int selectedHour = timePicker.getCurrentHour();
-                int selectedMinutes = timePicker.getCurrentMinute();
-                // Training selectedTraining = ...
-                // TODO - Handle selected values
+                Day day = ((Wrapper<Day>) daysSpinner.getSelectedItem()).getItem();
+                int hour = timePicker.getCurrentHour();
+                int minute = timePicker.getCurrentMinute();
+                // TODO - Handle item select
+                ISlottable item = new ISlottable() {
+                    @Override
+                    public String getSlotLabel() {
+                        return "Placeholder";
+                    }
+                };
 
+                if(onSlotAdded != null)
+                    onSlotAdded.onAdd(day, hour, minute, item);
                 dismiss();
             }
         });
@@ -61,6 +71,14 @@ public class AddSlotDialogFragment extends BottomSheetDialogFragment {
             week.add(new Wrapper<>(day, getResources().getString(nameResId)));
         }
         return week;
+    }
+
+    public void setOnSlotAdded(OnSlotAdded callback) {
+        onSlotAdded = callback;
+    }
+
+    public interface OnSlotAdded {
+        void onAdd(Day day, int hour, int minute, ISlottable item);
     }
 
 }

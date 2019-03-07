@@ -1,14 +1,24 @@
 package uqac.dim.muscuboost.core.schedule;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * A schedule with daily (and hourly) temporized slots.
  */
 public class Schedule {
 
-    private List<ScheduleSlot> slots = new ArrayList<>();
+    private Map<Day, List<ScheduleSlot>> slots = new HashMap<>();
+
+    /**
+     * A schedule.
+     */
+    public Schedule() {
+        for(Day day : Day.getWeek())
+            slots.put(day, new ArrayList<ScheduleSlot>());
+    }
 
     /**
      * Adds a new schedule slot.
@@ -16,11 +26,29 @@ public class Schedule {
      * @param slot Schedule slot to be added
      */
     public void addSlot(ScheduleSlot slot) {
-        slots.add(slot);
+        getSlotsByDay(slot.getDay())
+                .add(getAddIndex(slot), slot);
     }
 
     /**
-     * Removes a scedule slot.
+     * Returns the appropriate index on which to insert the slot
+     * to keep the schedule ordered by time.
+     *
+     * @param slot Slot to be inserted
+     * @return Appropriate slot index
+     */
+    private int getAddIndex(ScheduleSlot slot) {
+        int i = 0;
+        List<ScheduleSlot> slots = getSlotsByDay(slot.getDay());
+        while(slots.size() > i
+                && slot.getHour() * 60 + slot.getMinute()
+                    >= slots.get(i).getHour() * 60 + slots.get(i).getMinute())
+            i++;
+        return i;
+    }
+
+    /**
+     * Removes a schedule slot.
      *
      * @param slot Schedule slot to be removed
      */
@@ -33,7 +61,7 @@ public class Schedule {
      *
      * @return Schedule slots
      */
-    public List<ScheduleSlot> getSlots() {
+    public Map<Day, List<ScheduleSlot>> getSlots() {
         return slots;
     }
 
@@ -44,11 +72,7 @@ public class Schedule {
      * @return Slots matching the given day
      */
     public List<ScheduleSlot> getSlotsByDay(Day day) {
-        List<ScheduleSlot> slotsByDay = new ArrayList<>();
-        for(ScheduleSlot slot : slots)
-            if(slot.getDay() == day)
-                slotsByDay.add(slot);
-        return slotsByDay;
+        return slots.get(day);
     }
 
 }

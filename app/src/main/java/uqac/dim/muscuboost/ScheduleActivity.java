@@ -2,7 +2,6 @@ package uqac.dim.muscuboost;
 
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -16,6 +15,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import uqac.dim.muscuboost.core.schedule.Day;
+import uqac.dim.muscuboost.core.schedule.ISlottable;
 import uqac.dim.muscuboost.core.schedule.Schedule;
 import uqac.dim.muscuboost.core.schedule.ScheduleSlot;
 import uqac.dim.muscuboost.core.training.Training;
@@ -28,7 +28,7 @@ public class ScheduleActivity extends AppCompatActivity {
     private Schedule schedule;
     private IScheduleSlotAction slotAction = new TrainingSlotAction();
 
-    private BottomSheetDialogFragment addSlotFragment = new AddSlotDialogFragment();
+    private AddSlotDialogFragment addSlotFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +38,15 @@ public class ScheduleActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         if(getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        addSlotFragment = new AddSlotDialogFragment();
+        addSlotFragment.setOnSlotAdded(new AddSlotDialogFragment.OnSlotAdded() {
+            @Override
+            public void onAdd(Day day, int hour, int minute, ISlottable item) {
+                schedule.addSlot(new ScheduleSlot(day, hour, minute, item));
+                drawSchedule(schedule);
+            }
+        });
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

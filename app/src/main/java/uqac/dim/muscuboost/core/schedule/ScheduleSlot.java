@@ -127,7 +127,7 @@ public class ScheduleSlot {
      * @return The slot label
      */
     public String getLabel() {
-        return item.getSlotLabel();
+        return item != null ? item.getSlotLabel() : null;
     }
 
 }
