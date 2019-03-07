@@ -1,15 +1,14 @@
 <resources>
     <string name="app_name">MuscuBoost</string>
-    <string name="action_settings">Settings</string>
-    <string name="schedule_name">Planning</string>
-    <string name="monday">Lundi</string>
-    <string name="tuesday">Mardi</string>
-    <string name="wednesday">Mercredi</string>
-    <string name="thursday">Jeudi</string>
-    <string name="friday">Vendredi</string>
-    <string name="saturday">Samedi</string>
-    <string name="sunday">Dimanche</string>
-    <string name="empty_row">Repos</string>
-    <string name="edit">Modifier</string>
-    <string name="delete">Supprimer</string>
+    <string name="schedule_name">Schedule</string>
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+    <string name="saturday">Saturday</string>
+    <string name="sunday">Sunday</string>
+    <string name="empty_row">Rest</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
 </resources>
