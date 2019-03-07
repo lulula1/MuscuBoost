@@ -4,12 +4,47 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:padding="8dp"
     tools:context=".ui.schedule.fragment.AddSlotDialogFragment">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:gravity="center"
-        android:background="@color/colorPrimaryDark"
-        android:text="Hello World!" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/schedule.addSlot.label"
+            android:text="@string/day_label" />
+
+        <Spinner
+            android:id="@+id/days_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <View style="@style/schedule.addSlot.hr" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/schedule.addSlot.label"
+            android:text="@string/hour_label" />
+
+        <TimePicker
+            android:id="@+id/time_picker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:timePickerMode="spinner" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/add"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:backgroundTint="@color/colorAccent"
+        android:text="@string/add_label"
+        android:textColor="@android:color/white" />
 </LinearLayout>

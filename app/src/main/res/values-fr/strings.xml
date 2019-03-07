@@ -12,4 +12,8 @@
     <string name="empty_row">Repos</string>
     <string name="edit">Modifier</string>
     <string name="delete">Supprimer</string>
+    <string name="day_label">Jour</string>
+    <string name="hour_label">Heure</string>
+    <string name="add_label">Ajouter</string>
+    <string name="training_label">Entraînement</string>
 </resources>
