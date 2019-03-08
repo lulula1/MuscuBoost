@@ -42,9 +42,5 @@
 
     <Button
         android:id="@+id/add"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:backgroundTint="@color/colorAccent"
-        android:text="@string/add_label"
-        android:textColor="@android:color/white" />
+        style="@style/schedule.addSlot.add" />
 </LinearLayout>
