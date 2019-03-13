@@ -4,9 +4,12 @@ import android.app.Dialog;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.text.format.DateFormat;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 import java.util.ArrayList;
@@ -18,10 +21,13 @@ import uqac.dim.muscuboost.core.schedule.ISlottable;
 
 public class AddSlotDialogFragment extends BottomSheetDialogFragment {
 
+    private List<ISlottable> slottables;
     private OnSlotAdded onSlotAdded;
 
     private Spinner daysSpinner;
     private TimePicker timePicker;
+    private ListView slotsList;
+    private TextView emptyListText;
     private Button addBtn;
 
     @Override
@@ -31,6 +37,8 @@ public class AddSlotDialogFragment extends BottomSheetDialogFragment {
 
         daysSpinner = contentView.findViewById(R.id.days_spinner);
         timePicker = contentView.findViewById(R.id.time_picker);
+        slotsList = contentView.findViewById(R.id.slots);
+        emptyListText = contentView.findViewById(R.id.empty_list);
         addBtn = contentView.findViewById(R.id.add);
 
         dialog.setContentView(contentView);
@@ -39,38 +47,61 @@ public class AddSlotDialogFragment extends BottomSheetDialogFragment {
     @Override
     public void onStart() {
         super.onStart();
+
         daysSpinner.setAdapter(new ArrayAdapter<>(getContext(),
                 android.R.layout.simple_spinner_dropdown_item, getWrappedWeek()));
+
         timePicker.setIs24HourView(DateFormat.is24HourFormat(getContext()));
+
+        if(slottables != null && !slottables.isEmpty()) {
+            slotsList.setAdapter(new ArrayAdapter<>(getContext(),
+                    android.R.layout.simple_list_item_single_choice, getWrappedSlottables()));
+            emptyListText.setVisibility(View.GONE);
+        }
+
+        slotsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long arg3) {
+                addBtn.setEnabled(true);
+            }
+        });
+
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Day day = ((Wrapper<Day>) daysSpinner.getSelectedItem()).getItem();
                 int hour = timePicker.getCurrentHour();
                 int minute = timePicker.getCurrentMinute();
-                // TODO - Handle item select
-                ISlottable item = new ISlottable() {
-                    @Override
-                    public String getSlotLabel() {
-                        return "Placeholder";
-                    }
-                };
+                ISlottable slottable = ((Wrapper<ISlottable>) slotsList.getItemAtPosition(
+                        slotsList.getCheckedItemPosition())).getItem();
 
-                if(onSlotAdded != null)
-                    onSlotAdded.onAdd(day, hour, minute, item);
+                if (onSlotAdded != null)
+                    onSlotAdded.onAdd(day, hour, minute, slottable);
                 dismiss();
             }
         });
     }
 
     private List<Wrapper<Day>> getWrappedWeek() {
-        List<Wrapper<Day>> week = new ArrayList<>();
+        List<Wrapper<Day>> weekWrappers = new ArrayList<>();
         for(Day day : Day.getWeek()) {
             int nameResId = getResources()
                     .getIdentifier(day.toString(), "string", getContext().getPackageName());
-            week.add(new Wrapper<>(day, getResources().getString(nameResId)));
+            weekWrappers.add(new Wrapper<>(day, getResources().getString(nameResId)));
         }
-        return week;
+        return weekWrappers;
+    }
+
+    private List<Wrapper<ISlottable>> getWrappedSlottables() {
+        List<Wrapper<ISlottable>> slottableWrappers = new ArrayList<>();
+        if(slottables != null)
+            for(ISlottable slottable : slottables)
+                slottableWrappers.add(new Wrapper<>(slottable, slottable.getSlotLabel()));
+        return slottableWrappers;
+    }
+
+    public void setSlottables(List<ISlottable> slottables) {
+        this.slottables = slottables;
     }
 
     public void setOnSlotAdded(OnSlotAdded callback) {

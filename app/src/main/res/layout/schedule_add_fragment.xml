@@ -14,7 +14,7 @@
 
         <TextView
             style="@style/schedule.addSlot.label"
-            android:text="@string/day_label" />
+            android:text="@string/add_slot_day_label" />
 
         <Spinner
             android:id="@+id/days_spinner"
@@ -31,7 +31,7 @@
 
         <TextView
             style="@style/schedule.addSlot.label"
-            android:text="@string/hour_label" />
+            android:text="@string/add_slot_time_label" />
 
         <TimePicker
             android:id="@+id/time_picker"
@@ -40,7 +40,33 @@
             android:timePickerMode="spinner" />
     </LinearLayout>
 
+    <View style="@style/schedule.addSlot.hr" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/schedule.addSlot.label"
+            android:text="@string/add_slot_slot_label" />
+
+        <ListView
+            android:id="@+id/slots"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:choiceMode="singleChoice" />
+
+        <TextView
+            android:id="@+id/empty_list"
+            style="@style/schedule.addSlot.empty_list"
+            android:text="@string/add_slot_empty_slot_list" />
+    </LinearLayout>
+
     <Button
         android:id="@+id/add"
-        style="@style/schedule.addSlot.add" />
+        style="@style/schedule.addSlot.add"
+        android:enabled="false"
+        android:text="@string/add_slot_add_label" />
 </LinearLayout>

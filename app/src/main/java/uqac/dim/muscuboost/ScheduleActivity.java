@@ -14,6 +14,9 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import uqac.dim.muscuboost.core.schedule.Day;
 import uqac.dim.muscuboost.core.schedule.ISlottable;
 import uqac.dim.muscuboost.core.schedule.Schedule;
@@ -75,6 +78,14 @@ public class ScheduleActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         drawSchedule(schedule);
+
+        // TODO - Delete following
+        List<ISlottable> slottables = new ArrayList<>();
+        for(List<ScheduleSlot> daySlots : schedule.getSlots().values())
+            for(ScheduleSlot slot : daySlots)
+                slottables.add(slot.getItem());
+        //////////////////////////
+        addSlotFragment.setSlottables(slottables);
     }
 
     private String getStringResource(String resName) {

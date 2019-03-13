@@ -11,8 +11,9 @@
     <string name="empty_row">Rest</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
-    <string name="day_label">Day</string>
-    <string name="hour_label">Hour</string>
-    <string name="add_label">Add</string>
-    <string name="training_label">Training</string>
+    <string name="add_slot_day_label">Day</string>
+    <string name="add_slot_time_label">Time</string>
+    <string name="add_slot_slot_label">Training</string>
+    <string name="add_slot_add_label">Add</string>
+    <string name="add_slot_empty_slot_list">No training available</string>
 </resources>
