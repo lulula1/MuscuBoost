@@ -2,4 +2,8 @@
     <string name="app_name">MuscuBoost</string>
     <string name="action_settings">Settings</string>
     <string name="schedule_name">Planning</string>
+    <string name="nameMuscle">Name</string>
+    <string name="add">Ajouter</string>
+    <string name="liste_des_muscles">Liste des muscles</string>
+    <string name="listes_des_exercices">Listes des exercices</string>
 </resources>
