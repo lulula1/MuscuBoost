@@ -5,24 +5,24 @@ import android.database.sqlite.SQLiteDatabase;
 
 public abstract class DAOBase {
 
-    protected static SQLiteDatabase bdd = null;
-    private static DatabaseHandler gestion = null;
+    protected static SQLiteDatabase db = null;
+    private static DatabaseHandler handler = null;
 
     public DAOBase(Context pContext) {
-        this.gestion = new DatabaseHandler(pContext);
+        handler = new DatabaseHandler(pContext);
     }
 
     public SQLiteDatabase open() {
-        bdd = gestion.getWritableDatabase();
-        return bdd;
+        db = handler.getWritableDatabase();
+        return db;
     }
 
     public void close() {
-        bdd.close();
-        bdd = null;
+        db.close();
+        db = null;
     }
 
-    public SQLiteDatabase getBdd() {
-        return bdd;
+    public SQLiteDatabase getDb() {
+        return db;
     }
 }

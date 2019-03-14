@@ -10,17 +10,17 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import java.util.List;
 
-import uqac.dim.muscuboost.core.training.Exercice;
+import uqac.dim.muscuboost.core.training.Exercise;
 import uqac.dim.muscuboost.core.training.Muscle;
-import uqac.dim.muscuboost.db.ExerciceDAO;
+import uqac.dim.muscuboost.db.ExerciseDAO;
 import uqac.dim.muscuboost.db.MuscleDAO;
 
 public class MainActivity extends AppCompatActivity {
 
     MuscleDAO md = new MuscleDAO(this);
-    ExerciceDAO ed = new ExerciceDAO(this);
+    ExerciseDAO ed = new ExerciseDAO(this);
 
 
     @Override
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
                 EditText edt = findViewById(R.id.editText);
                 Muscle m = new Muscle(edt.getText().toString());
                 md.open();
-                md.ajouter(m);
+                md.insert(m);
                 affichage();
             }
         });
@@ -49,10 +49,10 @@ public class MainActivity extends AppCompatActivity {
         l.removeAllViews();
         md.open();
 
-        ArrayList<Muscle> muscles = md.selectionner("", null);
+        List<Muscle> muscles = md.select("", null);
         for(Muscle m : muscles){
             TextView t = new TextView(this);
-            t.setText(m.getId() + " --> " + m.getIntitule());
+            t.setText(m.getId() + " --> " + m.getName());
             t.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             t.setTextSize(18);
             t.setTextColor(Color.BLACK);
@@ -62,10 +62,10 @@ public class MainActivity extends AppCompatActivity {
         l = findViewById(R.id.liste_exos);
         l.removeAllViews();
         ed.open();
-        ArrayList<Exercice> exos = ed.selectionner("", null);
-        for(Exercice e : exos){
+        List<Exercise> exos = ed.select("", null);
+        for(Exercise e : exos){
             TextView t = new TextView(this);
-            t.setText(e.getId() + " --> " + e.getIntitule() + " -- " + e.getMuscle().getIntitule());
+            t.setText(e.getId() + " --> " + e.getName() + " -- " + e.getMuscle().getName());
             t.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             t.setTextSize(18);
             t.setTextColor(Color.BLACK);

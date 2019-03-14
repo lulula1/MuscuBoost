@@ -4,45 +4,47 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import uqac.dim.muscuboost.core.training.Exercise;
+
 public class DatabaseHandler extends SQLiteOpenHelper {
 
-    // Version de la base
-    protected static final int VERSION = 8;
+    // Database version
+    protected static final int VERSION = 9;
 
-    // Nom de la base
-    protected static final String NOM_BASE = "muscuboost.db";
+    // Database (file) name
+    protected static final String DATABASE_NAME = "muscuboost.db";
 
     public DatabaseHandler(Context context) {
-        super(context, NOM_BASE, null, VERSION);
+        super(context, DATABASE_NAME, null, VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(MuscleDAO.TABLE_CREATE);
-        db.execSQL(ExerciceDAO.TABLE_CREATE);
-        db.execSQL(EntrainementDAO.TABLE_CREATE);
-        db.execSQL(EntrainementExerciceDAO.TABLE_CREATE);
-        db.execSQL(CreneauDAO.TABLE_CREATE);
+        db.execSQL(ExerciseDAO.TABLE_CREATE);
+        db.execSQL(TrainingDAO.TABLE_CREATE);
+        db.execSQL(TrainingExerciseDAO.TABLE_CREATE);
+        db.execSQL(SlotDAO.TABLE_CREATE);
 
-        db.execSQL("INSERT INTO muscle(intitule) VALUES ('Deltoide')");
-        db.execSQL("INSERT INTO muscle(intitule) VALUES ('Biceps')");
-        db.execSQL("INSERT INTO muscle(intitule) VALUES ('Triceps')");
-        db.execSQL("INSERT INTO muscle(intitule) VALUES ('Pectauraux')");
+        db.execSQL("INSERT INTO " + MuscleDAO.TABLE_NAME + "(" + MuscleDAO.NAME + ") VALUES ('Deltoide')");
+        db.execSQL("INSERT INTO " + MuscleDAO.TABLE_NAME + "(" + MuscleDAO.NAME + ") VALUES ('Biceps')");
+        db.execSQL("INSERT INTO " + MuscleDAO.TABLE_NAME + "(" + MuscleDAO.NAME + ") VALUES ('Triceps')");
+        db.execSQL("INSERT INTO " + MuscleDAO.TABLE_NAME + "(" + MuscleDAO.NAME + ") VALUES ('Pectauraux')");
 
-        db.execSQL("INSERT INTO exercice(intitule, muscle) VALUES ('Develloper-Coucher', 4)");
-        db.execSQL("INSERT INTO exercice(intitule, muscle) VALUES ('Haltere', 2)");
-        db.execSQL("INSERT INTO exercice(intitule, muscle) VALUES ('Tractions', 3)");
-        db.execSQL("INSERT INTO exercice(intitule, muscle) VALUES ('Deeps', 1)");
+        db.execSQL("INSERT INTO " + ExerciseDAO.TABLE_NAME + "(" + ExerciseDAO.NAME + "," + ExerciseDAO.MUSCLE + ") VALUES ('Developpé-Couché', 4)");
+        db.execSQL("INSERT INTO " + ExerciseDAO.TABLE_NAME + "(" + ExerciseDAO.NAME + "," + ExerciseDAO.MUSCLE + ") VALUES ('Haltere', 2)");
+        db.execSQL("INSERT INTO " + ExerciseDAO.TABLE_NAME + "(" + ExerciseDAO.NAME + "," + ExerciseDAO.MUSCLE + ") VALUES ('Tractions', 3)");
+        db.execSQL("INSERT INTO " + ExerciseDAO.TABLE_NAME + "(" + ExerciseDAO.NAME + "," + ExerciseDAO.MUSCLE + ") VALUES ('Deeps', 1)");
 
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(MuscleDAO.TABLE_DROP);
-        db.execSQL(ExerciceDAO.TABLE_DROP);
-        db.execSQL(EntrainementDAO.TABLE_DROP);
-        db.execSQL(EntrainementExerciceDAO.TABLE_DROP);
-        db.execSQL(CreneauDAO.TABLE_DROP);
+        db.execSQL(ExerciseDAO.TABLE_DROP);
+        db.execSQL(TrainingDAO.TABLE_DROP);
+        db.execSQL(TrainingExerciseDAO.TABLE_DROP);
+        db.execSQL(SlotDAO.TABLE_DROP);
         onCreate(db);
     }
 }

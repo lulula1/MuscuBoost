@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import uqac.dim.muscuboost.core.training.Muscle;
 
@@ -12,12 +13,12 @@ public class MuscleDAO extends DAOBase {
     public static final String TABLE_NAME = "muscle";
 
     public static final String KEY = "id";
-    public static final String INTITULE = "intitule";
+    public static final String NAME = "name";
 
     public static final String TABLE_CREATE =
             "CREATE TABLE " + TABLE_NAME + " ("
                     + KEY + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                    + INTITULE + " VARCHAR(30) );";
+                    + NAME + " VARCHAR(30) NOT NULL );";
 
     public static final String TABLE_DROP = "DROP TABLE IF EXISTS " + TABLE_NAME + ";";
 
@@ -25,32 +26,32 @@ public class MuscleDAO extends DAOBase {
         super(pContext);
     }
 
-    public void ajouter(Muscle m) {
+    public void insert(Muscle muscle) {
         ContentValues value = new ContentValues();
-        value.put(MuscleDAO.INTITULE, m.getIntitule());
-        bdd.insert(MuscleDAO.TABLE_NAME, null, value);
+        value.put(MuscleDAO.NAME, muscle.getName());
+        db.insert(MuscleDAO.TABLE_NAME, null, value);
     }
 
-    public void supprimer(Muscle m) {
-        String[] whereArgs = {m.getIntitule()};
-        bdd.delete(TABLE_NAME, INTITULE + " = ?", whereArgs);
+    public void delete(Muscle muscle) {
+        String[] whereArgs = {muscle.getName()};
+        db.delete(TABLE_NAME, NAME + " = ?", whereArgs);
     }
 
-    public void supprimer(int id) {
+    public void delete(int id) {
         String[] whereArgs = {String.valueOf(id)};
-        bdd.delete(TABLE_NAME, KEY + " = ?", whereArgs);
+        db.delete(TABLE_NAME, KEY + " = ?", whereArgs);
     }
 
-    public void modifier(Muscle m) {
+    public void update(Muscle muscle) {
         ContentValues value = new ContentValues();
-        value.put(INTITULE, m.getIntitule());
-        String[] whereArgs = {String.valueOf(m.getId())};
-        bdd.update(TABLE_NAME, value, KEY + " = ?", whereArgs);
+        value.put(NAME, muscle.getName());
+        String[] whereArgs = {String.valueOf(muscle.getId())};
+        db.update(TABLE_NAME, value, KEY + " = ?", whereArgs);
     }
 
-    public ArrayList<Muscle> selectionner(String whereSQL, String[] whereArgs) {
-        Cursor c = bdd.rawQuery("SELECT * FROM " + TABLE_NAME + whereSQL, whereArgs);
-        ArrayList<Muscle> array = new ArrayList<Muscle>();
+    public List<Muscle> select(String whereSQL, String[] whereArgs) {
+        Cursor c = db.rawQuery("SELECT * FROM " + TABLE_NAME + whereSQL, whereArgs);
+        List<Muscle> array = new ArrayList<>();
         while (c.moveToNext()) {
             Muscle m = new Muscle(c.getString(1));
             m.setId(c.getInt(0));

@@ -1,14 +1,14 @@
 package uqac.dim.muscuboost.core.training;
 
-public class Exercice {
+public class Exercise {
 
     private int id;
     private Muscle muscle;
-    private String intitule;
+    private String name;
 
-    public Exercice(Muscle muscle, String intitule) {
+    public Exercise(Muscle muscle, String name) {
         this.muscle = muscle;
-        this.intitule = intitule;
+        this.name = name;
     }
 
     public int getId() {
@@ -19,8 +19,8 @@ public class Exercice {
         return muscle;
     }
 
-    public String getIntitule() {
-        return intitule;
+    public String getName() {
+        return name;
     }
 
     public void setId(int id) {

@@ -3,22 +3,23 @@ package uqac.dim.muscuboost.core.training;
 public class Muscle {
 
     private int id;
-    private String intitule;
+    private String name;
 
-    public Muscle(String nom) {
-        this.intitule = nom;
+    public Muscle(String name) {
+        this.name = name;
     }
 
-    public Muscle(int id, String nom) {
-        this.intitule = nom;
+    public Muscle(int id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
-    public void setIntitule(String nom) {
-        this.intitule = nom;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getIntitule() {
-        return intitule;
+    public String getName() {
+        return name;
     }
 
     public void setId(int id) {
