@@ -5,6 +5,7 @@ package uqac.dim.muscuboost.core.schedule;
  */
 public class ScheduleSlot {
 
+    private final long ID;
     private Day day;
     private Integer hour;
     private Integer minute;
@@ -18,7 +19,8 @@ public class ScheduleSlot {
      * @param minute Minute of the slot
      * @param item Item contained in the slot
      */
-    public ScheduleSlot(Day day, Integer hour, Integer minute, ISlottable item) {
+    public ScheduleSlot(long id, Day day, Integer hour, Integer minute, ISlottable item) {
+        ID = id;
         setDay(day);
         setHour(hour);
         setMinute(minute);
@@ -31,8 +33,17 @@ public class ScheduleSlot {
      * @param day  Day of week of the slot
      * @param item Item contained in the slot
      */
-    public ScheduleSlot(Day day, ISlottable item) {
-        this(day, null, null, item);
+    public ScheduleSlot(long id, Day day, ISlottable item) {
+        this(id, day, null, null, item);
+    }
+
+    /**
+     * Returns the slot's id.
+     *
+     * @return Id of the slot
+     */
+    public long getId() {
+        return ID;
     }
 
     /**

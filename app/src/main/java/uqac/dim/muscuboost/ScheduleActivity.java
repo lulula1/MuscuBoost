@@ -46,7 +46,7 @@ public class ScheduleActivity extends AppCompatActivity {
         addSlotFragment.setOnSlotAdded(new AddSlotDialogFragment.OnSlotAdded() {
             @Override
             public void onAdd(Day day, int hour, int minute, ISlottable item) {
-                schedule.addSlot(new ScheduleSlot(day, hour, minute, item));
+                schedule.addSlot(new ScheduleSlot(0, day, hour, minute, item));
                 drawSchedule(schedule);
             }
         });
@@ -62,15 +62,15 @@ public class ScheduleActivity extends AppCompatActivity {
 
         // TODO - Remove test values
         schedule = new Schedule();
-        schedule.addSlot(new ScheduleSlot(Day.MONDAY, 19, 0,
+        schedule.addSlot(new ScheduleSlot(0, Day.MONDAY, 19, 0,
                 new Training(0, "Jambes")));
-        schedule.addSlot(new ScheduleSlot(Day.TUESDAY, 19, 0,
+        schedule.addSlot(new ScheduleSlot(1, Day.TUESDAY, 19, 0,
                 new Training(1, "Pectoraux")));
-        schedule.addSlot(new ScheduleSlot(Day.THURSDAY, 19, 0,
+        schedule.addSlot(new ScheduleSlot(2, Day.THURSDAY, 19, 0,
                 new Training(2, "Bras")));
-        schedule.addSlot(new ScheduleSlot(Day.FRIDAY, 19, 0,
+        schedule.addSlot(new ScheduleSlot(3, Day.FRIDAY, 19, 0,
                 new Training(3, "Dos")));
-        schedule.addSlot(new ScheduleSlot(Day.SUNDAY, 17, 0,
+        schedule.addSlot(new ScheduleSlot(4, Day.SUNDAY, 17, 0,
                 new Training(4, "Epaules")));
     }
 
