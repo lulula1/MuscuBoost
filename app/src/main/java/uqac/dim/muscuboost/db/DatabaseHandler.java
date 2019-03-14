@@ -6,9 +6,14 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
 
+    // Version de la base
+    protected static final int VERSION = 8;
 
-    public DatabaseHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
+    // Nom de la base
+    protected static final String NOM_BASE = "muscuboost.db";
+
+    public DatabaseHandler(Context context) {
+        super(context, NOM_BASE, null, VERSION);
     }
 
     @Override
