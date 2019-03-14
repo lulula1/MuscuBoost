@@ -1,4 +1,4 @@
-package uqac.dim.muscuboost;
+package uqac.dim.muscuboost.core.training;
 
 import java.util.ArrayList;
 
@@ -9,7 +9,7 @@ public class Entrainement {
     private int niveau;
     private ArrayList<Exercice> exercices;
 
-    public Entrainement(String intitule, int niveau, ArrayList<Exercice> exercices){
+    public Entrainement(String intitule, int niveau, ArrayList<Exercice> exercices) {
         this.intitule = intitule;
         this.niveau = niveau;
         this.exercices = exercices;

@@ -1,4 +1,4 @@
-package uqac.dim.muscuboost;
+package uqac.dim.muscuboost.core.training;
 
 public class Exercice {
 
@@ -6,7 +6,7 @@ public class Exercice {
     private Muscle muscle;
     private String intitule;
 
-    public Exercice(Muscle muscle, String intitule){
+    public Exercice(Muscle muscle, String intitule) {
         this.muscle = muscle;
         this.intitule = intitule;
     }

@@ -12,6 +12,11 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import uqac.dim.muscuboost.core.training.Exercice;
+import uqac.dim.muscuboost.core.training.Muscle;
+import uqac.dim.muscuboost.db.ExerciceDAO;
+import uqac.dim.muscuboost.db.MuscleDAO;
+
 public class MainActivity extends AppCompatActivity {
 
     MuscleDAO md = new MuscleDAO(this);
