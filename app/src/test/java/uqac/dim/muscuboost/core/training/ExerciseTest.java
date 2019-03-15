@@ -7,13 +7,17 @@ import static org.junit.Assert.*;
 
 public class ExerciseTest {
 
+    private Muscle biceps;
+    private Muscle triceps;
     private Exercise exercise1;
     private Exercise exercise2;
 
     @Before
     public void setUp() {
-        exercise1 = new Exercise(0, "Exercise1", Muscle.BICEPS);
-        exercise2 = new Exercise(10, "Exercise2", Muscle.TRICEPS);
+        biceps = new Muscle(0, "Biceps");
+        triceps = new Muscle(1, "Triceps");
+        exercise1 = new Exercise(0, "Exercise1", biceps);
+        exercise2 = new Exercise(10, "Exercise2", triceps);
     }
 
     @Test
@@ -37,15 +41,15 @@ public class ExerciseTest {
 
     @Test
     public void setMuscle() {
-        assertEquals(Muscle.BICEPS, exercise1.getMuscle());
-        exercise1.setMuscle(Muscle.PECTORAL);
-        assertEquals(Muscle.PECTORAL, exercise1.getMuscle());
+        assertEquals(biceps, exercise1.getMuscle());
+        exercise1.setMuscle(triceps);
+        assertEquals(triceps, exercise1.getMuscle());
     }
 
     @Test
     public void getMuscle() {
-        assertEquals(Muscle.BICEPS, exercise1.getMuscle());
-        assertEquals(Muscle.TRICEPS, exercise2.getMuscle());
+        assertEquals(biceps, exercise1.getMuscle());
+        assertEquals(triceps, exercise2.getMuscle());
     }
 
 }

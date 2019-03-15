@@ -53,7 +53,7 @@ public class Schedule {
      * @param slot Schedule slot to be removed
      */
     public void removeSlot(ScheduleSlot slot) {
-        slots.remove(slot);
+        slots.get(slot.getDay()).remove(slot);
     }
 
     /**

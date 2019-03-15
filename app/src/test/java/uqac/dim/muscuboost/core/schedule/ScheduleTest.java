@@ -12,7 +12,7 @@ public class ScheduleTest {
     @Before
     public void setUp() {
         schedule = new Schedule();
-        slot = new ScheduleSlot(Day.MONDAY, new ISlottable() {
+        slot = new ScheduleSlot(0, Day.MONDAY, new ISlottable() {
             @Override
             public String getSlotLabel() {
                 return null;
@@ -21,26 +21,32 @@ public class ScheduleTest {
     }
 
     @Test
-    public void getSlotTest() {
-        assertEquals(0, schedule.getSlots().size());
-        schedule.addSlot(slot);
-        assertEquals(1, schedule.getSlots().size());
-        assertEquals(slot, schedule.getSlots().get(0));
+    public void getIdTest() {
+        assertEquals(0, slot.getId());
     }
 
     @Test
     public void addSlotTest() {
-        assertEquals(0, schedule.getSlots().size());
+        assertEquals(0, schedule.getSlotsByDay(slot.getDay()).size());
         schedule.addSlot(slot);
-        assertEquals(1, schedule.getSlots().size());
+        assertEquals(1, schedule.getSlotsByDay(slot.getDay()).size());
     }
 
     @Test
     public void removeSlotTest() {
         schedule.addSlot(slot);
-        assertEquals(1, schedule.getSlots().size());
+        assertEquals(1, schedule.getSlotsByDay(slot.getDay()).size());
         schedule.removeSlot(slot);
-        assertEquals(0, schedule.getSlots().size());
+        assertEquals(0, schedule.getSlotsByDay(slot.getDay()).size());
+    }
+
+    @Test
+    public void getSlotsTest() {
+        assertEquals(Day.getWeek().size(), schedule.getSlots().size());
+        assertEquals(0, schedule.getSlots().get(slot.getDay()).size());
+        schedule.addSlot(slot);
+        assertEquals(1, schedule.getSlots().get(slot.getDay()).size());
+        assertEquals(slot, schedule.getSlots().get(slot.getDay()).get(0));
     }
 
     @Test

@@ -16,7 +16,7 @@ public enum Day {
     SATURDAY  (5, "saturday"),
     SUNDAY    (6, "sunday");
 
-    private final long ID;
+    private final int ID;
     private final String NAME;
 
     /**
@@ -25,7 +25,7 @@ public enum Day {
      * @param id Numerical day of the week format
      * @param name Name of the day
      */
-    Day(long id, String name) {
+    Day(int id, String name) {
         ID = id;
         NAME = name;
     }
@@ -41,6 +41,16 @@ public enum Day {
     }
 
     /**
+     * Returns the string version of the day.
+     *
+     * @return String version of the day
+     */
+    @Override
+    public String toString() {
+        return NAME;
+    }
+
+    /**
      * Returns the days of a week.
      * From monday to sunday.
      *
@@ -51,9 +61,15 @@ public enum Day {
                 Arrays.asList(MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY));
     }
 
-    @Override
-    public String toString() {
-        return NAME;
+    /**
+     * Returns a day based on its numerical day of the week id.
+     *
+     * @param id Id of the desired day
+     * @return Day of the given id
+     */
+    public static Day getDayById(int id) {
+        List<Day> week = getWeek();
+        return 0 <= id && id < week.size() ? week.get(id) : null;
     }
 
 }

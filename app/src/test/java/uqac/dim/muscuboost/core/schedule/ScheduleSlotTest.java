@@ -12,15 +12,21 @@ public class ScheduleSlotTest {
     private ScheduleSlot slotDayTime;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         slottable = new ISlottable() {
             @Override
             public String getSlotLabel() {
                 return null;
             }
         };
-        slotDay = new ScheduleSlot(Day.MONDAY, slottable);
-        slotDayTime = new ScheduleSlot(Day.WEDNESDAY, 15, 30, slottable);
+        slotDay = new ScheduleSlot(0, Day.MONDAY, slottable);
+        slotDayTime = new ScheduleSlot(10, Day.WEDNESDAY, 15, 30, slottable);
+    }
+
+    @Test
+    public void getIdTest() {
+        assertEquals(0, slotDay.getId());
+        assertEquals(10, slotDayTime.getId());
     }
 
     @Test
