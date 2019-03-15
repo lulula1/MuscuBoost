@@ -25,26 +25,15 @@ public class TrainingDAO extends DAOBase {
         super(pContext);
     }
 
-    public void insert(Training training) {
+    public Training insert(String name) {
         ContentValues value = new ContentValues();
-        value.put(NAME, training.getName());
-        db.insert(TrainingDAO.TABLE_NAME, null, value);
-
-        for (Exercise exo : training.getExercises()) {
-            value.clear();
-            value.put(TrainingExerciseDAO.TRAINING_ID, training.getId());
-            value.put(TrainingExerciseDAO.EXERCISE_ID, exo.getId());
-            db.insert(TrainingExerciseDAO.TABLE_NAME, null, value);
-        }
+        value.put(NAME, name);
+        long id = db.insert(TrainingDAO.TABLE_NAME, null, value);
+        return new Training(id, name);
     }
 
     public void delete(Training training) {
-        String[] whereArgs = {training.getName()};
-        db.delete(TABLE_NAME, NAME + " = ?", whereArgs);
-    }
-
-    public void delete(long id) {
-        String[] whereArgs = {String.valueOf(id)};
+        String[] whereArgs = {String.valueOf(training.getId())};
         db.delete(TABLE_NAME, KEY + " = ?", whereArgs);
     }
 

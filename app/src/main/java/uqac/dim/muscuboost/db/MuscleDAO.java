@@ -26,19 +26,15 @@ public class MuscleDAO extends DAOBase {
         super(pContext);
     }
 
-    public void insert(Muscle muscle) {
+    public Muscle insert(String name) {
         ContentValues value = new ContentValues();
-        value.put(MuscleDAO.NAME, muscle.getName());
-        db.insert(MuscleDAO.TABLE_NAME, null, value);
+        value.put(MuscleDAO.NAME, name);
+        long id = db.insert(MuscleDAO.TABLE_NAME, null, value);
+        return new Muscle(id, name);
     }
 
     public void delete(Muscle muscle) {
-        String[] whereArgs = {muscle.getName()};
-        db.delete(TABLE_NAME, NAME + " = ?", whereArgs);
-    }
-
-    public void delete(long id) {
-        String[] whereArgs = {String.valueOf(id)};
+        String[] whereArgs = {String.valueOf(muscle.getId())};
         db.delete(TABLE_NAME, KEY + " = ?", whereArgs);
     }
 
@@ -50,7 +46,7 @@ public class MuscleDAO extends DAOBase {
     }
 
     public List<Muscle> select(String whereSQL, String[] whereArgs) {
-        Cursor c = db.rawQuery("SELECT * FROM " + TABLE_NAME + whereSQL, whereArgs);
+        Cursor c = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + whereSQL, whereArgs);
         List<Muscle> array = new ArrayList<>();
         while (c.moveToNext()) {
             long id = c.getLong(0);

@@ -16,14 +16,14 @@ public class ExerciseDAO extends DAOBase {
 
     public static final String KEY = "id";
     public static final String NAME = "name";
-    public static final String MUSCLE = "muscle";
+    public static final String MUSCLE_ID = "muscle_id";
 
     public static final String TABLE_CREATE =
             "CREATE TABLE " + TABLE_NAME + " ("
                     + KEY + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + NAME + " VARCHAR(30) NOT NULL,"
-                    + MUSCLE + " INTEGER NOT NULL,"
-                    + "FOREIGN KEY (" + MUSCLE + ") REFERENCES " + MuscleDAO.TABLE_NAME + "(" + MuscleDAO.KEY + ") );";
+                    + MUSCLE_ID + " INTEGER NOT NULL,"
+                    + "FOREIGN KEY (" + MUSCLE_ID + ") REFERENCES " + MuscleDAO.TABLE_NAME + "(" + MuscleDAO.KEY + ") );";
 
     public static final String TABLE_DROP = "DROP TABLE IF EXISTS " + TABLE_NAME + ";";
 
@@ -31,27 +31,23 @@ public class ExerciseDAO extends DAOBase {
         super(pContext);
     }
 
-    public void insert(Exercise exercise) {
+    public Exercise insert(String name, Muscle muscle) {
         ContentValues value = new ContentValues();
-        value.put(NAME, exercise.getName());
-        value.put(MUSCLE, exercise.getMuscle().getId());
-        db.insert(MuscleDAO.TABLE_NAME, null, value);
+        value.put(NAME, name);
+        value.put(MUSCLE_ID, muscle.getId());
+        long id = db.insert(MuscleDAO.TABLE_NAME, null, value);
+        return new Exercise(id, name, muscle);
     }
 
     public void delete(Exercise exercise) {
-        String[] whereArgs = {exercise.getName()};
-        db.delete(TABLE_NAME, NAME + " = ?", whereArgs);
-    }
-
-    public void delete(long id) {
-        String[] whereArgs = {String.valueOf(id)};
+        String[] whereArgs = {String.valueOf(exercise.getId())};
         db.delete(TABLE_NAME, KEY + " = ?", whereArgs);
     }
 
     public void update(Exercise exercise) {
         ContentValues value = new ContentValues();
         value.put(NAME, exercise.getName());
-        value.put(MUSCLE, exercise.getMuscle().getId());
+        value.put(MUSCLE_ID, exercise.getMuscle().getId());
         String[] whereArgs = {String.valueOf(exercise.getId())};
         db.update(TABLE_NAME, value, KEY + " = ?", whereArgs);
     }

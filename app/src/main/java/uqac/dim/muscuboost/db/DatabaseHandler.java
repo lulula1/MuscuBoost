@@ -26,15 +26,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL(TrainingExerciseDAO.TABLE_CREATE);
         db.execSQL(SlotDAO.TABLE_CREATE);
 
+        // Insert default muscles
         db.execSQL("INSERT INTO " + MuscleDAO.TABLE_NAME + "(" + MuscleDAO.NAME + ") VALUES ('Deltoide')");
         db.execSQL("INSERT INTO " + MuscleDAO.TABLE_NAME + "(" + MuscleDAO.NAME + ") VALUES ('Biceps')");
         db.execSQL("INSERT INTO " + MuscleDAO.TABLE_NAME + "(" + MuscleDAO.NAME + ") VALUES ('Triceps')");
         db.execSQL("INSERT INTO " + MuscleDAO.TABLE_NAME + "(" + MuscleDAO.NAME + ") VALUES ('Pectauraux')");
 
-        db.execSQL("INSERT INTO " + ExerciseDAO.TABLE_NAME + "(" + ExerciseDAO.NAME + "," + ExerciseDAO.MUSCLE + ") VALUES ('Developpé-Couché', 4)");
-        db.execSQL("INSERT INTO " + ExerciseDAO.TABLE_NAME + "(" + ExerciseDAO.NAME + "," + ExerciseDAO.MUSCLE + ") VALUES ('Haltere', 2)");
-        db.execSQL("INSERT INTO " + ExerciseDAO.TABLE_NAME + "(" + ExerciseDAO.NAME + "," + ExerciseDAO.MUSCLE + ") VALUES ('Tractions', 3)");
-        db.execSQL("INSERT INTO " + ExerciseDAO.TABLE_NAME + "(" + ExerciseDAO.NAME + "," + ExerciseDAO.MUSCLE + ") VALUES ('Deeps', 1)");
+        // Insert default exercises
+        db.execSQL("INSERT INTO " + ExerciseDAO.TABLE_NAME + "(" + ExerciseDAO.NAME + "," + ExerciseDAO.MUSCLE_ID + ") VALUES ('Developpé-Couché', 4)");
+        db.execSQL("INSERT INTO " + ExerciseDAO.TABLE_NAME + "(" + ExerciseDAO.NAME + "," + ExerciseDAO.MUSCLE_ID + ") VALUES ('Haltere', 2)");
+        db.execSQL("INSERT INTO " + ExerciseDAO.TABLE_NAME + "(" + ExerciseDAO.NAME + "," + ExerciseDAO.MUSCLE_ID + ") VALUES ('Tractions', 3)");
+        db.execSQL("INSERT INTO " + ExerciseDAO.TABLE_NAME + "(" + ExerciseDAO.NAME + "," + ExerciseDAO.MUSCLE_ID + ") VALUES ('Deeps', 1)");
 
     }
 
