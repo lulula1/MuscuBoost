@@ -7,7 +7,9 @@ import android.database.Cursor;
 import java.util.ArrayList;
 import java.util.List;
 
-import uqac.dim.muscuboost.core.training.ScheduleSlot;
+import uqac.dim.muscuboost.core.schedule.Day;
+import uqac.dim.muscuboost.core.schedule.ScheduleSlot;
+import uqac.dim.muscuboost.core.training.Training;
 
 public class SlotDAO extends DAOBase {
 
@@ -22,10 +24,10 @@ public class SlotDAO extends DAOBase {
     public static final String TABLE_CREATE =
             "CREATE TABLE " + TABLE_NAME + " ("
                     + KEY + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                    + DAY + " VARCHAR(15) NOT NULL,"
+                    + DAY + " INTEGER NOT NULL,"
                     + HOUR + " INTEGER NOT NULL,"
                     + MINUTE + " INTEGER NOT NULL,"
-                    + TRAINING_ID + " INTEGER NOT NULL,"
+                    + TRAINING_ID + " INTEGER,"
                     + "FOREIGN KEY (" + TRAINING_ID + ") REFERENCES " + TrainingDAO.TABLE_NAME + "(" + TrainingDAO.KEY + ") ON DELETE CASCADE );";
 
     public static final String TABLE_DROP = "DROP TABLE IF EXISTS " + TABLE_NAME + ";";
@@ -34,36 +36,33 @@ public class SlotDAO extends DAOBase {
         super(pContext);
     }
 
-    public void insert(ScheduleSlot slot) {
+    public ScheduleSlot insert(Day day, int hour, int minute, Training training) {
         ContentValues value = new ContentValues();
-        value.put(DAY, slot.getDay());
-        value.put(HOUR, slot.getHour());
-        value.put(MINUTE, slot.getMinute());
-        value.put(TRAINING_ID, slot.getTraining().getId());
-        db.insert(MuscleDAO.TABLE_NAME, null, value);
+        value.put(DAY, day.getId());
+        value.put(HOUR, hour);
+        value.put(MINUTE, minute);
+        value.put(TRAINING_ID, training.getId());
+        long id = db.insert(MuscleDAO.TABLE_NAME, null, value);
+        return new ScheduleSlot(id, day, hour, minute, training);
     }
 
     public void delete(ScheduleSlot slot) {
-        delete(slot.getId());
-    }
-
-    public void delete(int id) {
-        String[] whereArgs = {String.valueOf(id)};
+        String[] whereArgs = {String.valueOf(slot.getId())};
         db.delete(TABLE_NAME, KEY + " = ?", whereArgs);
     }
 
     public void update(ScheduleSlot slot) {
         ContentValues value = new ContentValues();
-        value.put(DAY, slot.getDay());
+        value.put(DAY, slot.getDay().getId());
         value.put(HOUR, slot.getHour());
         value.put(MINUTE, slot.getMinute());
-        value.put(TRAINING_ID, slot.getTraining().getId());
+        value.put(TRAINING_ID, ((Training) slot.getItem()).getId());
         String[] whereArgs = {String.valueOf(slot.getId())};
         db.update(TABLE_NAME, value, KEY + " = ?", whereArgs);
     }
 
     public List<ScheduleSlot> select(String whereSQL, String[] whereArgs) {
-        Cursor c = db.rawQuery("SELECT * FROM " + TABLE_NAME + whereSQL, whereArgs);
+        Cursor c = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + whereSQL, whereArgs);
         List<ScheduleSlot> array = new ArrayList<>();
         while (c.moveToNext()) {
             String[] strings = {c.getString(4)};
