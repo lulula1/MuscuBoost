@@ -4,69 +4,68 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="8dp"
     tools:context=".ui.schedule.fragment.AddSlotDialogFragment">
 
-    <LinearLayout
+    <TextView
+        style="@style/schedule.addSlot.title"
+        android:text="@string/add_slot_new" />
+
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <TextView
-            style="@style/schedule.addSlot.label"
-            android:text="@string/add_slot_day_label" />
-
-        <Spinner
-            android:id="@+id/days_spinner"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <View style="@style/schedule.addSlot.hr" />
+            <TextView
+                style="@style/schedule.addSlot.label"
+                android:text="@string/add_slot_day_label" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+            <Spinner
+                android:id="@+id/days_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp" />
 
-        <TextView
-            style="@style/schedule.addSlot.label"
-            android:text="@string/add_slot_time_label" />
+            <View style="@style/hr" />
 
-        <TimePicker
-            android:id="@+id/time_picker"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:timePickerMode="spinner" />
-    </LinearLayout>
+            <TextView
+                style="@style/schedule.addSlot.label"
+                android:text="@string/add_slot_time_label" />
 
-    <View style="@style/schedule.addSlot.hr" />
+            <TimePicker
+                android:id="@+id/time_picker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:timePickerMode="spinner" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical">
+            <View style="@style/hr" />
 
-        <TextView
-            style="@style/schedule.addSlot.label"
-            android:text="@string/add_slot_slot_label" />
+            <TextView
+                style="@style/schedule.addSlot.label"
+                android:text="@string/add_slot_slot_label" />
 
-        <ListView
-            android:id="@+id/slots"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:choiceMode="singleChoice" />
+            <ListView
+                android:id="@+id/slots"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:choiceMode="singleChoice"
+                android:nestedScrollingEnabled="true" />
 
-        <TextView
-            android:id="@+id/empty_list"
-            style="@style/schedule.addSlot.empty_list"
-            android:text="@string/add_slot_empty_slot_list" />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/empty_list"
+                style="@style/schedule.addSlot.empty_list"
+                android:text="@string/add_slot_empty_slot_list" />
 
-    <Button
-        android:id="@+id/add"
-        style="@style/schedule.addSlot.add"
-        android:enabled="false"
-        android:text="@string/add_slot_add_label" />
+            <Button
+                android:id="@+id/add"
+                style="@style/schedule.addSlot.add"
+                android:enabled="false"
+                android:text="@string/add_slot_add_label" />
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 </LinearLayout>

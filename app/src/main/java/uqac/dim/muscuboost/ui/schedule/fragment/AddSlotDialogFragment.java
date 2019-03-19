@@ -4,15 +4,18 @@ import android.app.Dialog;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.text.format.DateFormat;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import uqac.dim.muscuboost.R;
@@ -48,14 +51,20 @@ public class AddSlotDialogFragment extends BottomSheetDialogFragment {
     public void onStart() {
         super.onStart();
 
+        final int MAX_SLOTS_SHOWN = 5;
+
         daysSpinner.setAdapter(new ArrayAdapter<>(getContext(),
                 android.R.layout.simple_spinner_dropdown_item, getWrappedWeek()));
+        daysSpinner.setSelection((Calendar.getInstance().get(Calendar.DAY_OF_WEEK) + 5) % 7);
 
         timePicker.setIs24HourView(DateFormat.is24HourFormat(getContext()));
 
         if(slottables != null && !slottables.isEmpty()) {
             slotsList.setAdapter(new ArrayAdapter<>(getContext(),
                     android.R.layout.simple_list_item_single_choice, getWrappedSlottables()));
+            slotsList.setLayoutParams(new LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    Math.min(slottables.size(), MAX_SLOTS_SHOWN) * 100));
             emptyListText.setVisibility(View.GONE);
         }
 

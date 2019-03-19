@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">MuscuBoost</string>
     <string name="schedule_name">Schedule</string>
@@ -11,6 +12,7 @@
     <string name="empty_row">Rest</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
+    <string name="add_slot_new">New</string>
     <string name="add_slot_day_label">Day</string>
     <string name="add_slot_time_label">Time</string>
     <string name="add_slot_slot_label">Training</string>
