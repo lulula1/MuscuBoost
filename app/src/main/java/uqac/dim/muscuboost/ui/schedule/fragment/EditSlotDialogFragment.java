@@ -3,11 +3,8 @@ package uqac.dim.muscuboost.ui.schedule.fragment;
 import android.app.Dialog;
 import android.os.Build;
 import android.util.Log;
-import android.view.View;
 
 import uqac.dim.muscuboost.R;
-import uqac.dim.muscuboost.core.schedule.Day;
-import uqac.dim.muscuboost.core.schedule.ISlottable;
 import uqac.dim.muscuboost.core.schedule.ScheduleSlot;
 
 public class EditSlotDialogFragment extends AddSlotDialogFragment {

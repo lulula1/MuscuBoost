@@ -137,7 +137,7 @@ public class ScheduleActivity extends AppCompatActivity {
         labelButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        slotAction.onLabelClick(getBaseContext(), view, slot);
+                        slotAction.onLabelClick(ScheduleActivity.this, view, slot);
                     }
                 });
 
@@ -150,7 +150,7 @@ public class ScheduleActivity extends AppCompatActivity {
                             popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                                 @Override
                                 public boolean onMenuItemClick(MenuItem item) {
-                                    return slotAction.onMenuItemClick(getBaseContext(), item, slot);
+                                    return slotAction.onMenuItemClick(ScheduleActivity.this, item, slot);
                                 }
                             });
                             popup.show();
