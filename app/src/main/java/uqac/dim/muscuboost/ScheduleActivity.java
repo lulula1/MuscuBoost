@@ -43,11 +43,11 @@ public class ScheduleActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         addSlotFragment = new AddSlotDialogFragment();
-        addSlotFragment.setOnSlotAdded(new AddSlotDialogFragment.OnSlotAdded() {
+        addSlotFragment.setOnSlotSubmit(new AddSlotDialogFragment.OnSlotSubmit() {
             @Override
-            public void onAdd(Day day, int hour, int minute, ISlottable item) {
+            public void onSubmit(Day day, int hour, int minute, ISlottable item) {
                 schedule.addSlot(new ScheduleSlot(0, day, hour, minute, item));
-                drawSchedule(schedule);
+                drawSchedule();
             }
         });
 
@@ -60,8 +60,9 @@ public class ScheduleActivity extends AppCompatActivity {
             }
         });
 
-        // TODO - Remove test values
         schedule = new Schedule();
+
+        // TODO - Remove test values
         schedule.addSlot(new ScheduleSlot(0, Day.MONDAY, 19, 0,
                 new Training(0, "Jambes")));
         schedule.addSlot(new ScheduleSlot(1, Day.TUESDAY, 19, 0,
@@ -77,15 +78,18 @@ public class ScheduleActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        drawSchedule(schedule);
+        drawSchedule();
 
-        // TODO - Delete following
+        // TODO - Retrieve slots from the database
         List<ISlottable> slottables = new ArrayList<>();
-        for(List<ScheduleSlot> daySlots : schedule.getSlots().values())
-            for(ScheduleSlot slot : daySlots)
-                slottables.add(slot.getItem());
-        //////////////////////////
+        for(ScheduleSlot slot : schedule.getSlots())
+            slottables.add(slot.getItem());
+        //////////////////////////////////////////
         addSlotFragment.setSlottables(slottables);
+    }
+
+    public Schedule getSchedule() {
+        return schedule;
     }
 
     private String getStringResource(String resName) {
@@ -93,7 +97,7 @@ public class ScheduleActivity extends AppCompatActivity {
                 getResources().getIdentifier(resName, "string", getPackageName()));
     }
 
-    private void drawSchedule(Schedule schedule) {
+    public void drawSchedule() {
         TableLayout scheduleView = findViewById(R.id.schedule);
         scheduleView.removeAllViewsInLayout();
 

@@ -1,9 +1,11 @@
 package uqac.dim.muscuboost.core.training;
 
+import java.io.Serializable;
+
 /**
  * A body muscle.
  */
-public class Muscle {
+public class Muscle implements Serializable {
 
     private final long ID;
     private String name;
@@ -44,6 +46,23 @@ public class Muscle {
      */
     public String getName() {
         return name;
+    }
+
+    /**
+     * Returns whether the given object equals the muscle.
+     *
+     * @param obj Object to compare
+     * @return True if the given object equals the muscle, false otherwise
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if(obj.getClass() != getClass())
+            return false;
+        Muscle other = (Muscle) obj;
+        if(other.ID != ID
+                || !other.name.equals(name))
+            return false;
+        return true;
     }
 
 }

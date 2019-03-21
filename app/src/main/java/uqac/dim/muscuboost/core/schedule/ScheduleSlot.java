@@ -1,9 +1,11 @@
 package uqac.dim.muscuboost.core.schedule;
 
+import java.io.Serializable;
+
 /**
  * A temporal slot of a schedule.
  */
-public class ScheduleSlot {
+public class ScheduleSlot implements Serializable {
 
     private final long ID;
     private Day day;

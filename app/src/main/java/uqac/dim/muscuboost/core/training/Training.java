@@ -1,5 +1,6 @@
 package uqac.dim.muscuboost.core.training;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +10,7 @@ import uqac.dim.muscuboost.core.schedule.ISlottable;
  * A training that contains exercises.
  * It can be slotted in a {@link uqac.dim.muscuboost.core.schedule.ScheduleSlot}.
  */
-public class Training implements ISlottable {
+public class Training implements ISlottable, Serializable {
 
     private final long ID;
     private String name;
@@ -88,6 +89,24 @@ public class Training implements ISlottable {
     @Override
     public String getSlotLabel() {
         return name;
+    }
+
+    /**
+     * Returns whether the given object equals the training.
+     *
+     * @param obj Object to compare
+     * @return True if the given object equals the training, false otherwise
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if(obj.getClass() != getClass())
+            return false;
+        Training other = (Training) obj;
+        if(other.ID != ID
+          || !other.name.equals(name)
+          || !other.exercises.equals(exercises))
+            return false;
+        return true;
     }
 
 }
