@@ -43,11 +43,10 @@ public class TrainingSlotAction implements IScheduleSlotAction {
         Training training = getTraining(slot);
         if(training == null) return;
 
-        // TODO - Implement the training display action
-        /*Intent intent = new Intent(context, TrainingActivity.class);
+        Intent intent = new Intent(context, TrainingActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra(TrainingActivity.EXTRA_TRAINING, training);
-        context.startActivity(intent);*/
+        context.startActivity(intent);
     }
 
     @Override

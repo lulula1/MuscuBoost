@@ -18,4 +18,5 @@
     <string name="add_slot_slot_label">Entraînement</string>
     <string name="add_slot_add_label">Ajouter</string>
     <string name="add_slot_empty_slot_list">Aucun entraînement disponible</string>
+    <string name="training_empty_exercise_list">Aucun exercice</string>
 </resources>

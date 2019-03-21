@@ -18,4 +18,5 @@
     <string name="add_slot_slot_label">Training</string>
     <string name="add_slot_add_label">Add</string>
     <string name="add_slot_empty_slot_list">No training available</string>
+    <string name="training_empty_exercise_list">Not any exercise</string>
 </resources>
