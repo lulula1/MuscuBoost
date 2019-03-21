@@ -42,11 +42,10 @@ public class ScheduleTest {
 
     @Test
     public void getSlotsTest() {
-        assertEquals(Day.getWeek().size(), schedule.getSlots().size());
-        assertEquals(0, schedule.getSlots().get(slot.getDay()).size());
+        assertEquals(0, schedule.getSlots().size());
         schedule.addSlot(slot);
-        assertEquals(1, schedule.getSlots().get(slot.getDay()).size());
-        assertEquals(slot, schedule.getSlots().get(slot.getDay()).get(0));
+        assertEquals(1, schedule.getSlots().size());
+        assertEquals(slot, schedule.getSlots().get(0));
     }
 
     @Test
@@ -55,6 +54,20 @@ public class ScheduleTest {
         assertEquals(1, schedule.getSlotsByDay(Day.MONDAY).size());
         assertEquals(slot, schedule.getSlotsByDay(Day.MONDAY).get(0));
         assertEquals(0, schedule.getSlotsByDay(Day.TUESDAY).size());
+    }
+
+    @Test
+    public void getSortIndexTest() {
+        ScheduleSlot first  = new ScheduleSlot(0, Day.MONDAY, 0,  0,  null);
+        ScheduleSlot second = new ScheduleSlot(0, Day.MONDAY, 16, 31, null);
+        ScheduleSlot third  = new ScheduleSlot(0, Day.MONDAY, 23, 59, null);
+        schedule.addSlot(second);
+        schedule.addSlot(third);
+        schedule.addSlot(first);
+        assertEquals(3, schedule.getSlotsByDay(Day.MONDAY).size());
+        assertEquals(first, schedule.getSlotsByDay(Day.MONDAY).get(0));
+        assertEquals(second, schedule.getSlotsByDay(Day.MONDAY).get(1));
+        assertEquals(third, schedule.getSlotsByDay(Day.MONDAY).get(2));
     }
 
 }

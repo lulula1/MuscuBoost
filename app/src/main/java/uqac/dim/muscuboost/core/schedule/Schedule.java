@@ -1,24 +1,14 @@
 package uqac.dim.muscuboost.core.schedule;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * A schedule with daily (and hourly) temporized slots.
  */
 public class Schedule {
 
-    private Map<Day, List<ScheduleSlot>> slots = new HashMap<>();
-
-    /**
-     * A schedule.
-     */
-    public Schedule() {
-        for(Day day : Day.getWeek())
-            slots.put(day, new ArrayList<ScheduleSlot>());
-    }
+    private List<ScheduleSlot> slots = new ArrayList<>();
 
     /**
      * Adds a new schedule slot.
@@ -26,25 +16,7 @@ public class Schedule {
      * @param slot Schedule slot to be added
      */
     public void addSlot(ScheduleSlot slot) {
-        getSlotsByDay(slot.getDay())
-                .add(getAddIndex(slot), slot);
-    }
-
-    /**
-     * Returns the appropriate index on which to insert the slot
-     * to keep the schedule ordered by time.
-     *
-     * @param slot Slot to be inserted
-     * @return Appropriate slot index
-     */
-    private int getAddIndex(ScheduleSlot slot) {
-        int i = 0;
-        List<ScheduleSlot> slots = getSlotsByDay(slot.getDay());
-        while(slots.size() > i
-                && slot.getHour() * 60 + slot.getMinute()
-                    >= slots.get(i).getHour() * 60 + slots.get(i).getMinute())
-            i++;
-        return i;
+        slots.add(slot);
     }
 
     /**
@@ -53,7 +25,7 @@ public class Schedule {
      * @param slot Schedule slot to be removed
      */
     public void removeSlot(ScheduleSlot slot) {
-        slots.get(slot.getDay()).remove(slot);
+        slots.remove(slot);
     }
 
     /**
@@ -61,7 +33,7 @@ public class Schedule {
      *
      * @return Schedule slots
      */
-    public Map<Day, List<ScheduleSlot>> getSlots() {
+    public List<ScheduleSlot> getSlots() {
         return slots;
     }
 
@@ -72,7 +44,29 @@ public class Schedule {
      * @return Slots matching the given day
      */
     public List<ScheduleSlot> getSlotsByDay(Day day) {
-        return slots.get(day);
+        List<ScheduleSlot> daySlots = new ArrayList<>();
+        for(ScheduleSlot slot : slots)
+            if(slot.getDay() == day)
+                daySlots.add(getSortIndex(slot, daySlots), slot);
+        return daySlots;
+    }
+
+    /**
+     * Returns the appropriate index on which the slot may be inserted
+     * to keep the slotList ordered by time.
+     *
+     * @param slot Slot to be inserted
+     * @param slotList Sample of slots to compare the slot to to get the appropriate slot index
+     * @return Appropriate slot index
+     */
+    private static int getSortIndex(ScheduleSlot slot, List<ScheduleSlot> slotList) {
+        int index = 0;
+        for(ScheduleSlot otherSlot : slotList)
+            if(slot.getDay() == otherSlot.getDay()
+                    && slot.getHour() * 60 + slot.getMinute()
+                    >= otherSlot.getHour() * 60 + otherSlot.getMinute())
+                index++;
+        return index;
     }
 
 }
