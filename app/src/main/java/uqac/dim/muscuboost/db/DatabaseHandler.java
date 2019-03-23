@@ -4,12 +4,10 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import uqac.dim.muscuboost.core.training.Exercise;
-
 public class DatabaseHandler extends SQLiteOpenHelper {
 
     // Database version
-    protected static final int VERSION = 9;
+    protected static final int VERSION = 10;
 
     // Database (file) name
     protected static final String DATABASE_NAME = "muscuboost.db";
@@ -49,4 +47,5 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL(SlotDAO.TABLE_DROP);
         onCreate(db);
     }
+
 }

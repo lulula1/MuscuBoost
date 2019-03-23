@@ -10,6 +10,7 @@ import java.util.List;
 import uqac.dim.muscuboost.core.training.Muscle;
 
 public class MuscleDAO extends DAOBase {
+
     public static final String TABLE_NAME = "muscle";
 
     public static final String KEY = "id";
@@ -22,39 +23,51 @@ public class MuscleDAO extends DAOBase {
 
     public static final String TABLE_DROP = "DROP TABLE IF EXISTS " + TABLE_NAME + ";";
 
-    public MuscleDAO(Context pContext) {
-        super(pContext);
+    public MuscleDAO(Context context) {
+        super(context);
     }
 
-    public Muscle insert(String name) {
-        ContentValues value = new ContentValues();
-        value.put(MuscleDAO.NAME, name);
-        long id = db.insert(MuscleDAO.TABLE_NAME, null, value);
+    public Muscle addMuscle(String name) {
+        ContentValues values = new ContentValues();
+        values.put(MuscleDAO.NAME, name);
+        long id = db.insert(MuscleDAO.TABLE_NAME, null, values);
         return new Muscle(id, name);
     }
 
-    public void delete(Muscle muscle) {
+    public void removeMuscle(Muscle muscle) {
         String[] whereArgs = {String.valueOf(muscle.getId())};
         db.delete(TABLE_NAME, KEY + " = ?", whereArgs);
     }
 
-    public void update(Muscle muscle) {
-        ContentValues value = new ContentValues();
-        value.put(NAME, muscle.getName());
+    public void updateMuscle(Muscle muscle) {
+        ContentValues values = new ContentValues();
+        values.put(NAME, muscle.getName());
         String[] whereArgs = {String.valueOf(muscle.getId())};
-        db.update(TABLE_NAME, value, KEY + " = ?", whereArgs);
+        db.update(TABLE_NAME, values, KEY + " = ?", whereArgs);
     }
 
-    public List<Muscle> select(String whereSQL, String[] whereArgs) {
-        Cursor c = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + whereSQL, whereArgs);
-        List<Muscle> array = new ArrayList<>();
+    public List<Muscle> getMuscles() {
+        return getMuscles(null, null);
+    }
+
+    public List<Muscle> getMuscles(String whereSQL, String[] whereArgs) {
+        Cursor c = db.rawQuery("SELECT * "
+                        + "FROM " + TABLE_NAME
+                        + (whereSQL != null ? " WHERE " + whereSQL : ""),
+                whereArgs);
+        List<Muscle> muscles = new ArrayList<>();
         while (c.moveToNext()) {
-            long id = c.getLong(0);
-            String name = c.getString(1);
-            Muscle m = new Muscle(id, name);
-            array.add(m);
+            long id = c.getLong(c.getColumnIndex(KEY));
+            String name = c.getString(c.getColumnIndex(NAME));
+            muscles.add(new Muscle(id, name));
         }
-        return array;
+        return muscles;
+    }
+
+    public Muscle getMuscle(long muscleId) {
+        String[] whereArgs = {String.valueOf(muscleId)};
+        List<Muscle> muscles = getMuscles(KEY + " = ?", whereArgs);
+        return !muscles.isEmpty() ? muscles.get(0) : null;
     }
 
 }

@@ -5,11 +5,14 @@ import android.database.sqlite.SQLiteDatabase;
 
 public abstract class DAOBase {
 
-    protected static SQLiteDatabase db = null;
-    private static DatabaseHandler handler = null;
+    protected Context context;
 
-    public DAOBase(Context pContext) {
-        handler = new DatabaseHandler(pContext);
+    protected SQLiteDatabase db;
+    private DatabaseHandler handler;
+
+    public DAOBase(Context context) {
+        this.context = context;
+        handler = new DatabaseHandler(context);
     }
 
     public SQLiteDatabase open() {
@@ -25,4 +28,5 @@ public abstract class DAOBase {
     public SQLiteDatabase getDb() {
         return db;
     }
+
 }

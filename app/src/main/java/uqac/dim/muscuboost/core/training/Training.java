@@ -23,8 +23,21 @@ public class Training implements ISlottable, Serializable {
      * @param name Name of the training
      */
     public Training(long id, String name) {
+        this(id, name, null);
+    }
+
+    /**
+     * Creates a training.
+     *
+     * @param id Id of the training
+     * @param name Name of the training
+     * @param exercises Exercises of the training
+     */
+    public Training(long id, String name, List<Exercise> exercises) {
         ID = id;
         this.name = name;
+        if(exercises != null)
+            this.exercises = exercises;
     }
 
     /**
