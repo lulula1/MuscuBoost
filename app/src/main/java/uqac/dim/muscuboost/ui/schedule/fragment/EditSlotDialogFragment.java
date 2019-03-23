@@ -7,7 +7,7 @@ import android.util.Log;
 import uqac.dim.muscuboost.R;
 import uqac.dim.muscuboost.core.schedule.ScheduleSlot;
 
-public class EditSlotDialogFragment extends AddSlotDialogFragment {
+public class EditSlotDialogFragment extends SlotDialogFragment {
 
     private ScheduleSlot editedSlot;
 
@@ -48,8 +48,6 @@ public class EditSlotDialogFragment extends AddSlotDialogFragment {
                 break;
             }
         }
-
-
     }
 
 }

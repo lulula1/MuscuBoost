@@ -6,9 +6,6 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import uqac.dim.muscuboost.R;
 import uqac.dim.muscuboost.ScheduleActivity;
 import uqac.dim.muscuboost.TrainingActivity;
@@ -16,6 +13,8 @@ import uqac.dim.muscuboost.core.schedule.Day;
 import uqac.dim.muscuboost.core.schedule.ISlottable;
 import uqac.dim.muscuboost.core.schedule.ScheduleSlot;
 import uqac.dim.muscuboost.core.training.Training;
+import uqac.dim.muscuboost.db.SlotDAO;
+import uqac.dim.muscuboost.db.TrainingDAO;
 import uqac.dim.muscuboost.ui.schedule.fragment.AddSlotDialogFragment;
 import uqac.dim.muscuboost.ui.schedule.fragment.EditSlotDialogFragment;
 
@@ -50,12 +49,18 @@ public class TrainingSlotAction implements IScheduleSlotAction {
     }
 
     @Override
-    public boolean onMenuItemClick(Context context, MenuItem item, final ScheduleSlot slot) {
+    public boolean onMenuItemClick(final Context context, MenuItem item, final ScheduleSlot slot) {
         final ScheduleActivity activity = getActivity(context);
         if(activity == null) return false;
 
         Training training = getTraining(slot);
         if(training == null) return false;
+
+        final SlotDAO slotDao = new SlotDAO(context);
+        slotDao.open();
+
+        TrainingDAO trainingDao = new TrainingDAO(context);
+        trainingDao.open();
 
         switch(item.getItemId()) {
             case R.id.edit:
@@ -65,13 +70,6 @@ public class TrainingSlotAction implements IScheduleSlotAction {
                 final EditSlotDialogFragment editSlotFragment = new EditSlotDialogFragment();
                 editSlotFragment.setArguments(editSlotArguments);
 
-                // TODO - Retrieve slots from the database
-                List<ISlottable> slottables = new ArrayList<>();
-                for(ScheduleSlot sSlot : activity.getSchedule().getSlots())
-                    slottables.add(sSlot.getItem());
-                //////////////////////////////////////////
-                editSlotFragment.setSlottables(slottables);
-
                 editSlotFragment.setOnSlotSubmit(new AddSlotDialogFragment.OnSlotSubmit() {
                     @Override
                     public void onSubmit(Day day, int hour, int minute, ISlottable item) {
@@ -79,19 +77,29 @@ public class TrainingSlotAction implements IScheduleSlotAction {
                         slot.setHour(hour);
                         slot.setMinute(minute);
                         slot.setItem(item);
+
+                        slotDao.update(slot);
+                        slotDao.close();
+
                         activity.drawSchedule();
                     }
                 });
 
+                editSlotFragment.setSlottables(trainingDao.getAll());
                 if(!editSlotFragment.isAdded())
                     editSlotFragment.show(activity.getSupportFragmentManager(), "editSlot");
                 break;
             case R.id.delete:
                 // TODO - Ask for confirmation
+
+                slotDao.delete(slot.getId());
+                slotDao.close();
+
                 activity.getSchedule().removeSlot(slot);
                 activity.drawSchedule();
                 break;
         }
+        trainingDao.close();
         return true;
     }
 

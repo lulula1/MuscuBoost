@@ -61,7 +61,7 @@ public class SlotDAO extends DAOSingleKey<ScheduleSlot> {
         if(minute >= 0 && minute <= 59)
             values.put(MINUTE, minute);
         values.put(TRAINING_ID, training.getId());
-        long id = db.insert(MuscleDAO.TABLE_NAME, null, values);
+        long id = db.insert(TABLE_NAME, null, values);
         return new ScheduleSlot(id, day, hour, minute, training);
     }
 

@@ -14,14 +14,14 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import uqac.dim.muscuboost.core.schedule.Day;
 import uqac.dim.muscuboost.core.schedule.ISlottable;
 import uqac.dim.muscuboost.core.schedule.Schedule;
 import uqac.dim.muscuboost.core.schedule.ScheduleSlot;
 import uqac.dim.muscuboost.core.training.Training;
+import uqac.dim.muscuboost.db.SlotDAO;
+import uqac.dim.muscuboost.db.TrainingDAO;
 import uqac.dim.muscuboost.ui.schedule.IScheduleSlotAction;
 import uqac.dim.muscuboost.ui.schedule.TrainingSlotAction;
 import uqac.dim.muscuboost.ui.schedule.fragment.AddSlotDialogFragment;
@@ -33,6 +33,9 @@ public class ScheduleActivity extends AppCompatActivity {
 
     private AddSlotDialogFragment addSlotFragment;
 
+    private SlotDAO slotDao = new SlotDAO(this);
+    private TrainingDAO trainingDao = new TrainingDAO(this);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,11 +45,17 @@ public class ScheduleActivity extends AppCompatActivity {
         if(getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        slotDao.open();
+        trainingDao.open();
+
         addSlotFragment = new AddSlotDialogFragment();
         addSlotFragment.setOnSlotSubmit(new AddSlotDialogFragment.OnSlotSubmit() {
             @Override
             public void onSubmit(Day day, int hour, int minute, ISlottable item) {
-                schedule.addSlot(new ScheduleSlot(0, day, hour, minute, item));
+                if(item instanceof Training) {
+                    ScheduleSlot newSlot = slotDao.insert(day, hour, minute, (Training) item);
+                    schedule.addSlot(newSlot);
+                }
                 drawSchedule();
             }
         });
@@ -55,6 +64,7 @@ public class ScheduleActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                addSlotFragment.setSlottables(trainingDao.getAll());
                 if(!addSlotFragment.isAdded())
                     addSlotFragment.show(getSupportFragmentManager(), "addSlot");
             }
@@ -62,30 +72,36 @@ public class ScheduleActivity extends AppCompatActivity {
 
         schedule = new Schedule();
 
+        // Add slots from database to the schedule
+        for(ScheduleSlot slot : slotDao.getAll())
+            schedule.addSlot(slot);
+
         // TODO - Remove test values
-        schedule.addSlot(new ScheduleSlot(0, Day.MONDAY, 19, 0,
-                new Training(0, "Jambes")));
-        schedule.addSlot(new ScheduleSlot(1, Day.TUESDAY, 19, 0,
-                new Training(1, "Pectoraux")));
-        schedule.addSlot(new ScheduleSlot(2, Day.THURSDAY, 19, 0,
-                new Training(2, "Bras")));
-        schedule.addSlot(new ScheduleSlot(3, Day.FRIDAY, 19, 0,
-                new Training(3, "Dos")));
-        schedule.addSlot(new ScheduleSlot(4, Day.SUNDAY, 17, 0,
-                new Training(4, "Epaules")));
+        /*schedule.addSlot(slotDao.insert(Day.MONDAY, 19, 0, trainingDao.insert("Jambes")));
+        schedule.addSlot(slotDao.insert(Day.TUESDAY, 19, 0, trainingDao.insert("Pectoraux")));
+        schedule.addSlot(slotDao.insert(Day.THURSDAY, 19, 0, trainingDao.insert("Bras")));
+        schedule.addSlot(slotDao.insert(Day.FRIDAY, 19, 0, trainingDao.insert("Dos")));
+        schedule.addSlot(slotDao.insert(Day.SUNDAY, 17, 0, trainingDao.insert("Epaules")));*/
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         drawSchedule();
+    }
 
-        // TODO - Retrieve slots from the database
-        List<ISlottable> slottables = new ArrayList<>();
-        for(ScheduleSlot slot : schedule.getSlots())
-            slottables.add(slot.getItem());
-        //////////////////////////////////////////
-        addSlotFragment.setSlottables(slottables);
+    @Override
+    protected void onResume() {
+        super.onResume();
+        slotDao.open();
+        trainingDao.open();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        slotDao.close();
+        trainingDao.close();
     }
 
     public Schedule getSchedule() {

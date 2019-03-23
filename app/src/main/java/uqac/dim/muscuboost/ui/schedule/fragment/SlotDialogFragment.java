@@ -24,7 +24,7 @@ import uqac.dim.muscuboost.core.schedule.ISlottable;
 
 public class SlotDialogFragment extends BottomSheetDialogFragment {
 
-    protected List<ISlottable> slottables;
+    protected List<? extends ISlottable> slottables;
     protected OnSlotSubmit onSlotSubmit;
 
     protected View contentView;
@@ -112,7 +112,7 @@ public class SlotDialogFragment extends BottomSheetDialogFragment {
         return slottableWrappers;
     }
 
-    public void setSlottables(List<ISlottable> slottables) {
+    public void setSlottables(List<? extends ISlottable> slottables) {
         this.slottables = slottables;
     }
 

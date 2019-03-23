@@ -34,7 +34,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO " + ExerciseDAO.TABLE_NAME + "(" + ExerciseDAO.NAME + "," + ExerciseDAO.MUSCLE_ID + ") VALUES ('Developpé-Couché', 4)");
         db.execSQL("INSERT INTO " + ExerciseDAO.TABLE_NAME + "(" + ExerciseDAO.NAME + "," + ExerciseDAO.MUSCLE_ID + ") VALUES ('Haltere', 2)");
         db.execSQL("INSERT INTO " + ExerciseDAO.TABLE_NAME + "(" + ExerciseDAO.NAME + "," + ExerciseDAO.MUSCLE_ID + ") VALUES ('Tractions', 3)");
-        db.execSQL("INSERT INTO " + ExerciseDAO.TABLE_NAME + "(" + ExerciseDAO.NAME + "," + ExerciseDAO.MUSCLE_ID + ") VALUES ('Deeps', 1)");
+        db.execSQL("INSERT INTO " + ExerciseDAO.TABLE_NAME + "(" + ExerciseDAO.NAME + "," + ExerciseDAO.MUSCLE_ID + ") VALUES ('Dips', 1)");
 
     }
 
