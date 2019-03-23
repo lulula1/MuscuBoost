@@ -11,7 +11,7 @@ import java.util.List;
 import uqac.dim.muscuboost.core.training.Exercise;
 import uqac.dim.muscuboost.core.training.Training;
 
-public class TrainingDAO extends DAOBase {
+public class TrainingDAO extends DAOSingleKey<Training> {
 
     private TrainingExerciseDAO trainingExerciseDao = new TrainingExerciseDAO(context);
 
@@ -25,10 +25,8 @@ public class TrainingDAO extends DAOBase {
                     + KEY + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                     + NAME + " VARCHAR(30) NOT NULL );";
 
-    public static final String TABLE_DROP = "DROP TABLE IF EXISTS " + TABLE_NAME + ";";
-
     public TrainingDAO(Context context) {
-        super(context);
+        super(context, TABLE_NAME, KEY);
     }
 
     @Override
@@ -43,19 +41,15 @@ public class TrainingDAO extends DAOBase {
         trainingExerciseDao.close();
     }
 
-    public Training addTraining(String name) {
+    public Training insert(String name) {
         ContentValues values = new ContentValues();
         values.put(NAME, name);
         long id = db.insert(TrainingDAO.TABLE_NAME, null, values);
         return new Training(id, name);
     }
 
-    public void removeTraining(Training training) {
-        String[] whereArgs = {String.valueOf(training.getId())};
-        db.delete(TABLE_NAME, KEY + " = ?", whereArgs);
-    }
-
-    public void updateTraining(Training training) {
+    @Override
+    public void update(Training training) {
         ContentValues values = new ContentValues();
         values.put(NAME, training.getName());
         String[] whereArgs = {String.valueOf(training.getId())};
@@ -71,29 +65,17 @@ public class TrainingDAO extends DAOBase {
         }
     }
 
-    public List<Training> getTrainings() {
-        return getTrainings(null, null);
-    }
-
-    public List<Training> getTrainings(String whereSQL, String[] whereArgs) {
-        Cursor c = db.rawQuery("SELECT * "
-                        + "FROM " + TABLE_NAME
-                        + (whereSQL != null ? " WHERE " + whereSQL : ""),
-                whereArgs);
+    @Override
+    public List<Training> getAll(String whereSQL, String[] whereArgs) {
+        Cursor c = getGetAllCursor(whereSQL, whereArgs);
         List<Training> trainings = new ArrayList<>();
         while (c.moveToNext()) {
             long id = c.getLong(c.getColumnIndex(KEY));
             String name = c.getString(c.getColumnIndex(NAME));
-            List<Exercise> exercises = trainingExerciseDao.getExercises(id);
+            List<Exercise> exercises = trainingExerciseDao.getAllExercises(id);
             trainings.add(new Training(id, name, exercises));
         }
         return trainings;
-    }
-
-    public Training getTraining(long trainingId) {
-        String[] whereArgs = {String.valueOf(trainingId)};
-        List<Training> trainings = getTrainings(KEY + " = ?", whereArgs);
-        return !trainings.isEmpty() ? trainings.get(0) : null;
     }
 
 }

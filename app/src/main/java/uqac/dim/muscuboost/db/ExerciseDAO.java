@@ -11,7 +11,7 @@ import java.util.List;
 import uqac.dim.muscuboost.core.training.Exercise;
 import uqac.dim.muscuboost.core.training.Muscle;
 
-public class ExerciseDAO extends DAOBase {
+public class ExerciseDAO extends DAOSingleKey<Exercise> {
 
     private MuscleDAO muscleDao = new MuscleDAO(context);
 
@@ -28,10 +28,8 @@ public class ExerciseDAO extends DAOBase {
                     + MUSCLE_ID + " INTEGER NOT NULL,"
                     + "FOREIGN KEY (" + MUSCLE_ID + ") REFERENCES " + MuscleDAO.TABLE_NAME + "(" + MuscleDAO.KEY + ") );";
 
-    public static final String TABLE_DROP = "DROP TABLE IF EXISTS " + TABLE_NAME + ";";
-
     public ExerciseDAO(Context context) {
-        super(context);
+        super(context, TABLE_NAME, KEY);
     }
 
     @Override
@@ -46,7 +44,7 @@ public class ExerciseDAO extends DAOBase {
         muscleDao.close();
     }
 
-    public Exercise addExercise(String name, Muscle muscle) {
+    public Exercise insert(String name, Muscle muscle) {
         ContentValues values = new ContentValues();
         values.put(NAME, name);
         values.put(MUSCLE_ID, muscle.getId());
@@ -54,12 +52,8 @@ public class ExerciseDAO extends DAOBase {
         return new Exercise(id, name, muscle);
     }
 
-    public void removeExercise(Exercise exercise) {
-        String[] whereArgs = {String.valueOf(exercise.getId())};
-        db.delete(TABLE_NAME, KEY + " = ?", whereArgs);
-    }
-
-    public void updateExercise(Exercise exercise) {
+    @Override
+    public void update(Exercise exercise) {
         ContentValues values = new ContentValues();
         values.put(NAME, exercise.getName());
         values.put(MUSCLE_ID, exercise.getMuscle().getId());
@@ -67,30 +61,18 @@ public class ExerciseDAO extends DAOBase {
         db.update(TABLE_NAME, values, KEY + " = ?", whereArgs);
     }
 
-    public List<Exercise> getExercises() {
-        return getExercises(null, null);
-    }
-
-    public List<Exercise> getExercises(String whereSQL, String[] whereArgs) {
-        Cursor c = db.rawQuery("SELECT * "
-                        + "FROM " + TABLE_NAME
-                        + (whereSQL != null ? " WHERE " + whereSQL : ""),
-                whereArgs);
+    @Override
+    public List<Exercise> getAll(String whereSQL, String[] whereArgs) {
+        Cursor c = getGetAllCursor(whereSQL, whereArgs);
         List<Exercise> exercices = new ArrayList<>();
         while (c.moveToNext()) {
             long id = c.getLong(c.getColumnIndex(KEY));
             String name = c.getString(c.getColumnIndex(NAME));
             long muscleId = c.getLong(c.getColumnIndex(MUSCLE_ID));
-            Muscle muscle = muscleDao.getMuscle(muscleId);
+            Muscle muscle = muscleDao.get(muscleId);
             exercices.add(new Exercise(id, name, muscle));
         }
         return exercices;
-    }
-
-    public Exercise getExercise(long exerciseId) {
-        String[] whereArgs = {String.valueOf(exerciseId)};
-        List<Exercise> exercises = getExercises(KEY + " = ?", whereArgs);
-        return !exercises.isEmpty() ? exercises.get(0) : null;
     }
 
 }

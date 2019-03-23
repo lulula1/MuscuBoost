@@ -40,11 +40,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL(MuscleDAO.TABLE_DROP);
-        db.execSQL(ExerciseDAO.TABLE_DROP);
-        db.execSQL(TrainingDAO.TABLE_DROP);
-        db.execSQL(TrainingExerciseDAO.TABLE_DROP);
-        db.execSQL(SlotDAO.TABLE_DROP);
+        db.execSQL("DROP TABLE IF EXISTS " + MuscleDAO.TABLE_NAME + ";");
+        db.execSQL("DROP TABLE IF EXISTS " + ExerciseDAO.TABLE_NAME + ";");
+        db.execSQL("DROP TABLE IF EXISTS " + TrainingDAO.TABLE_NAME + ";");
+        db.execSQL("DROP TABLE IF EXISTS " + TrainingExerciseDAO.TABLE_NAME + ";");
+        db.execSQL("DROP TABLE IF EXISTS " + SlotDAO.TABLE_NAME + ";");
         onCreate(db);
     }
 

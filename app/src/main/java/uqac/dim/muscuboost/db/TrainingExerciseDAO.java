@@ -28,8 +28,6 @@ public class TrainingExerciseDAO extends DAOBase {
                     + "FOREIGN KEY (" + TRAINING_ID + ") REFERENCES " + TrainingDAO.TABLE_NAME + "(" + TrainingDAO.KEY + ") ON DELETE CASCADE,"
                     + "FOREIGN KEY (" + EXERCISE_ID + ") REFERENCES " + ExerciseDAO.TABLE_NAME + "(" + ExerciseDAO.KEY + ") ON DELETE CASCADE );";
 
-    public static final String TABLE_DROP = "DROP TABLE IF EXISTS " + TABLE_NAME + ";";
-
     public TrainingExerciseDAO(Context context) {
         super(context);
     }
@@ -46,14 +44,14 @@ public class TrainingExerciseDAO extends DAOBase {
         exerciseDao.close();
     }
 
-    public void addTrainingExercise(Training training, Exercise exercise) {
+    public void insert(Training training, Exercise exercise) {
         ContentValues values = new ContentValues();
         values.put(TRAINING_ID, training.getId());
         values.put(EXERCISE_ID, exercise.getId());
         db.insert(TABLE_NAME, null, values);
     }
 
-    public void removeTrainingExercise(Training training, Exercise exercise) {
+    public void delete(Training training, Exercise exercise) {
         String[] whereArgs = {String.valueOf(training.getId()),
                 String.valueOf(exercise.getId())};
         db.delete(TrainingExerciseDAO.TABLE_NAME,
@@ -61,7 +59,7 @@ public class TrainingExerciseDAO extends DAOBase {
                         + TrainingExerciseDAO.EXERCISE_ID + " = ?", whereArgs);
     }
 
-    public List<Exercise> getExercises(long trainingId) {
+    public List<Exercise> getAllExercises(long trainingId) {
         String[] whereArgs = {String.valueOf(trainingId)};
         Cursor c = db.rawQuery("SELECT *"
                         + "FROM " + TABLE_NAME + " "
@@ -70,7 +68,7 @@ public class TrainingExerciseDAO extends DAOBase {
         List<Exercise> exercises = new ArrayList<>();
         while (c.moveToNext()) {
             long exerciseId = c.getLong(c.getColumnIndex(EXERCISE_ID));
-            exercises.add(exerciseDao.getExercise(exerciseId));
+            exercises.add(exerciseDao.get(exerciseId));
         }
         return exercises;
     }
