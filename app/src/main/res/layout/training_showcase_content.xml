@@ -6,8 +6,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".TrainingActivity"
-    tools:showIn="@layout/training_activity">
+    tools:context=".TrainingShowcaseActivity"
+    tools:showIn="@layout/training_showcase_activity">
 
     <TextView
         android:id="@+id/name"

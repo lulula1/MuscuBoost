@@ -8,7 +8,7 @@ import android.view.View;
 
 import uqac.dim.muscuboost.R;
 import uqac.dim.muscuboost.ScheduleActivity;
-import uqac.dim.muscuboost.TrainingActivity;
+import uqac.dim.muscuboost.TrainingShowcaseActivity;
 import uqac.dim.muscuboost.core.schedule.Day;
 import uqac.dim.muscuboost.core.schedule.ISlottable;
 import uqac.dim.muscuboost.core.schedule.ScheduleSlot;
@@ -42,9 +42,9 @@ public class TrainingSlotAction implements IScheduleSlotAction {
         Training training = getTraining(slot);
         if(training == null) return;
 
-        Intent intent = new Intent(context, TrainingActivity.class);
+        Intent intent = new Intent(context, TrainingShowcaseActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtra(TrainingActivity.EXTRA_TRAINING, training);
+        intent.putExtra(TrainingShowcaseActivity.EXTRA_TRAINING, training);
         context.startActivity(intent);
     }
 

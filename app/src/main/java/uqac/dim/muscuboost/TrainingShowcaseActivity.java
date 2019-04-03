@@ -10,7 +10,7 @@ import android.widget.Toolbar;
 import uqac.dim.muscuboost.core.training.Training;
 import uqac.dim.muscuboost.ui.training.ExerciseAdapter;
 
-public class TrainingActivity extends ListActivity {
+public class TrainingShowcaseActivity extends ListActivity {
 
     public static final String EXTRA_TRAINING = "training";
 
@@ -19,7 +19,7 @@ public class TrainingActivity extends ListActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.training_activity);
+        setContentView(R.layout.training_showcase_activity);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setActionBar(toolbar);
         if(getActionBar() != null)

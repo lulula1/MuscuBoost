@@ -27,7 +27,7 @@
                 android:value=".MainActivity" />
         </activity>
         <activity
-            android:name=".TrainingActivity"
+            android:name=".TrainingShowcaseActivity"
             android:screenOrientation="sensorPortrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
