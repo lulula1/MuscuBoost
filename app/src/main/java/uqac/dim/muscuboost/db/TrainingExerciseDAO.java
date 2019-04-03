@@ -44,10 +44,10 @@ public class TrainingExerciseDAO extends DAOBase {
         exerciseDao.close();
     }
 
-    public void insert(Training training, Exercise exercise) {
+    public void insert(long trainingId, long exerciseId) {
         ContentValues values = new ContentValues();
-        values.put(TRAINING_ID, training.getId());
-        values.put(EXERCISE_ID, exercise.getId());
+        values.put(TRAINING_ID, trainingId);
+        values.put(EXERCISE_ID, exerciseId);
         db.insert(TABLE_NAME, null, values);
     }
 
