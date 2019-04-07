@@ -1,6 +1,7 @@
 package uqac.dim.muscuboost;
 
 import android.app.ListActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,6 +27,10 @@ public class TrainingShowcaseActivity extends ListActivity {
             getActionBar().setDisplayHomeAsUpEnabled(true);
 
         training = (Training) getIntent().getSerializableExtra(EXTRA_TRAINING);
+        if(training == null) {
+            finish();
+            return;
+        }
         setTitle(training.getSlotLabel());
 
         setListAdapter(new ExerciseAdapter(getBaseContext(), training.getExercises()));
@@ -56,7 +61,9 @@ public class TrainingShowcaseActivity extends ListActivity {
     }
 
     public void startTraining(View view) {
-        // TODO
+        Intent intent = new Intent(getBaseContext(), TrainActivity.class);
+        intent.putExtra(TrainActivity.EXTRA_TRAINING, training);
+        startActivity(intent);
     }
 
 }

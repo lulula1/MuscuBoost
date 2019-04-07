@@ -28,6 +28,12 @@
         <activity
             android:name=".TrainingShowcaseActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".TrainActivity"
+            android:label="@string/train_name"
+            android:launchMode="singleTop" />
+
+        <receiver android:name=".TrainReceiver" />
     </application>
 
 </manifest>

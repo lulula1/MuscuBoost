@@ -2,6 +2,7 @@
 <resources>
     <string name="app_name">MuscuBoost</string>
     <string name="schedule_name">Planning</string>
+    <string name="train_name">Entraînement</string>
     <string name="monday">Lundi</string>
     <string name="tuesday">Mardi</string>
     <string name="wednesday">Mercredi</string>
@@ -13,10 +14,14 @@
     <string name="edit">Modifier</string>
     <string name="delete">Supprimer</string>
     <string name="add_slot_new">Nouveau</string>
-    <string name="add_slot_day_label">Jour</string>
-    <string name="add_slot_time_label">Heure</string>
-    <string name="add_slot_slot_label">Entraînement</string>
-    <string name="add_slot_add_label">Ajouter</string>
+    <string name="day">Jour</string>
+    <string name="time">Heure</string>
+    <string name="training">Entraînement</string>
+    <string name="add">Ajouter</string>
     <string name="add_slot_empty_slot_list">Aucun entraînement disponible</string>
     <string name="training_empty_exercise_list">Aucun exercice</string>
+    <string name="notif_training">Entrainement</string>
+    <string name="notif_training_desc">Notification lors d\'un entraînement en cours</string>
+    <string name="series">Série</string>
+    <string name="exercise">Exercice</string>
 </resources>
