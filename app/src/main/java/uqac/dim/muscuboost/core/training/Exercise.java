@@ -77,14 +77,16 @@ public class Exercise implements Serializable {
      */
     @Override
     public boolean equals(Object obj) {
+        if(obj == null)
+            return false;
         if(obj.getClass() != getClass())
             return false;
         Exercise other = (Exercise) obj;
-        if(other.ID != ID
-                || !other.name.equals(name)
-                || !other.muscle.equals(muscle))
-            return false;
-        return true;
+        if(other.muscle == null && muscle == null)
+            return true;
+        return other.ID == ID
+                && other.name.equals(name)
+                && other.muscle.equals(muscle);
     }
 
 }

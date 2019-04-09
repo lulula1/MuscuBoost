@@ -56,13 +56,13 @@ public class Muscle implements Serializable {
      */
     @Override
     public boolean equals(Object obj) {
+        if(obj == null)
+            return false;
         if(obj.getClass() != getClass())
             return false;
         Muscle other = (Muscle) obj;
-        if(other.ID != ID
-                || !other.name.equals(name))
-            return false;
-        return true;
+        return other.ID == ID
+                && other.name.equals(name);
     }
 
 }

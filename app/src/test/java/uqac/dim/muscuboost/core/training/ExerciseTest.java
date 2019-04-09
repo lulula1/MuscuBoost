@@ -40,16 +40,28 @@ public class ExerciseTest {
     }
 
     @Test
-    public void setMuscle() {
+    public void setMuscleTest() {
         assertEquals(biceps, exercise1.getMuscle());
         exercise1.setMuscle(triceps);
         assertEquals(triceps, exercise1.getMuscle());
     }
 
     @Test
-    public void getMuscle() {
+    public void getMuscleTest() {
         assertEquals(biceps, exercise1.getMuscle());
         assertEquals(triceps, exercise2.getMuscle());
+    }
+
+    @Test
+    public void equalsTest() {
+        assertEquals(exercise1, new Exercise(0, "Exercise1", biceps));
+        assertEquals(exercise1, new Exercise(0, "Exercise1",
+                new Muscle(0, "Biceps")));
+        assertNotEquals(exercise1, null);
+        assertNotEquals(exercise1, new Object());
+        assertNotEquals(exercise1, new Exercise(1, "Exercise1", biceps));
+        assertNotEquals(exercise1, new Exercise(0, "Exercise2", biceps));
+        assertNotEquals(exercise1, new Exercise(0, "Exercise1", triceps));
     }
 
 }

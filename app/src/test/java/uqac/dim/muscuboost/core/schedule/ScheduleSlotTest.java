@@ -125,4 +125,11 @@ public class ScheduleSlotTest {
         assertEquals(sc, slotDay.getItem());
     }
 
+    @Test
+    public void getLabelTest() {
+        //return item != null ? item.getSlotLabel() : null;
+        assertNull(new ScheduleSlot(2, Day.MONDAY, null).getLabel());
+        assertEquals(slottable.getSlotLabel(), slotDay.getLabel());
+    }
+
 }

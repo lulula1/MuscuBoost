@@ -3,6 +3,8 @@ package uqac.dim.muscuboost.core.training;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Collections;
+
 import static org.junit.Assert.*;
 
 public class TrainingTest {
@@ -16,6 +18,14 @@ public class TrainingTest {
         exercise = new Exercise(0, "Exercise", new Muscle(0, "Biceps"));
         training1 = new Training(0, "Training1");
         training2 = new Training(10, "Training2");
+    }
+
+    @Test
+    public void trainingTest() {
+        Training training3 = new Training(1, "Training3",
+                Collections.singletonList(exercise));
+        assertEquals(1, training3.getExercises().size());
+        assertEquals(exercise, training3.getExercises().get(0));
     }
 
     @Test
@@ -63,6 +73,21 @@ public class TrainingTest {
     public void getSlotLabelTest() {
         assertEquals("Training1", training1.getSlotLabel());
         assertEquals("Training2", training2.getSlotLabel());
+    }
+
+    @Test
+    public void equalsTest() {
+        assertEquals(training1, new Training(0, "Training1"));
+        assertNotEquals(training1, null);
+        assertNotEquals(training1, new Object());
+        assertNotEquals(training1, new Training(1, "Training1"));
+        assertNotEquals(training1, new Training(0, "Training2"));
+
+        training1.addExercise(exercise);
+        Training tempTraining = new Training(0, "Training1");
+        assertNotEquals(training1, tempTraining);
+        tempTraining.addExercise(exercise);
+        assertEquals(training1, tempTraining);
     }
 
 }

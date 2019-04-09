@@ -112,14 +112,14 @@ public class Training implements ISlottable, Serializable {
      */
     @Override
     public boolean equals(Object obj) {
+        if(obj == null)
+            return false;
         if(obj.getClass() != getClass())
             return false;
         Training other = (Training) obj;
-        if(other.ID != ID
-          || !other.name.equals(name)
-          || !other.exercises.equals(exercises))
-            return false;
-        return true;
+        return other.ID == ID
+          && other.name.equals(name)
+          && other.exercises.equals(exercises);
     }
 
 }
