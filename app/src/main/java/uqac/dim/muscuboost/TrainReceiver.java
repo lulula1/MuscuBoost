@@ -8,22 +8,29 @@ public class TrainReceiver extends BroadcastReceiver {
 
     public static final String EXTRA_ACTION = "action";
 
-    public static final int NEXT_SERIES = 1;
-    public static final int NEXT_EXERCISE = 2;
+    public static final int ACTION_NEXT_SERIES = 1;
+    public static final int ACTION_NEXT_EXERCISE = 2;
+
+    private TrainService trainService;
+
+    public TrainReceiver(TrainService trainService) {
+        this.trainService = trainService;
+    }
 
     @Override
     public void onReceive(Context context, Intent intent) {
         int action = intent.getIntExtra(EXTRA_ACTION, -1);
         switch(action) {
-            case NEXT_SERIES:
-                // TODO - Handle next serie
-                System.out.println("next serie");
+            case ACTION_NEXT_SERIES:
+                trainService.getOngoingTraining().nextSeries();
                 break;
-            case NEXT_EXERCISE:
-                // TODO - Handle next exercise
-                System.out.println("next exercice");
+            case ACTION_NEXT_EXERCISE:
+                trainService.getOngoingTraining().nextExercise();
                 break;
+            default:
+                return;
         }
+        trainService.update();
     }
 
 }

@@ -33,7 +33,7 @@
             android:label="@string/train_name"
             android:launchMode="singleTask" />
 
-        <receiver android:name=".TrainReceiver" />
+        <service android:name=".TrainService" />
     </application>
 
 </manifest>

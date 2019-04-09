@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Activity names -->
     <string name="app_name">MuscuBoost</string>
     <string name="schedule_name">Planning</string>
     <string name="train_name">Entraînement</string>
+
+    <!-- Schedule activity -->
     <string name="monday">Lundi</string>
     <string name="tuesday">Mardi</string>
     <string name="wednesday">Mercredi</string>
@@ -13,15 +16,22 @@
     <string name="empty_row">Repos</string>
     <string name="edit">Modifier</string>
     <string name="delete">Supprimer</string>
+
+    <!-- Add/Edit slot dialog -->
     <string name="add_slot_new">Nouveau</string>
     <string name="day">Jour</string>
     <string name="time">Heure</string>
     <string name="training">Entraînement</string>
     <string name="add">Ajouter</string>
     <string name="add_slot_empty_slot_list">Aucun entraînement disponible</string>
+
+    <!-- Training showcase activity -->
     <string name="training_empty_exercise_list">Aucun exercice</string>
+
+    <!-- Train activity -->
     <string name="notif_training">Entrainement</string>
     <string name="notif_training_desc">Notification lors d\'un entraînement en cours</string>
     <string name="series">Série</string>
     <string name="exercise">Exercice</string>
+    <string name="training_over">Entraînement terminé !</string>
 </resources>
