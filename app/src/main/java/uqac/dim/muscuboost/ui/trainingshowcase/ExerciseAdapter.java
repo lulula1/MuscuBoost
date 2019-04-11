@@ -1,4 +1,4 @@
-package uqac.dim.muscuboost.ui.training;
+package uqac.dim.muscuboost.ui.trainingshowcase;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -14,8 +14,11 @@ import uqac.dim.muscuboost.core.training.Exercise;
 
 public class ExerciseAdapter extends ArrayAdapter<Exercise> {
 
-    public ExerciseAdapter(Context context, List<Exercise> exercise) {
-        super(context, R.layout.training_exercise_list_item, exercise);
+    private int resource;
+
+    public ExerciseAdapter(Context context, int resource, List<Exercise> exercise) {
+        super(context, resource, exercise);
+        this.resource = resource;
     }
 
     @Override
@@ -26,7 +29,7 @@ public class ExerciseAdapter extends ArrayAdapter<Exercise> {
 
         if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflater.inflate(R.layout.training_exercise_list_item, null);
+            convertView = inflater.inflate(resource, null);
             viewHolder = new ViewHolder();
             viewHolder.name = convertView.findViewById(R.id.name);
             viewHolder.muscle = convertView.findViewById(R.id.muscle);

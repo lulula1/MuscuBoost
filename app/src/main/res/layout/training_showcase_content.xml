@@ -11,44 +11,39 @@
 
     <TextView
         android:id="@+id/name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="8dp"
-        android:gravity="center"
-        android:textSize="28sp" />
+        style="@style/trainingShowcase.name" />
 
     <View style="@style/hr" />
 
     <ListView
-        android:id="@android:id/list"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:id="@+id/list"
+        style="@style/trainingShowcase.list" />
 
     <TextView
-        android:id="@android:id/empty"
+        android:id="@+id/empty_list"
+        style="@style/trainingShowcase.empty"
+        android:text="@string/training_empty_exercise_list" />
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="16dp"
-        android:layout_weight="1"
-        android:gravity="center_horizontal"
-        android:text="@string/training_empty_exercise_list"
-        android:textColor="@android:color/darker_gray" />
-
-    <Button
-        android:id="@+id/start"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="16dp"
-        android:backgroundTint="@drawable/btn"
-        android:enabled="false"
-        android:onClick="startTraining"
-        android:padding="16dp"
-        android:text="Débuter l'entraînement"
-        android:textColor="@android:color/white"
-        android:textSize="16dp" />
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:gravity="center"
+        android:orientation="horizontal">
 
+        <Button
+            android:id="@+id/start"
+            style="@style/trainingShowcase.button"
+            android:layout_weight="2"
+            android:onClick="startTraining"
+            android:text="@string/training_start" />
+
+        <ImageButton
+            android:id="@+id/add_exercise"
+            style="@style/trainingShowcase.button"
+            android:layout_weight="1"
+            android:onClick="addExercise"
+            android:src="@drawable/baseline_add_black_24" />
+    </LinearLayout>
 </LinearLayout>

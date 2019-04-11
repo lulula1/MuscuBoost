@@ -40,8 +40,8 @@ public class TrainService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        notifManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         registerReceiver(trainReceiver, new IntentFilter(NOTIF_ACTION));
-        setupNotification();
     }
 
     @Override
@@ -50,10 +50,12 @@ public class TrainService extends Service {
         Training training = (Training) intent.getSerializableExtra(EXTRA_TRAINING);
         if(training == null)
             stopSelf();
+        else {
+            ongoingTraining = new OngoingTraining(training);
 
-        ongoingTraining = new OngoingTraining(training);
-
-        sendNotification();
+            setupNotification();
+            sendNotification();
+        }
         return START_NOT_STICKY;
     }
 
@@ -78,8 +80,6 @@ public class TrainService extends Service {
     }
 
     private void setupNotification() {
-        notifManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID,
                     getString(R.string.notif_training), NotificationManager.IMPORTANCE_DEFAULT);

@@ -3,6 +3,7 @@
     <!-- Activity names -->
     <string name="app_name">MuscuBoost</string>
     <string name="schedule_name">Planning</string>
+    <string name="training_showcase_name">Entraînement</string>
     <string name="train_name">Entraînement</string>
 
     <!-- Schedule activity -->
@@ -27,6 +28,10 @@
 
     <!-- Training showcase activity -->
     <string name="training_empty_exercise_list">Aucun exercice</string>
+    <string name="training_start">Débuter l\'entraînement</string>
+    <string name="new_exercises">Nouveaux exercices</string>
+    <string name="no_exercise_available">Aucun exercice disponible</string>
+    <string name="cancel">Annuler</string>
 
     <!-- Train activity -->
     <string name="notif_training">Entrainement</string>

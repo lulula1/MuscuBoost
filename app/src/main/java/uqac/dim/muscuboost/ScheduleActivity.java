@@ -87,15 +87,15 @@ public class ScheduleActivity extends AppCompatActivity {
         trainingExerciseDao.insert(arms.getId(), 3);
         trainingExerciseDao.insert(shoulders.getId(), 4);
         trainingExerciseDao.close();*/
-
-        // Add slots from database to the schedule
-        for(ScheduleSlot slot : slotDao.getAll())
-            schedule.addSlot(slot);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        slotDao.open();
+        schedule.clearSlots();
+        for(ScheduleSlot slot : slotDao.getAll())
+            schedule.addSlot(slot);
         drawSchedule();
     }
 

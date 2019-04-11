@@ -27,6 +27,7 @@
         </activity>
         <activity
             android:name=".TrainingShowcaseActivity"
+            android:label="@string/training_showcase_name"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".TrainActivity"

@@ -38,6 +38,13 @@ public class Schedule {
     }
 
     /**
+     * Clears schedule slot's list.
+     */
+    public void clearSlots() {
+        slots.clear();
+    }
+
+    /**
      * Returns all the slots matching the given day.
      *
      * @param day The day on which to filter slots
