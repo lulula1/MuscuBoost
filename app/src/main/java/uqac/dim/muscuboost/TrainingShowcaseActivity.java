@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.SparseBooleanArray;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,7 +16,6 @@ import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toolbar;
 
 import java.util.List;
 
@@ -40,7 +40,7 @@ public class TrainingShowcaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.training_showcase_activity);
         Toolbar toolbar = findViewById(R.id.toolbar);
-        setActionBar(toolbar);
+        setSupportActionBar(toolbar);
 
         training = (Training) getIntent().getSerializableExtra(EXTRA_TRAINING);
         if(training == null) {
@@ -48,9 +48,9 @@ public class TrainingShowcaseActivity extends AppCompatActivity {
             return;
         }
 
-        if(getActionBar() != null) {
-            getActionBar().setSubtitle(training.getSlotLabel());
-            getActionBar().setDisplayHomeAsUpEnabled(true);
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setSubtitle(training.getSlotLabel());
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
         list = findViewById(R.id.list);
