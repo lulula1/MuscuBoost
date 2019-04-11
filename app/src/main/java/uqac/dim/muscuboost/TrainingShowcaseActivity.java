@@ -13,7 +13,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -34,6 +33,7 @@ public class TrainingShowcaseActivity extends AppCompatActivity {
 
     private Training training;
     private ListView list;
+    private boolean editing = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,12 +97,8 @@ public class TrainingShowcaseActivity extends AppCompatActivity {
                 finish();
                 return true;
             case R.id.edit:
-                for(int i = 0; i < list.getChildCount(); i++) {
-                    ImageButton editBtn = list.getChildAt(i).findViewById(R.id.edit);
-                    editBtn.setVisibility(editBtn.getVisibility() == View.VISIBLE
-                            ? View.GONE
-                            : View.VISIBLE);
-                }
+                editing = !editing;
+                updateList();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -186,6 +182,10 @@ public class TrainingShowcaseActivity extends AppCompatActivity {
         findViewById(R.id.empty_list).setVisibility(empty ? View.VISIBLE : View.GONE);
         list.setVisibility(empty ? View.GONE : View.VISIBLE);
         adapter.notifyDataSetChanged();
+
+        for(int i = 0; i < list.getChildCount(); i++)
+            list.getChildAt(i).findViewById(R.id.edit)
+                    .setVisibility(editing ? View.VISIBLE : View.GONE);
     }
 
 }
