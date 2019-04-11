@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toolbar;
@@ -28,8 +29,10 @@ public class TrainingShowcaseActivity extends AppCompatActivity {
 
     public static final String EXTRA_TRAINING = "training";
 
-    private Training training;
+    private ExerciseDAO exerciseDao = new ExerciseDAO(this);
+    private TrainingExerciseDAO teDao = new TrainingExerciseDAO(this);
 
+    private Training training;
     private ListView list;
 
     @Override
@@ -54,6 +57,7 @@ public class TrainingShowcaseActivity extends AppCompatActivity {
 
         list.setAdapter(new ExerciseAdapter(getBaseContext(), R.layout.training_exercise_list_item,
                 training.getExercises()));
+        list.setEnabled(false);
 
         updateList();
     }
@@ -66,10 +70,39 @@ public class TrainingShowcaseActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        exerciseDao.open();
+        teDao.open();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        exerciseDao.close();
+        teDao.close();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater()
+                .inflate(R.menu.training_showcase_menu, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
+                return true;
+            case R.id.edit:
+                for(int i = 0; i < list.getChildCount(); i++) {
+                    ImageButton editBtn = list.getChildAt(i).findViewById(R.id.edit);
+                    editBtn.setVisibility(editBtn.getVisibility() == View.VISIBLE
+                            ? View.GONE
+                            : View.VISIBLE);
+                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -83,35 +116,27 @@ public class TrainingShowcaseActivity extends AppCompatActivity {
     }
 
     public void addExercise(View view) {
-        ExerciseDAO exerciseDAO = new ExerciseDAO(this);
-        exerciseDAO.open();
-
-        final List<Exercise> exercises = exerciseDAO.getAll();
+        final List<Exercise> exercises = exerciseDao.getAll();
         exercises.removeAll(training.getExercises());
-
-        exerciseDAO.close();
 
         DialogInterface.OnClickListener onSubmit = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int which) {
-                TrainingExerciseDAO teDAO = new TrainingExerciseDAO(TrainingShowcaseActivity.this);
                 AlertDialog dialog = (AlertDialog) dialogInterface;
-                teDAO.open();
 
                 SparseBooleanArray checkedItems = dialog.getListView().getCheckedItemPositions();
                 for(int i = 0; i < checkedItems.size(); i++) {
                     Exercise checkedExercise = (Exercise) dialog.getListView()
                             .getItemAtPosition(checkedItems.keyAt(i));
-                    teDAO.insert(training.getId(), checkedExercise.getId());
+                    teDao.insert(training.getId(), checkedExercise.getId());
                     training.addExercise(checkedExercise);
                 }
 
-                teDAO.close();
                 updateList();
             }
         };
 
-        final AlertDialog dialog = new AlertDialog.Builder(getBaseContext())
+        final AlertDialog dialog = new AlertDialog.Builder(this)
                 .setAdapter(new ExerciseAdapter(getBaseContext(),
                         R.layout.training_exercise_dialog_list_item, exercises), null)
                 .setTitle(getString(R.string.new_exercises))
@@ -143,12 +168,23 @@ public class TrainingShowcaseActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    public void removeExercise(View view) {
+        int position = list.getPositionForView((View) view.getParent());
+        if(position >= 0) {
+            Exercise exercise = (Exercise) list.getItemAtPosition(position);
+            teDao.delete(training.getId(), exercise.getId());
+            training.removeExercise(exercise);
+            updateList();
+        }
+    }
+
     public void updateList() {
         ExerciseAdapter adapter = (ExerciseAdapter) list.getAdapter();
         boolean empty = adapter.getCount() <= 0;
 
         findViewById(R.id.start).setEnabled(!empty);
         findViewById(R.id.empty_list).setVisibility(empty ? View.VISIBLE : View.GONE);
+        list.setVisibility(empty ? View.GONE : View.VISIBLE);
         adapter.notifyDataSetChanged();
     }
 

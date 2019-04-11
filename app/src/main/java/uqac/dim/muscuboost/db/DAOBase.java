@@ -15,9 +15,8 @@ public abstract class DAOBase {
         handler = new DatabaseHandler(context);
     }
 
-    public SQLiteDatabase open() {
+    public void open() {
         db = handler.getWritableDatabase();
-        return db;
     }
 
     public void close() {

@@ -3,13 +3,11 @@ package uqac.dim.muscuboost.db;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import uqac.dim.muscuboost.core.training.Exercise;
-import uqac.dim.muscuboost.core.training.Training;
 
 public class TrainingExerciseDAO extends DAOBase {
 
@@ -33,9 +31,9 @@ public class TrainingExerciseDAO extends DAOBase {
     }
 
     @Override
-    public SQLiteDatabase open() {
+    public void open() {
+        super.open();
         exerciseDao.open();
-        return super.open();
     }
 
     @Override
@@ -51,11 +49,11 @@ public class TrainingExerciseDAO extends DAOBase {
         db.insert(TABLE_NAME, null, values);
     }
 
-    public void delete(Training training, Exercise exercise) {
-        String[] whereArgs = {String.valueOf(training.getId()),
-                String.valueOf(exercise.getId())};
+    public void delete(long trainingId, long exerciseId) {
+        String[] whereArgs = {String.valueOf(trainingId),
+                String.valueOf(exerciseId)};
         db.delete(TrainingExerciseDAO.TABLE_NAME,
-                TrainingExerciseDAO.TRAINING_ID + " = ? AND"
+                TrainingExerciseDAO.TRAINING_ID + " = ? AND "
                         + TrainingExerciseDAO.EXERCISE_ID + " = ?", whereArgs);
     }
 

@@ -3,7 +3,6 @@ package uqac.dim.muscuboost.db;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,9 +29,9 @@ public class TrainingDAO extends DAOSingleKey<Training> {
     }
 
     @Override
-    public SQLiteDatabase open() {
+    public void open() {
+        super.open();
         trainingExerciseDao.open();
-        return super.open();
     }
 
     @Override
