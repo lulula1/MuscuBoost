@@ -43,6 +43,7 @@
             android:id="@+id/add_exercise"
             style="@style/trainingShowcase.button"
             android:layout_weight="1"
+            android:backgroundTint="@color/colorPrimaryDark"
             android:onClick="addExercise"
             android:src="@drawable/baseline_add_black_24" />
     </LinearLayout>

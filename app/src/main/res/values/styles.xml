@@ -114,7 +114,7 @@
     <style name="schedule.addSlot.label">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:paddingTop">8dp</item>
+        <item name="android:layout_marginTop">8dp</item>
         <item name="android:gravity">center_horizontal</item>
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:textSize">16sp</item>
@@ -132,8 +132,6 @@
     <style name="schedule.addSlot.add">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginStart">8dp</item>
-        <item name="android:layout_marginEnd">8dp</item>
         <item name="android:layout_marginBottom">8dp</item>
         <item name="android:backgroundTint">@drawable/btn</item>
         <item name="android:textColor">@android:color/white</item>
@@ -154,6 +152,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">0dp</item>
         <item name="android:layout_weight">1</item>
+        <item name="android:listSelector">#0000</item>
     </style>
 
     <style name="trainingShowcase.empty">
@@ -170,13 +169,64 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_gravity">center_horizontal</item>
         <item name="android:layout_marginTop">8dp</item>
-        <item name="android:layout_marginBottom">16dp</item>
         <item name="android:backgroundTint">@drawable/btn</item>
         <item name="android:enabled">false</item>
         <item name="android:padding">16dp</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:tint">@android:color/white</item>
         <item name="android:textSize">16dp</item>
+    </style>
+
+    <style name="exerciseListItem" />
+
+    <style name="exerciseListItem.root">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:paddingStart">24dp</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingEnd">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+    </style>
+
+    <style name="exerciseListItem.main">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="exerciseListItem.exercise">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentStart">true</item>
+        <item name="android:layout_alignParentTop">true</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="exerciseListItem.muscle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_below">@+id/name</item>
+        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:textColor">@android:color/darker_gray</item>
+    </style>
+
+    <style name="exerciseListItem.checkbox">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:buttonTint">@color/colorPrimary</item>
+    </style>
+
+    <style name="exerciseListItem.remove">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_margin">8dp</item>
+        <item name="android:background">#0000</item>
+        <item name="android:scaleX">1.25</item>
+        <item name="android:scaleY">1.25</item>
+        <item name="android:tint">@color/colorPrimary</item>
     </style>
 
 </resources>

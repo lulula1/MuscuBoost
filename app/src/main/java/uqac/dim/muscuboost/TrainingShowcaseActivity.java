@@ -33,7 +33,6 @@ public class TrainingShowcaseActivity extends AppCompatActivity {
 
     private Training training;
     private ListView list;
-    private boolean editing = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +56,6 @@ public class TrainingShowcaseActivity extends AppCompatActivity {
 
         list.setAdapter(new ExerciseAdapter(getBaseContext(), R.layout.training_exercise_list_item,
                 training.getExercises()));
-        list.setEnabled(false);
 
         updateList();
     }
@@ -84,6 +82,18 @@ public class TrainingShowcaseActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean("editing", getAdapter().isEditing());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        getAdapter().setEditing(savedInstanceState.getBoolean("editing"));
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater()
                 .inflate(R.menu.training_showcase_menu, menu);
@@ -97,7 +107,7 @@ public class TrainingShowcaseActivity extends AppCompatActivity {
                 finish();
                 return true;
             case R.id.edit:
-                editing = !editing;
+                getAdapter().toggleEditing();
                 updateList();
                 return true;
             default:
@@ -175,17 +185,17 @@ public class TrainingShowcaseActivity extends AppCompatActivity {
     }
 
     public void updateList() {
-        ExerciseAdapter adapter = (ExerciseAdapter) list.getAdapter();
+        ExerciseAdapter adapter = getAdapter();
         boolean empty = adapter.getCount() <= 0;
 
         findViewById(R.id.start).setEnabled(!empty);
         findViewById(R.id.empty_list).setVisibility(empty ? View.VISIBLE : View.GONE);
         list.setVisibility(empty ? View.GONE : View.VISIBLE);
         adapter.notifyDataSetChanged();
+    }
 
-        for(int i = 0; i < list.getChildCount(); i++)
-            list.getChildAt(i).findViewById(R.id.edit)
-                    .setVisibility(editing ? View.VISIBLE : View.GONE);
+    private ExerciseAdapter getAdapter() {
+        return (ExerciseAdapter) list.getAdapter();
     }
 
 }

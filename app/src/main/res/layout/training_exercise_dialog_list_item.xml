@@ -1,34 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="16dp"
+    style="@style/exerciseListItem.root"
     tools:context=".TrainingShowcaseActivity">
 
-    <TextView
-        android:id="@+id/name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="16dp"
-        android:textSize="20sp" />
+    <RelativeLayout style="@style/exerciseListItem.main">
 
-    <TextView
-        android:id="@+id/muscle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@id/name"
-        android:layout_marginStart="4dp"
-        android:layout_toEndOf="@+id/name"
-        android:textColor="@android:color/darker_gray" />
+        <TextView
+            android:id="@+id/name"
+            android:textSize="20dp"
+            style="@style/exerciseListItem.exercise" />
+
+        <TextView
+            android:id="@+id/muscle"
+            style="@style/exerciseListItem.muscle" />
+    </RelativeLayout>
 
     <CheckBox
         android:id="@+id/checkbox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
+        style="@style/exerciseListItem.checkbox"
         android:clickable="false"
         android:focusable="false" />
-</RelativeLayout>
+</LinearLayout>
