@@ -5,18 +5,13 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Binder;
 import android.os.Build;
 import android.os.IBinder;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import uqac.dim.muscuboost.core.ongoingtraining.OngoingTraining;
-import uqac.dim.muscuboost.core.training.Exercise;
 import uqac.dim.muscuboost.core.training.Training;
 
 public class TrainService extends Service {
@@ -26,7 +21,7 @@ public class TrainService extends Service {
     private static final String NOTIF_ACTION = ".TrainService.NOTIF_ACTION";
 
     private static final String CHANNEL_ID = "training_channel";
-    private static final int ID_NOTIFICATION = 12349;
+    private static final int NOTIFICATION_ID = 12349;
 
     private TrainReceiver trainReceiver = new TrainReceiver(this);
 
@@ -35,7 +30,6 @@ public class TrainService extends Service {
     private PendingIntent contentPending;
     private PendingIntent nextSeriePending;
     private PendingIntent nextExercisePending;
-
 
     @Override
     public void onCreate() {
@@ -48,27 +42,28 @@ public class TrainService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId)
     {
         Training training = (Training) intent.getSerializableExtra(EXTRA_TRAINING);
-        if(training == null)
-            stopSelf();
-        else {
-            ongoingTraining = new OngoingTraining(training);
-
-            setupNotification();
-            sendNotification();
+        if(ongoingTraining == null || ongoingTraining.getTraining().getId() != training.getId()) {
+            if (training == null)
+                stopSelf();
+            else {
+                ongoingTraining = new OngoingTraining(training);
+                setupNotification();
+                startForeground(NOTIFICATION_ID, sendNotification());
+            }
         }
-        return START_NOT_STICKY;
+        return START_STICKY;
     }
 
     @Override
     public IBinder onBind(Intent intent) {
-        return null;
+        return new TrainBinder();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         unregisterReceiver(trainReceiver);
-        cancelNotification();
+        stopForeground(true);
     }
 
     public OngoingTraining getOngoingTraining() {
@@ -101,7 +96,12 @@ public class TrainService extends Service {
                 nextExerciseIntent, 0);
     }
 
-    private void sendNotification() {
+    private Notification sendNotification() {
+        if(notifManager == null || contentPending == null
+            || nextSeriePending == null || nextExercisePending == null)
+            throw new RuntimeException("You must first call setupNotification() " +
+                    "before calling sendNotification()");
+
         Notification.Builder builder;
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
@@ -125,11 +125,14 @@ public class TrainService extends Service {
         else
             builder.setContentText(getString(R.string.training_over));
 
-        notifManager.notify(ID_NOTIFICATION, builder.build());
+        Notification notification = builder.build();
+        notifManager.notify(NOTIFICATION_ID, notification);
+        return notification;
     }
-
-    private void cancelNotification() {
-        notifManager.cancel(ID_NOTIFICATION);
+    class TrainBinder extends Binder {
+        TrainService getService() {
+            return TrainService.this;
+        }
     }
 
 }
