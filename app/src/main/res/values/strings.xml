@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Misc -->
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
     <!-- Activity names -->
     <string name="app_name">MuscuBoost</string>
     <string name="schedule_name">Schedule</string>
@@ -17,6 +21,8 @@
     <string name="empty_row">Rest</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
+    <string name="confirm_delete_title">Do you really want to delete ?</string>
+
 
     <!-- Add/Edit slot dialog -->
     <string name="add_slot_new">New</string>
@@ -24,7 +30,9 @@
     <string name="time">Time</string>
     <string name="training">Training</string>
     <string name="add">Add</string>
+    <string name="save">Save</string>
     <string name="add_slot_empty_slot_list">No training available</string>
+    <string name="new_training">New training name</string>
 
     <!-- Training showcase activity -->
     <string name="training_empty_exercise_list">Not any exercise</string>

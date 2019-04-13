@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.schedule.fragment.AddSlotDialogFragment">
+    tools:context=".ui.schedule.fragment.SlotDialogFragment">
 
     <TextView
         android:id="@+id/title"
@@ -13,7 +13,8 @@
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="8dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -61,6 +62,23 @@
                 android:id="@+id/empty_list"
                 style="@style/schedule.addSlot.empty_list"
                 android:text="@string/add_slot_empty_slot_list" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp">
+
+                <EditText
+                    android:id="@+id/new_name"
+                    style="@style/schedule.addSlot.newTrainingEditText"
+                    android:hint="@string/new_training" />
+
+                <ImageButton
+                    android:id="@+id/add_training"
+                    style="@style/schedule.addSlot.newTrainingSubmit"
+                    android:src="@drawable/baseline_add_black_24" />
+            </LinearLayout>
 
             <Button
                 android:id="@+id/add"

@@ -1,6 +1,8 @@
 package uqac.dim.muscuboost.ui.schedule;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -90,13 +92,20 @@ public class TrainingSlotAction implements IScheduleSlotAction {
                     editSlotFragment.show(activity.getSupportFragmentManager(), "editSlot");
                 break;
             case R.id.delete:
-                // TODO - Ask for confirmation
+                new AlertDialog.Builder(context)
+                        .setTitle(R.string.confirm_delete_title)
+                        .setNegativeButton(R.string.no, null)
+                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                slotDao.delete(slot.getId());
+                                slotDao.close();
 
-                slotDao.delete(slot.getId());
-                slotDao.close();
-
-                activity.getSchedule().removeSlot(slot);
-                activity.drawSchedule();
+                                activity.getSchedule().removeSlot(slot);
+                                activity.drawSchedule();
+                            }
+                        })
+                        .show();
                 break;
         }
         trainingDao.close();

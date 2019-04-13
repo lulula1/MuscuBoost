@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -15,12 +16,13 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import uqac.dim.muscuboost.R;
 import uqac.dim.muscuboost.core.schedule.Day;
 import uqac.dim.muscuboost.core.schedule.ISlottable;
+import uqac.dim.muscuboost.core.training.Training;
+import uqac.dim.muscuboost.db.TrainingDAO;
 
 public class SlotDialogFragment extends BottomSheetDialogFragment {
 
@@ -92,6 +94,37 @@ public class SlotDialogFragment extends BottomSheetDialogFragment {
                 dismiss();
             }
         });
+
+        contentView.findViewById(R.id.add_training)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        EditText editText = contentView.findViewById(R.id.new_name);
+                        String trainingName = editText.getText().toString().trim();
+                        editText.getText().clear();
+
+                        if(!trainingName.isEmpty()) {
+                            TrainingDAO trainingDao = new TrainingDAO(getContext());
+                            trainingDao.open();
+
+                            Training training = trainingDao.insert(trainingName);
+                            ArrayAdapter<Wrapper<Training>> adapter =
+                                    (ArrayAdapter<Wrapper<Training>>) slotsList.getAdapter();
+                            adapter.add(new Wrapper<>(training, training.getName()));
+                            adapter.notifyDataSetChanged();
+
+                            trainingDao.close();
+                        }
+                    }
+                });
+    }
+
+    public void setSlottables(List<? extends ISlottable> slottables) {
+        this.slottables = slottables;
+    }
+
+    public void setOnSlotSubmit(OnSlotSubmit callback) {
+        onSlotSubmit = callback;
     }
 
     private List<Wrapper<Day>> getWrappedWeek() {
@@ -110,14 +143,6 @@ public class SlotDialogFragment extends BottomSheetDialogFragment {
             for(ISlottable slottable : slottables)
                 slottableWrappers.add(new Wrapper<>(slottable, slottable.getSlotLabel()));
         return slottableWrappers;
-    }
-
-    public void setSlottables(List<? extends ISlottable> slottables) {
-        this.slottables = slottables;
-    }
-
-    public void setOnSlotSubmit(OnSlotSubmit callback) {
-        onSlotSubmit = callback;
     }
 
     public interface OnSlotSubmit {

@@ -22,6 +22,7 @@ public class EditSlotDialogFragment extends SlotDialogFragment {
         }
 
         title.setText(R.string.edit);
+        addBtn.setText(R.string.save);
     }
 
     @Override
