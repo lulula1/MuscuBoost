@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.schedule.fragment.SlotDialogFragment">
+
+    <TextView
+        android:id="@+id/title"
+        style="@style/schedule.addSlot.title"
+        android:text="@string/add_slot_new" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/schedule.addSlot.label"
+                android:text="@string/day" />
+
+            <Spinner
+                android:id="@+id/days_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp" />
+
+            <View style="@style/hr" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:paddingStart="24dp"
+                    android:paddingEnd="24dp">
+
+                    <TextView
+                        style="@style/schedule.addSlot.label"
+                        android:text="@string/time" />
+
+                    <TimePicker
+                        android:id="@+id/time_picker"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:timePickerMode="spinner" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/schedule.addSlot.label"
+                        android:text="@string/training" />
+
+                    <ListView
+                        android:id="@+id/slots"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:paddingRight="32dp"
+                        android:layout_weight="1"
+                        android:choiceMode="singleChoice"
+                        android:nestedScrollingEnabled="true"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/empty_list"
+                        android:layout_weight="1"
+                        style="@style/schedule.addSlot.empty_list"
+                        android:text="@string/add_slot_empty_slot_list" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp">
+
+                        <EditText
+                            android:id="@+id/new_name"
+                            style="@style/schedule.addSlot.newTrainingEditText"
+                            android:hint="@string/new_training" />
+
+                        <ImageButton
+                            android:id="@+id/add_training"
+                            style="@style/schedule.addSlot.newTrainingSubmit"
+                            android:src="@drawable/baseline_add_black_24" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/add"
+                style="@style/schedule.addSlot.add"
+                android:enabled="false"
+                android:text="@string/add" />
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>

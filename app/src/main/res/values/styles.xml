@@ -123,7 +123,7 @@
     <style name="schedule.addSlot.empty_list">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:gravity">center</item>
+        <item name="android:gravity">center_horizontal</item>
         <item name="android:paddingTop">8dp</item>
         <item name="android:paddingBottom">24dp</item>
         <item name="android:textColor">@android:color/darker_gray</item>

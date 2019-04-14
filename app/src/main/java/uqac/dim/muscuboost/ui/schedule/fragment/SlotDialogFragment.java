@@ -70,6 +70,7 @@ public class SlotDialogFragment extends BottomSheetDialogFragment {
             slotsList.setLayoutParams(new LinearLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     Math.min(slottables.size(), MAX_SLOTS_SHOWN) * 100));
+            slotsList.setVisibility(View.VISIBLE);
             emptyListText.setVisibility(View.GONE);
         }
 
