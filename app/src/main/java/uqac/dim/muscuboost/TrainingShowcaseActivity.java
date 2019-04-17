@@ -26,7 +26,7 @@ import uqac.dim.muscuboost.ui.trainingshowcase.ExerciseAdapter;
 
 public class TrainingShowcaseActivity extends AppCompatActivity {
 
-    public static final String EXTRA_TRAINING = "training";
+    public static final String EXTRA_TRAINING = "uqac.dim.muscuboost.TrainingShowcaseActivity.TRAINING";
 
     private ExerciseDAO exerciseDao = new ExerciseDAO(this);
     private TrainingExerciseDAO teDao = new TrainingExerciseDAO(this);

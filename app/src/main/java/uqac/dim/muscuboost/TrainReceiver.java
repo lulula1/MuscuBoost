@@ -6,7 +6,7 @@ import android.content.Intent;
 
 public class TrainReceiver extends BroadcastReceiver {
 
-    public static final String EXTRA_ACTION = "action";
+    public static final String EXTRA_ACTION = "uqac.dim.muscuboost.TrainReceiver.ACTION";
 
     public static final int ACTION_NEXT_SERIES = 1;
     public static final int ACTION_NEXT_EXERCISE = 2;

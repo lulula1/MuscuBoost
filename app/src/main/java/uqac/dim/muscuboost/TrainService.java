@@ -21,11 +21,11 @@ import uqac.dim.muscuboost.core.training.Training;
 
 public class TrainService extends Service implements Subject {
 
-    public static final String EXTRA_TRAINING = "training";
+    public static final String EXTRA_TRAINING = "uqac.dim.muscuboost.TrainService.EXTRA_TRAINING";
 
-    private static final String NOTIF_ACTION = ".TrainService.NOTIF_ACTION";
+    private static final String NOTIF_ACTION = "uqac.dim.muscuboost.TrainService.NOTIF_ACTION";
 
-    private static final String CHANNEL_ID = "training_channel";
+    private static final String CHANNEL_ID = "uqac.dim.muscuboost.TRAINING";
     private static final int NOTIFICATION_ID = 12349;
 
     private TrainReceiver trainReceiver = new TrainReceiver(this);

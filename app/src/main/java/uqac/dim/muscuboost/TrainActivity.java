@@ -17,7 +17,7 @@ import uqac.dim.muscuboost.core.training.Training;
 
 public class TrainActivity extends AppCompatActivity implements ServiceConnection, Observer {
 
-    public static String EXTRA_TRAINING = "training";
+    public static String EXTRA_TRAINING = "uqac.dim.muscuboost.TrainActivity.EXTRA_TRAINING";
 
     private OngoingTraining ongoingTraining;
 
