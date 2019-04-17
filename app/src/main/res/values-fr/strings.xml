@@ -8,7 +8,7 @@
     <string name="app_name">MuscuBoost</string>
     <string name="schedule_name">Planning</string>
     <string name="training_showcase_name">Entraînement</string>
-    <string name="train_name">Entraînement</string>
+    <string name="train_name">Entraînement en cours</string>
 
     <!-- Schedule activity -->
     <string name="monday">Lundi</string>

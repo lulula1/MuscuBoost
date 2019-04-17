@@ -22,10 +22,10 @@ public class TrainReceiver extends BroadcastReceiver {
         int action = intent.getIntExtra(EXTRA_ACTION, -1);
         switch(action) {
             case ACTION_NEXT_SERIES:
-                trainService.getOngoingTraining().nextSeries();
+                trainService.nextSeries();
                 break;
             case ACTION_NEXT_EXERCISE:
-                trainService.getOngoingTraining().nextExercise();
+                trainService.nextExercise();
                 break;
             default:
                 return;

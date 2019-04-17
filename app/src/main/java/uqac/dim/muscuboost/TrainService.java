@@ -11,10 +11,15 @@ import android.os.Binder;
 import android.os.Build;
 import android.os.IBinder;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import uqac.dim.muscuboost.core.ongoingtraining.Observer;
 import uqac.dim.muscuboost.core.ongoingtraining.OngoingTraining;
+import uqac.dim.muscuboost.core.ongoingtraining.Subject;
 import uqac.dim.muscuboost.core.training.Training;
 
-public class TrainService extends Service {
+public class TrainService extends Service implements Subject {
 
     public static final String EXTRA_TRAINING = "training";
 
@@ -24,6 +29,7 @@ public class TrainService extends Service {
     private static final int NOTIFICATION_ID = 12349;
 
     private TrainReceiver trainReceiver = new TrainReceiver(this);
+    private List<Observer> observers = new ArrayList<>();
 
     private OngoingTraining ongoingTraining;
     private NotificationManager notifManager;
@@ -39,17 +45,12 @@ public class TrainService extends Service {
     }
 
     @Override
-    public int onStartCommand(Intent intent, int flags, int startId)
-    {
+    public int onStartCommand(Intent intent, int flags, int startId) {
         Training training = (Training) intent.getSerializableExtra(EXTRA_TRAINING);
-        if(ongoingTraining == null || ongoingTraining.getTraining().getId() != training.getId()) {
-            if (training == null)
-                stopSelf();
-            else {
-                ongoingTraining = new OngoingTraining(training);
-                setupNotification();
-                startForeground(NOTIFICATION_ID, sendNotification());
-            }
+        if(isDifferentTraining(training)) {
+            ongoingTraining = new OngoingTraining(training);
+            setupNotification();
+            startForeground(NOTIFICATION_ID, sendNotification());
         }
         return START_STICKY;
     }
@@ -66,12 +67,34 @@ public class TrainService extends Service {
         stopForeground(true);
     }
 
+    @Override
+    public void notifyUpdate() {
+        for(Observer observer : observers)
+            observer.onUpdate();
+    }
+
+    @Override
+    public void register(Observer observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void unregister(Observer observer) {
+        observers.remove(observer);
+    }
+
     public OngoingTraining getOngoingTraining() {
         return ongoingTraining;
     }
 
     public void update() {
         sendNotification();
+        notifyUpdate();
+    }
+
+    private boolean isDifferentTraining(Training training) {
+        return training != null && (ongoingTraining == null
+                || ongoingTraining.getTraining().getId() != training.getId());
     }
 
     private void setupNotification() {
@@ -118,9 +141,9 @@ public class TrainService extends Service {
         if(!ongoingTraining.isTrainingOver())
             builder.setContentText(getString(R.string.series) + " #" + ongoingTraining.getSeries()
                     + " - " + ongoingTraining.getCurrentExercise().getName())
-                    .addAction(new Notification.Action(R.drawable.baseline_exposure_plus_1_black_24,
+                    .addAction(new Notification.Action(R.drawable.baseline_exposure_plus_1_white_24,
                             getString(R.string.series).toLowerCase(), nextSeriePending))
-                    .addAction(new Notification.Action(R.drawable.baseline_fast_forward_black_24,
+                    .addAction(new Notification.Action(R.drawable.baseline_fast_forward_white_24,
                             getString(R.string.exercise).toLowerCase(), nextExercisePending));
         else
             builder.setContentText(getString(R.string.training_over));
@@ -129,10 +152,20 @@ public class TrainService extends Service {
         notifManager.notify(NOTIFICATION_ID, notification);
         return notification;
     }
+
+    void nextSeries() {
+        ongoingTraining.nextSeries();
+        update();
+    }
+
+    void nextExercise() {
+        ongoingTraining.nextExercise();
+        update();
+    }
+
     class TrainBinder extends Binder {
         TrainService getService() {
             return TrainService.this;
         }
     }
-
 }

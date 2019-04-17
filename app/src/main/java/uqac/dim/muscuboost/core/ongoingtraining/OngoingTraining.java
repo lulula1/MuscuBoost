@@ -8,14 +8,14 @@ import uqac.dim.muscuboost.core.training.Exercise;
 import uqac.dim.muscuboost.core.training.Training;
 
 /**
- * A training currently being practiced
+ * A training currently being practiced.
  */
 public class OngoingTraining {
 
     private Training training;
     private Exercise currentExercise;
     private int series;
-    private List<Exercise> exercisesDone = new ArrayList<>();
+    private List<Exercise> doneExercises = new ArrayList<>();
 
     /**
      * Creates an ongoing training.
@@ -68,14 +68,32 @@ public class OngoingTraining {
     }
 
     /**
+     * Returns the count of exercises of the training.
+     *
+     * @return Count of exercises
+     */
+    public int getExerciseCount() {
+        return training.getExercises().size();
+    }
+
+    /**
+     * Returns the count of exercises done during the training.
+     *
+     * @return Count of done exercises
+     */
+    public int getDoneExercisesCount() {
+        return doneExercises.size();
+    }
+
+    /**
      * Proceed to the next exercise. This will reset the series count.
      */
     public void nextExercise() {
         if(!isTrainingOver()) {
-            exercisesDone.add(currentExercise);
-            if(exercisesDone.size() < training.getExercises().size()) {
+            doneExercises.add(currentExercise);
+            if(doneExercises.size() < training.getExercises().size()) {
                 // TODO - Don't oblige the currentExercise to be the next training exercise
-                currentExercise = training.getExercises().get(exercisesDone.size());
+                currentExercise = training.getExercises().get(doneExercises.size());
                 series = 1;
             }else {
                 currentExercise = null;
