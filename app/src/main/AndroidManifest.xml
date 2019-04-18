@@ -2,12 +2,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="uqac.dim.muscuboost">
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        >
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name">
@@ -35,6 +39,20 @@
             android:launchMode="singleTask" />
 
         <service android:name=".TrainService" />
+        <service
+            android:name=".MonService"
+            android:enabled="true"
+            android:exported="true"></service>
+        <activity android:name=".Chronometre"
+            android:label="Chronometer"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ExerciceActivity"
+            android:label="Exercises"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".AddExerciceActivity"
+            android:label="Add exercise"
+            android:screenOrientation="portrait"/>
     </application>
+
 
 </manifest>

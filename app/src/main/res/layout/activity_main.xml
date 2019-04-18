@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="102dp">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imgCarnetMuscu"
+                        android:layout_width="match_parent"
+                        android:layout_height="125dp"
+                        android:onClick="clickEntrainement"
+                        app:srcCompat="@drawable/icon_carnetmuscu" />
+
+                    <TextView
+                        android:id="@+id/txtViewMesEntrainements"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Mes entrainements"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="clickExercice"
+                    android:layout_weight="50"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imgExercices"
+                        android:layout_width="match_parent"
+                        android:layout_height="125dp"
+                        app:srcCompat="@drawable/icon_exercice" />
+
+                    <TextView
+                        android:id="@+id/textViewExercices"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Exercices"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="10dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imgStats"
+                        android:layout_width="match_parent"
+                        android:layout_height="125dp"
+                        android:layout_weight="50"
+                        app:srcCompat="@drawable/icon_graph" />
+
+                    <TextView
+                        android:id="@+id/textViewMesStatistiques"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="50"
+                        android:text="Mes statistiques"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imageView5"
+                        android:layout_width="match_parent"
+                        android:layout_height="125dp"
+                        android:layout_weight="50"
+                        app:srcCompat="@drawable/icon_donnees" />
+
+                    <TextView
+                        android:id="@+id/textViewMesInformations"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="50"
+                        android:text="Mes informations"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="10dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:onClick="clickChrono"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imgChrono"
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp"
+                        android:layout_weight="50"
+                        android:onClick="clickChrono"
+                        app:srcCompat="@drawable/icon_alarme" />
+
+                    <TextView
+                        android:id="@+id/txtViewChronometre"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="50"
+                        android:text="Chronomètre"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imgParam"
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp"
+                        android:layout_weight="50"
+                        app:srcCompat="@drawable/icon_settings" />
+
+                    <TextView
+                        android:id="@+id/textViewParametre"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="50"
+                        android:text="Paramètres"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+            </TableRow>
+
+        </TableLayout>
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>
