@@ -63,15 +63,15 @@ public class ExerciseDAO extends DAOSingleKey<Exercise> {
     @Override
     public List<Exercise> getAll(String whereSQL, String[] whereArgs) {
         Cursor c = getGetAllCursor(whereSQL, whereArgs);
-        List<Exercise> exercices = new ArrayList<>();
+        List<Exercise> exercises = new ArrayList<>();
         while (c.moveToNext()) {
             long id = c.getLong(c.getColumnIndex(KEY));
             String name = c.getString(c.getColumnIndex(NAME));
             long muscleId = c.getLong(c.getColumnIndex(MUSCLE_ID));
             Muscle muscle = muscleDao.get(muscleId);
-            exercices.add(new Exercise(id, name, muscle));
+            exercises.add(new Exercise(id, name, muscle));
         }
-        return exercices;
+        return exercises;
     }
 
 }
