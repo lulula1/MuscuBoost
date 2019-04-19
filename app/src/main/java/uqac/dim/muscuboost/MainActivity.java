@@ -13,7 +13,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.main_activity);
     }
 
-    public void startPlanningActivity(View view) {
+    public void startChrono(View view) {
+        startActivity(new Intent(getBaseContext(), Chronometre.class));
+    }
+
+    public void startTraining(View view) {
         startActivity(new Intent(getBaseContext(), ScheduleActivity.class));
     }
+
+    public void startExercise(View view) {
+        startActivity(new Intent(getBaseContext(), ExerciceActivity.class));
+    }
+
 }

@@ -3,6 +3,7 @@
     package="uqac.dim.muscuboost">
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -35,8 +36,25 @@
             android:name=".TrainActivity"
             android:label="@string/train_name"
             android:launchMode="singleTask" />
+        <!-- TODO - Extract labels in strings.xml -->
+        <activity
+            android:name=".Chronometre"
+            android:label="Chronometer"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ExerciceActivity"
+            android:label="Exercises"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AddExerciceActivity"
+            android:label="Add exercise"
+            android:screenOrientation="portrait" />
 
         <service android:name=".TrainService" />
+        <service
+            android:name=".MonService"
+            android:enabled="true"
+            android:exported="true" />
     </application>
 
 </manifest>
