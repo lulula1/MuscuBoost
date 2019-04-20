@@ -43,11 +43,6 @@
                     style="@style/main.label"
                     android:text="@string/main_exercise" />
             </LinearLayout>
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
 
             <LinearLayout
                 style="@style/main.wrapper"
@@ -63,6 +58,11 @@
                     style="@style/main.label"
                     android:text="@string/main_chrono" />
             </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <LinearLayout style="@style/main.wrapper">
 
@@ -76,11 +76,6 @@
                     style="@style/main.label"
                     android:text="@string/main_stats" />
             </LinearLayout>
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
 
             <LinearLayout style="@style/main.wrapper">
 

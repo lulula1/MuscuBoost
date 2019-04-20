@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startChrono(View view) {
-        startActivity(new Intent(getBaseContext(), Chronometre.class));
+        startActivity(new Intent(getBaseContext(), ChronoActivity.class));
     }
 
     public void startTraining(View view) {
@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startExercise(View view) {
-        startActivity(new Intent(getBaseContext(), ExerciceActivity.class));
+        startActivity(new Intent(getBaseContext(), ExerciseActivity.class));
     }
 
 }
