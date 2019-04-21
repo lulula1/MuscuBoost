@@ -15,13 +15,6 @@ public class MuscleDAO extends DAOBase {
     public static final String KEY = "id";
     public static final String NAME = "name";
 
-    public static final String TABLE_CREATE =
-            "CREATE TABLE " + TABLE_NAME + " ("
-                    + KEY + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                    + NAME + " VARCHAR(30) NOT NULL );";
-
-    public static final String TABLE_DROP = "DROP TABLE IF EXISTS " + TABLE_NAME + ";";
-
     public MuscleDAO(Context pContext) {
         super(pContext);
     }

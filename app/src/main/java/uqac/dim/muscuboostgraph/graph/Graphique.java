@@ -3,14 +3,18 @@ package uqac.dim.muscuboostgraph.graph;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,32 +65,48 @@ public class Graphique extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        View view = inflater.inflate(R.layout.fragment_graphique, container, false);
+
         int type = getArguments().getInt("type");
         String name = getArguments().getString("name");
 
-        GraphView graphView = new GraphView(getActivity());
-
         if(type == ListOptionGraph.TYPE_MUSCLE){
             StatisticsDAO sd = new StatisticsDAO(getActivity());
-            StatExerciseDAO sed = new StatExerciseDAO(getActivity());
             ExerciseDAO ed = new ExerciseDAO(getActivity());
             MuscleDAO md = new MuscleDAO(getActivity());
 
             md.open();
             ed.open();
             sd.open();
-            LineGraphSeries<DataPoint> series = new LineGraphSeries<>(sd.averageWeightForEachDateWhereExercice(ed.selectAllIdWhereMuscle(md.selectIdOf(name))));
+
+            int id = md.selectIdOf(name);
+            List<Integer> ids_exo = ed.selectAllIdWhereMuscle(id);
+            DataPoint[] seriesPoint = sd.averageWeightForEachDateWhereExercice(ids_exo);
+
             sd.close();
-            md.close();
-            ed.close();
 
-            FrameLayout frameLayout = getView().findViewById(R.id.graphique_container)
-
+            FrameLayout f = view.findViewById(R.id.graphique_container);
+            f.addView(createGraphique(seriesPoint));
         }
         else{
 
         }
         return inflater.inflate(R.layout.fragment_graphique, container, false);
+    }
+
+    private View createGraphique(DataPoint[] seriesPoint){
+        View v = new View(getActivity());
+        if(seriesPoint.length == 0){
+            ((TextView)v).setText("Aucune donnée");
+        }
+        else{
+            LineGraphSeries<DataPoint> series = new LineGraphSeries<>(seriesPoint);
+
+            v = new GraphView(getActivity());
+            ((GraphView)v).addSeries(series);
+        }
+
+        return v;
     }
 
     /**

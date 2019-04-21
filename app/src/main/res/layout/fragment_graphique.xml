@@ -12,9 +12,9 @@
         android:layout_height="match_parent">
 
         <com.jjoe64.graphview.GraphView
-            android:id="@+id/graphique"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:id="@+id/graphique"/>
 
     </FrameLayout>
 

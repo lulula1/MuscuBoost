@@ -17,6 +17,7 @@ public class ExerciseDAO extends DAOBase {
     public static final String KEY = "id";
     public static final String NAME = "name";
     public static final String MUSCLE_ID = "muscle_id";
+    public static final String DESCRIPTION = "description";
 
     public static final String TABLE_CREATE =
             "CREATE TABLE " + TABLE_NAME + " ("
@@ -31,11 +32,12 @@ public class ExerciseDAO extends DAOBase {
         super(pContext);
     }
 
-    public Exercise insert(String name, Muscle muscle) {
+    public Exercise insert(String name, Muscle muscle, String description) {
         ContentValues value = new ContentValues();
         value.put(NAME, name);
         value.put(MUSCLE_ID, muscle.getId());
-        long id = db.insert(MuscleDAO.TABLE_NAME, null, value);
+        value.put(DESCRIPTION, description );
+        long id = db.insert(ExerciseDAO.TABLE_NAME, null, value);
         return new Exercise(id, name,  muscle);
     }
 
@@ -48,6 +50,7 @@ public class ExerciseDAO extends DAOBase {
         ContentValues value = new ContentValues();
         value.put(NAME, exercise.getName());
         value.put(MUSCLE_ID, exercise.getMuscle().getId());
+        value.put(DESCRIPTION, exercise.getDescription());
         String[] whereArgs = {String.valueOf(exercise.getId())};
         db.update(TABLE_NAME, value, KEY + " = ?", whereArgs);
     }

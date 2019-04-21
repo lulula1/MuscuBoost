@@ -6,6 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import java.io.IOException;
+
+import uqac.dim.muscuboostgraph.db.DatabaseHandler;
 import uqac.dim.muscuboostgraph.graph.ListOptionGraph;
 
 
@@ -19,6 +22,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
+
+        DatabaseHandler db = new DatabaseHandler(getApplicationContext());
+        try {
+            db.createDatabase();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()
                     .add(R.id.fragment_list_container, ListOptionGraph.newInstance(ListOptionGraph.TYPE_MUSCLE))

@@ -19,7 +19,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private final Context myContext;
 
     // Database version
-    protected static final int VERSION = 10;
+    protected static final int VERSION = 41;
 
     // Database (file) name
     public static final String DATABASE_PATH = "/data/data/uqac.dim.muscuboostgraph/databases/";
@@ -32,27 +32,26 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public void createDatabase() throws IOException {
 
-        Log.v("DIM", "*********createDatabase***********");
+        Log.i("DIM", "*********createDatabase***********");
 
         boolean dbExist = checkDataBase();
 
         if(dbExist) {
-            Log.v("DIM", "LA BD EXISTE");
+            Log.i("DIM", "LA BD EXISTE");
             // By calling this method here onUpgrade will be called on a
             // writeable database, but only if the version number has been
             // bumped
             //onUpgrade(myDataBase, DATABASE_VERSION_old, DATABASE_VERSION);
         }
         else{
-            Log.v("DIM", "LA BD N'EXISTE PAS");
-
+            Log.i("DIM", "LA BD N'EXISTE PAS");
             try {
                 this.getReadableDatabase();
-                Log.v("DIM", "close");
                 this.close();
-                Log.v("DIM", "copydatabase");
+
+                Log.i("DIM", "copydatabase");
                 copyDataBase();
-                Log.v("DIM", "copie effectue avec succes");
+                Log.i("DIM", "copie effectue avec succes");
             }
             catch (IOException e){
                 throw new Error("Error copying database");
@@ -63,7 +62,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     //Check database already exist or not
     private boolean checkDataBase(){
 
-        Log.v("DIM", "checkDataBase");
+        Log.i("DIM", "checkDataBase");
 
         boolean checkDB = false;
 
@@ -87,13 +86,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         String outFileName = DATABASE_PATH + DATABASE_NAME;
 
-        Log.v("DIM", "outFileName : " + outFileName);
-        Log.v("DIM", "inFileName : " + DATABASE_NAME);
+        Log.i("DIM", "outFileName : " + outFileName);
+        Log.i("DIM", "inFileName : " + DATABASE_NAME);
 
         OutputStream myOutput = new FileOutputStream(outFileName);
         InputStream myInput = myContext.getAssets().open(DATABASE_NAME);
 
-        Log.v("DIM", "myInput : " + myInput);
+        Log.i("DIM", "myInput : " + myInput);
 
         byte[] buffer = new byte[1024];
         int length;
@@ -116,29 +115,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         File file = new File(DATABASE_PATH + DATABASE_NAME);
         if(file.exists()){
             file.delete();
-            System.out.println("delete database file.");
         }
-    }
-
-    //Open database
-    public void openDatabase() throws SQLException {
-        String myPath = DATABASE_PATH + DATABASE_NAME;
-        myDataBase = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READWRITE);
-    }
-
-    public synchronized void closeDataBase()throws SQLException{
-
-        if(myDataBase != null)
-            myDataBase.close();
-        super.close();
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        onCreate(db);
+
     }
 }

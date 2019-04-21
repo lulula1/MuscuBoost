@@ -5,6 +5,7 @@ public class Exercise {
     private long id;
     private Muscle muscle;
     private String name;
+    private  String description;
 
     public Exercise(long id, String name, Muscle muscle) {
         this.id = id;
@@ -22,6 +23,10 @@ public class Exercise {
 
     public String getName() {
         return name;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public void setId(int id) {

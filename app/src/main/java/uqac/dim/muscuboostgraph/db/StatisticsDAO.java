@@ -3,6 +3,7 @@ package uqac.dim.muscuboostgraph.db;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 
 import com.jjoe64.graphview.series.DataPoint;
 
@@ -62,22 +63,39 @@ public class StatisticsDAO extends DAOBase {
         for(int i = 0; i < list.size()-1; i++){
             where.append(list.get(i)).append(",");
         }
-        where.append(list.get(list.size() - 1));
+        if(list.size() > 0)
+            where.append(list.get(list.size() - 1));
 
-        Cursor c = db.rawQuery("SELECT " + StatExerciseDAO.DATE_ENREGISTREMENT + "," + StatisticsDAO.POIDS
-                + " FROM " + StatisticsDAO.TABLE_NAME
-                + " WHERE " + StatExerciseDAO.EXERCISE_ID + " IN (?)", new String[] {where.toString()});
+        String query = "SELECT " + StatExerciseDAO.DATE_ENREGISTREMENT + ", AVG(" + StatisticsDAO.POIDS
+                + ") FROM " + StatisticsDAO.TABLE_NAME + ", " + StatExerciseDAO.TABLE_NAME
+                + " WHERE stat_exercise.stat_id = statistic.id AND " + StatExerciseDAO.EXERCISE_ID + " IN (?)";
+
+        Cursor c = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         DataPoint[] serie = new DataPoint[c.getCount()];
-        int i = 0;
-        while (c.moveToNext()){
-            try {
-                serie[i] = new DataPoint(format.parse(c.getString(0)), c.getDouble(1));
-            }catch (ParseException e) {
-                e.printStackTrace();
-            }
+
+        c.moveToFirst();
+        Log.i("DIM", ""+c.getDouble(1));
+        try {
+            serie[0] = new DataPoint(format.parse(c.getString(0)), c.getDouble(1));
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
+
+//        int i = 0;
+//        while (c.moveToNext() && c.getCount() != 0){
+//            try {
+//                Log.i("DIM", c.getString(0));
+//                serie[i] = new DataPoint(format.parse(c.getString(0)), c.getDouble(1));
+//                Log.i("DIM", c.getString(0) + "\t" + c.getDouble(1));
+//                i++;
+//            }catch (ParseException e) {
+//                e.printStackTrace();
+//            }
+//        }
+
+        c.close();
         return serie;
     }
 

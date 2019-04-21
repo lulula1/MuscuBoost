@@ -2,6 +2,7 @@ package uqac.dim.muscuboostgraph.db;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 public abstract class DAOBase {
 
@@ -14,6 +15,7 @@ public abstract class DAOBase {
 
     public SQLiteDatabase open() {
         db = handler.getWritableDatabase();
+
         return db;
     }
 

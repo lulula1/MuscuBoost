@@ -5,14 +5,15 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.app.ListFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
-import uqac.dim.muscuboostgraph.MainActivity;
 import uqac.dim.muscuboostgraph.R;
 import uqac.dim.muscuboostgraph.db.ExerciseDAO;
 import uqac.dim.muscuboostgraph.db.MuscleDAO;
@@ -25,7 +26,7 @@ import uqac.dim.muscuboostgraph.db.MuscleDAO;
  * Use the {@link ListOptionGraph#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ListOptionGraph extends ListFragment implements AdapterView.OnItemClickListener {
+public class ListOptionGraph extends ListFragment {
 
     public static final int TYPE_MUSCLE = 0;
     public static final int TYPE_EXERCICE = 1;
@@ -52,6 +53,8 @@ public class ListOptionGraph extends ListFragment implements AdapterView.OnItemC
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
     }
 
     @Override
@@ -82,12 +85,14 @@ public class ListOptionGraph extends ListFragment implements AdapterView.OnItemC
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    public void onListItemClick(ListView listView, View view, int position, long id) {
+        Log.i("DIM", "Click sur Item - position : " + position);
         getActivity().getFragmentManager()
                 .beginTransaction()
-                .replace(R.id.graphique_container, Graphique.newInstance(getArguments().getInt("type"), ((TextView)view).getText().toString()))
+                .add(R.id.fragment_graph_container, Graphique.newInstance(getArguments().getInt("type"), ((TextView)view).getText().toString()))
                 .addToBackStack(null)
                 .commit();
+
     }
 
     /**
