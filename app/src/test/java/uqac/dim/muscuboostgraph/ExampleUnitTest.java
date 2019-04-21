@@ -1,4 +1,4 @@
-package uqac.dim.muscuboost;
+package uqac.dim.muscuboostgraph;
 
 import org.junit.Test;
 

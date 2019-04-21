@@ -1,25 +1,26 @@
-package uqac.dim.muscuboost.core.training;
+package uqac.dim.muscuboostgraph.core.training;
 
 public class ScheduleSlot {
 
-    private int id;
-    private String day;
+    private long id;
+    private Day day;
     private int hour;
     private int minute;
     private Training training;
 
-    public ScheduleSlot(String day, int hour, int minute, Training training) {
+    public ScheduleSlot(long id, Day day, int hour, int minute, Training training) {
+        this.id = id;
         this.day = day;
         this.hour = hour;
         this.minute = minute;
         this.training = training;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public String getDay() {
+    public Day getDay() {
         return day;
     }
 

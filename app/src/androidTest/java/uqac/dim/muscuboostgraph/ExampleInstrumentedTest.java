@@ -1,4 +1,4 @@
-package uqac.dim.muscuboost;
+package uqac.dim.muscuboostgraph;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("uqac.dim.muscuboost", appContext.getPackageName());
+        assertEquals("uqac.dim.muscuboostgraph", appContext.getPackageName());
     }
 }

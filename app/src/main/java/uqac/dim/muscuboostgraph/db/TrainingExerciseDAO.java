@@ -1,14 +1,14 @@
-package uqac.dim.muscuboost.db;
+package uqac.dim.muscuboostgraph.db;
 
 import android.content.ContentValues;
 import android.content.Context;
 
-import uqac.dim.muscuboost.core.training.Exercise;
-import uqac.dim.muscuboost.core.training.Training;
+import uqac.dim.muscuboostgraph.core.training.Exercise;
+import uqac.dim.muscuboostgraph.core.training.Training;
 
 public class TrainingExerciseDAO extends DAOBase {
 
-    public static final String TABLE_NAME = "training_exercice";
+    public static final String TABLE_NAME = "training_exercise";
 
     public static final String TRAINING_ID = "training_id";
     public static final String EXERCISE_ID = "exercise_id";

@@ -1,4 +1,4 @@
-package uqac.dim.muscuboost.db;
+package uqac.dim.muscuboostgraph.db;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,8 +7,8 @@ import android.database.Cursor;
 import java.util.ArrayList;
 import java.util.List;
 
-import uqac.dim.muscuboost.core.training.Exercise;
-import uqac.dim.muscuboost.core.training.Muscle;
+import uqac.dim.muscuboostgraph.core.training.Exercise;
+import uqac.dim.muscuboostgraph.core.training.Muscle;
 
 public class ExerciseDAO extends DAOBase {
 
@@ -36,7 +36,7 @@ public class ExerciseDAO extends DAOBase {
         value.put(NAME, name);
         value.put(MUSCLE_ID, muscle.getId());
         long id = db.insert(MuscleDAO.TABLE_NAME, null, value);
-        return new Exercise(id, name, muscle);
+        return new Exercise(id, name,  muscle);
     }
 
     public void delete(Exercise exercise) {
@@ -50,6 +50,26 @@ public class ExerciseDAO extends DAOBase {
         value.put(MUSCLE_ID, exercise.getMuscle().getId());
         String[] whereArgs = {String.valueOf(exercise.getId())};
         db.update(TABLE_NAME, value, KEY + " = ?", whereArgs);
+    }
+
+    public List<String> selectAllName(){
+        Cursor c = db.rawQuery("SELECT " + NAME + " FROM " + TABLE_NAME , null);
+        List<String> array = new ArrayList<String>();
+        while (c.moveToNext()) {
+            array.add(c.getString(0));
+        }
+        c.close();
+        return array;
+    }
+
+    public List<Integer> selectAllIdWhereMuscle(int id){
+        Cursor c = db.rawQuery("SELECT " + KEY + " FROM " + TABLE_NAME + " WHERE " + MUSCLE_ID + " = ? ", new String[] {""+id} );
+        List<Integer> array = new ArrayList<Integer>();
+        while (c.moveToNext()){
+            array.add(c.getInt(0));
+        }
+        c.close();
+        return array;
     }
 
     public static List<Exercise> select(String whereSQL, String[] whereArgs) {

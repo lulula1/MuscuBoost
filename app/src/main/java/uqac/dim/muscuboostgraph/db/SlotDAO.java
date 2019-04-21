@@ -1,4 +1,4 @@
-package uqac.dim.muscuboost.db;
+package uqac.dim.muscuboostgraph.db;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,9 +7,9 @@ import android.database.Cursor;
 import java.util.ArrayList;
 import java.util.List;
 
-import uqac.dim.muscuboost.core.schedule.Day;
-import uqac.dim.muscuboost.core.schedule.ScheduleSlot;
-import uqac.dim.muscuboost.core.training.Training;
+import uqac.dim.muscuboostgraph.core.training.Day;
+import uqac.dim.muscuboostgraph.core.training.ScheduleSlot;
+import uqac.dim.muscuboostgraph.core.training.Training;
 
 public class SlotDAO extends DAOBase {
 
@@ -56,7 +56,7 @@ public class SlotDAO extends DAOBase {
         value.put(DAY, slot.getDay().getId());
         value.put(HOUR, slot.getHour());
         value.put(MINUTE, slot.getMinute());
-        value.put(TRAINING_ID, ((Training) slot.getItem()).getId());
+        value.put(TRAINING_ID, slot.getTraining().getId());
         String[] whereArgs = {String.valueOf(slot.getId())};
         db.update(TABLE_NAME, value, KEY + " = ?", whereArgs);
     }

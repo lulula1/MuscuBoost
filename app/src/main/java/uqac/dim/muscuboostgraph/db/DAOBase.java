@@ -1,4 +1,4 @@
-package uqac.dim.muscuboost.db;
+package uqac.dim.muscuboostgraph.db;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -24,5 +24,9 @@ public abstract class DAOBase {
 
     public SQLiteDatabase getDb() {
         return db;
+    }
+
+    public DatabaseHandler getDatabaseHandler(){
+        return handler;
     }
 }

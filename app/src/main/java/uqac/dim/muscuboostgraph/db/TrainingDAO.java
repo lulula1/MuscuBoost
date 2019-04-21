@@ -1,11 +1,11 @@
-package uqac.dim.muscuboost.db;
+package uqac.dim.muscuboostgraph.db;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 
-import uqac.dim.muscuboost.core.training.Exercise;
-import uqac.dim.muscuboost.core.training.Training;
+import uqac.dim.muscuboostgraph.core.training.Exercise;
+import uqac.dim.muscuboostgraph.core.training.Training;
 
 public class TrainingDAO extends DAOBase {
 

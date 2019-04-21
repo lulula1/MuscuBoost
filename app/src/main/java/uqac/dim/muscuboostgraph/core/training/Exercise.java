@@ -1,17 +1,18 @@
-package uqac.dim.muscuboost.core.training;
+package uqac.dim.muscuboostgraph.core.training;
 
 public class Exercise {
 
-    private int id;
+    private long id;
     private Muscle muscle;
     private String name;
 
-    public Exercise(Muscle muscle, String name) {
+    public Exercise(long id, String name, Muscle muscle) {
+        this.id = id;
         this.muscle = muscle;
         this.name = name;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 

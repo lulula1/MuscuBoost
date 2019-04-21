@@ -1,10 +1,10 @@
-package uqac.dim.muscuboost.core.training;
+package uqac.dim.muscuboostgraph.core.training;
 
 import java.util.List;
 
 public class Training {
 
-    private int id;
+    private long id;
     private String name;
     private List<Exercise> exercises;
 
@@ -13,7 +13,12 @@ public class Training {
         this.exercises = exercises;
     }
 
-    public int getId() {
+    public Training(long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public long getId() {
         return id;
     }
 

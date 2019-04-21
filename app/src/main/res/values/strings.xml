@@ -6,4 +6,10 @@
     <string name="add">Ajouter</string>
     <string name="liste_des_muscles">Liste des muscles</string>
     <string name="listes_des_exercices">Listes des exercices</string>
+    <string name="statistiques">Statistiques</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="par_muscle">PAR MUSCLE</string>
+    <string name="par_exercice">PAR EXERCICE</string>
 </resources>
