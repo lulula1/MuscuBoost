@@ -3,12 +3,23 @@
     <!-- Misc -->
     <string name="yes">Oui</string>
     <string name="no">Non</string>
+    <string name="error_occurred">Une erreur est survenue</string>
 
     <!-- Activity names -->
     <string name="app_name">MuscuBoost</string>
     <string name="schedule_name">Planning</string>
     <string name="training_showcase_name">Entraînement</string>
     <string name="train_name">Entraînement en cours</string>
+    <string name="exercise_name">Exercices</string>
+    <string name="add_exercise_name">Nouvel exercice</string>
+
+    <!-- Main activity -->
+    <string name="main_training">Mes entraînements</string>
+    <string name="main_exercise">Exercices</string>
+    <string name="main_stats">Mes statistiques</string>
+    <string name="main_details">Mes informations</string>
+    <string name="main_chrono">Chronomètre</string>
+    <string name="main_settings">Paramètres</string>
 
     <!-- Schedule activity -->
     <string name="monday">Lundi</string>
@@ -46,4 +57,11 @@
     <string name="series">Série</string>
     <string name="exercise">Exercice</string>
     <string name="training_over">Entraînement terminé !</string>
+
+    <!-- Add exercise activity -->
+    <string name="add_exercise_name_label">Nom</string>
+    <string name="add_exercise_image_label">Image</string>
+    <string name="add_exercise_import_img">Importer image</string>
+    <string name="add_exercise_remove_img">Retirer image</string>
+    <string name="add_exercise_description_label">Description</string>
 </resources>

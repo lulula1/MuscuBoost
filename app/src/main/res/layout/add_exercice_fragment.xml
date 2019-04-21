@@ -1,88 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".AddExerciceActivity">
+    tools:context=".AddExerciseActivity">
 
-    <android.support.v4.widget.NestedScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/exercise_title"
+            style="@style/schedule.addSlot.label"
+            android:labelFor="@id/editTxt_exercise_title"
+            android:text="@string/add_exercise_name_label" />
+
+        <EditText
+            android:id="@+id/editTxt_exercise_title"
+            style="@style/schedule.addSlot.label" />
+
+        <TextView
+            android:id="@+id/exercise_image"
+            style="@style/schedule.addSlot.label"
+            android:text="@string/add_exercise_image_label" />
+
+        <ImageView
+            android:id="@+id/selected"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="250dp"
+            android:visibility="gone" />
 
-            <TextView
-                android:id="@+id/exercise_title"
-                style="@style/schedule.addSlot.label"
-                android:text="Title" />
+        <Button
+            android:id="@+id/import_img"
+            style="@style/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/add_exercise_import_img" />
 
-            <EditText
-                android:id="@+id/editTxt_exercise_title"
-                style="@style/schedule.addSlot.label"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp" />
+        <Button
+            android:id="@+id/remove_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/add_exercise_remove_img"
+            android:visibility="gone" />
 
-            <TextView
-                android:id="@+id/exercise_image"
-                style="@style/schedule.addSlot.label"
-                android:layout_height="32dp"
-                android:text="Image" />
+        <TextView
+            android:id="@+id/exercise_description"
+            style="@style/schedule.addSlot.label"
+            android:labelFor="@id/editTxt_exercise_description"
+            android:text="@string/add_exercise_description_label" />
 
-            <ImageView
-                android:id="@+id/selected"
-                android:layout_width="fill_parent"
-                android:layout_height="250dp"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:visibility="gone" />
+        <EditText
+            android:id="@+id/editTxt_exercise_description"
+            style="@style/schedule.addSlot.label"
+            android:inputType="textMultiLine"
+            android:lines="3"
+            android:scrollbars="vertical" />
 
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/import_img"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Importer Image"
-                    tools:layout_editor_absoluteX="111dp"
-                    tools:layout_editor_absoluteY="34dp" />
-
-                <Button
-                    android:id="@+id/remove_img"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="SUPPRIMER IMAGE"
-                    android:visibility="gone" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/exercise_description"
-                style="@style/schedule.addSlot.label"
-                android:text="Description" />
-
-            <EditText
-                android:id="@+id/editTxt_exercise_description"
-                style="@style/schedule.addSlot.label"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:inputType="textMultiLine"
-                android:lines="3"
-                android:scrollbars="vertical" />
-
-            <Button
-                android:id="@+id/add"
-                style="@style/schedule.addSlot.add"
-                android:enabled="false"
-                android:text="@string/add" />
-        </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
-</LinearLayout>
+        <Button
+            android:id="@+id/add"
+            style="@style/button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:text="@string/add" />
+    </LinearLayout>
+</ScrollView>

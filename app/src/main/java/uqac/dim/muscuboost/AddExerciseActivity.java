@@ -14,10 +14,9 @@ import android.widget.Toast;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
-// TODO - Rename to AddExerciseActivity
-public class AddExerciceActivity  extends AppCompatActivity {
+public class AddExerciseActivity extends AppCompatActivity {
 
-    private static final int RESULT_LOAD_IMG = 1;
+    private static final int REQUEST_CODE_LOAD_IMG = 1;
 
     private Button btnImport;
     private Button btnRemove;
@@ -27,6 +26,8 @@ public class AddExerciceActivity  extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_exercice_fragment);
+        if(getActionBar() != null)
+            getActionBar().setHomeButtonEnabled(true);
 
         btnImport = findViewById(R.id.import_img);
         btnRemove = findViewById(R.id.remove_img);
@@ -37,7 +38,7 @@ public class AddExerciceActivity  extends AppCompatActivity {
             public void onClick(View v) {
                 Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
                 photoPickerIntent.setType("image/*");
-                startActivityForResult(photoPickerIntent, RESULT_LOAD_IMG);
+                startActivityForResult(photoPickerIntent, REQUEST_CODE_LOAD_IMG);
             }
         });
 
@@ -53,28 +54,25 @@ public class AddExerciceActivity  extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int reqCode, int resultCode, Intent data) {
-        super.onActivityResult(reqCode, resultCode, data);
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode == RESULT_OK) {
+        if (requestCode == REQUEST_CODE_LOAD_IMG && resultCode == RESULT_OK) {
             try {
-                final Uri imageUri = data.getData();
-                final InputStream imageStream = getContentResolver().openInputStream(imageUri);
-                final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+                Uri imageUri = data.getData();
+                InputStream imageStream = getContentResolver().openInputStream(imageUri);
+                Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
                 selectedImg.setImageBitmap(selectedImage);
                 selectedImg.setVisibility(View.VISIBLE);
                 btnRemove.setVisibility(View.VISIBLE);
                 btnImport.setVisibility(View.GONE);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
-                // TODO - Extract to strings.xml
-                Toast.makeText(getApplicationContext(), "Une erreur s'est produite",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), R.string.error_occurred, Toast.LENGTH_LONG).show();
             }
-
-        }else {
-            // TODO - Extract to strings.xml
-            Toast.makeText(getApplicationContext(),"Vous n'avez pas choisi d'image", Toast.LENGTH_LONG).show();
         }
     }
+
+    // TODO - Implement exercise addition
 
 }

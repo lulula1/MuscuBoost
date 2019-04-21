@@ -3,12 +3,23 @@
     <!-- Misc -->
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="error_occurred">An error occurred</string>
 
     <!-- Activity names -->
     <string name="app_name">MuscuBoost</string>
     <string name="schedule_name">Schedule</string>
     <string name="training_showcase_name">Training</string>
     <string name="train_name">Training in progress</string>
+    <string name="exercise_name">Exercises</string>
+    <string name="add_exercise_name">Add exercise</string>
+
+    <!-- Main activity -->
+    <string name="main_training">My trainings</string>
+    <string name="main_exercise">Exercises</string>
+    <string name="main_stats">My statistics</string>
+    <string name="main_details">My details</string>
+    <string name="main_chrono">Chronometer</string>
+    <string name="main_settings">Settings</string>
 
     <!-- Schedule activity -->
     <string name="monday">Monday</string>
@@ -22,7 +33,6 @@
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
     <string name="confirm_delete_title">Do you really want to delete ?</string>
-
 
     <!-- Add/Edit slot dialog -->
     <string name="add_slot_new">New</string>
@@ -47,4 +57,11 @@
     <string name="series">Series</string>
     <string name="exercise">Exercise</string>
     <string name="training_over">Training over !</string>
+
+    <!-- Add exercise activity -->
+    <string name="add_exercise_name_label">Name</string>
+    <string name="add_exercise_image_label">Image</string>
+    <string name="add_exercise_import_img">Import image</string>
+    <string name="add_exercise_remove_img">Remove image</string>
+    <string name="add_exercise_description_label">Description</string>
 </resources>

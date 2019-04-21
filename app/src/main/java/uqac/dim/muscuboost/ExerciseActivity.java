@@ -6,19 +6,18 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-// TODO - Rename to ExerciseActivity
-public class ExerciceActivity  extends AppCompatActivity {
+public class ExerciseActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.exercice_activity);
+        setContentView(R.layout.exercise_activity);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getBaseContext(), AddExerciceActivity.class));
+                startActivity(new Intent(getBaseContext(), AddExerciseActivity.class));
             }
         });
     }

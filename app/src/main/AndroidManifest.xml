@@ -36,23 +36,29 @@
             android:name=".TrainActivity"
             android:label="@string/train_name"
             android:launchMode="singleTask" />
-        <!-- TODO - Extract labels in strings.xml -->
         <activity
-            android:name=".Chronometre"
-            android:label="Chronometer"
+            android:name=".ChronoActivity"
+            android:label="@string/chrono_name"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ExerciceActivity"
-            android:label="Exercises"
+            android:name=".ExerciseActivity"
+            android:label="@string/exercise_name"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".AddExerciceActivity"
-            android:label="Add exercise"
-            android:screenOrientation="portrait" />
+            android:name=".AddExerciseActivity"
+            android:label="@string/add_exercise_name"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ExerciseActivity" />
+        </activity>
 
-        <service android:name=".TrainService" />
         <service
-            android:name=".MonService"
+            android:name=".TrainService"
+            android:enabled="true"
+            android:exported="true" />
+        <service
+            android:name=".ChronoService"
             android:enabled="true"
             android:exported="true" />
     </application>
