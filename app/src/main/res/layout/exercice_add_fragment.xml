@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".AddExerciceActivity">
+    tools:context=".AjoutExercice.AddExerciceActivity">
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -31,7 +31,8 @@
                 android:id="@+id/exercise_image"
                 style="@style/schedule.addSlot.label"
                 android:layout_height="32dp"
-                android:text="Image" />
+                android:text="Image"
+                android:visibility="gone" />
 
             <ImageView
                 android:id="@+id/selected"
@@ -53,6 +54,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Importer Image"
+                    android:visibility="gone"
                     tools:layout_editor_absoluteX="111dp"
                     tools:layout_editor_absoluteY="34dp" />
 
@@ -68,6 +70,7 @@
             <TextView
                 android:id="@+id/exercise_description"
                 style="@style/schedule.addSlot.label"
+                android:layout_height="40dp"
                 android:text="Description" />
 
             <EditText
@@ -79,11 +82,34 @@
                 android:lines="3"
                 android:scrollbars="vertical" />
 
+            <TextView
+                android:id="@+id/exercise_title2"
+                style="@style/schedule.addSlot.label"
+                android:layout_width="match_parent"
+                android:layout_height="39dp"
+                android:text="Muscle principal sollicité" />
+
+            <Spinner
+                android:id="@+id/muscles_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp" />
+
+
             <Button
-                android:id="@+id/add"
+                android:id="@+id/add_exercice"
                 style="@style/schedule.addSlot.add"
-                android:enabled="false"
+                android:enabled="true"
                 android:text="@string/add" />
+
+            <Button
+                android:id="@+id/cancel_addExercice"
+                style="@style/schedule.addSlot.add"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="true"
+                android:text="@string/cancel" />
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 </LinearLayout>

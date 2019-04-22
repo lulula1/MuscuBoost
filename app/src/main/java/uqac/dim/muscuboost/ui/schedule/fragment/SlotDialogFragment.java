@@ -15,7 +15,6 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import uqac.dim.muscuboost.R;
@@ -44,11 +43,11 @@ public class SlotDialogFragment extends BottomSheetDialogFragment {
         dialog.setContentView(contentView);
 
         title = contentView.findViewById(R.id.title);
-        daysSpinner = contentView.findViewById(R.id.days_spinner);
+        daysSpinner = contentView.findViewById(R.id.muscles_spinner);
         timePicker = contentView.findViewById(R.id.time_picker);
         slotsList = contentView.findViewById(R.id.slots);
         emptyListText = contentView.findViewById(R.id.empty_list);
-        addBtn = contentView.findViewById(R.id.add);
+        addBtn = contentView.findViewById(R.id.add_exercice);
     }
 
     @Override

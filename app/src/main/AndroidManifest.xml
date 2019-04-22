@@ -17,7 +17,6 @@
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -46,12 +45,12 @@
         <activity android:name=".Chronometre"
             android:label="Chronometer"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ExerciceActivity"
-            android:label="Exercises"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".AddExerciceActivity"
+        <activity android:name=".AjoutExercice.AddExerciceActivity"
             android:label="Add exercise"
             android:screenOrientation="portrait"/>
+        <activity android:name=".AjoutExercice.ListeExerciseFragment"
+            android:label="Exercises"></activity>
+        <activity android:name=".AjoutExercice.DetailExerciseActivity"></activity>
     </application>
 
 

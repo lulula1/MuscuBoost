@@ -25,7 +25,7 @@
                 android:text="@string/day" />
 
             <Spinner
-                android:id="@+id/days_spinner"
+                android:id="@+id/muscles_spinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -63,7 +63,7 @@
                 android:text="@string/add_slot_empty_slot_list" />
 
             <Button
-                android:id="@+id/add"
+                android:id="@+id/add_exercice"
                 style="@style/schedule.addSlot.add"
                 android:enabled="false"
                 android:text="@string/add" />

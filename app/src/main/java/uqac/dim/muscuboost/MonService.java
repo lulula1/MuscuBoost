@@ -38,8 +38,10 @@ public class MonService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        monBinder = new MonBinderDActivite();
-        Log.i("DIM","SERVICE.ONCREATE");
+        if(monBinder==null) {
+            monBinder = new MonBinderDActivite();
+            Log.i("DIM", "SERVICE.ONCREATE");
+        }
     }
 
 
@@ -58,8 +60,8 @@ public class MonService extends Service {
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         Log.i("DIM","SERVICE.ONDESTROY");
+        super.onDestroy();
     }
 
     @Override
@@ -106,6 +108,7 @@ public class MonService extends Service {
         updateTime=0L;
         lap=0;
         txtTimer="00:00:00";
+        stopSelf();
     }
 
     public void ResumeChrono() {
@@ -118,9 +121,9 @@ public class MonService extends Service {
     }
 
     public String getTxtTimer(){
-        Log.i("DIM","SERVICE.GETTEXTTIMER");
         return txtTimer;
     }
+
 
 }
 

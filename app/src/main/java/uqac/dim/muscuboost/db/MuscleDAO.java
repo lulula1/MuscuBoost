@@ -52,4 +52,22 @@ public class MuscleDAO extends DAOSingleKey<Muscle> {
         return muscles;
     }
 
+    public List<String> selectAllName(){
+        Cursor c = db.rawQuery("SELECT " + NAME + " FROM " + TABLE_NAME , null);
+        List<String> array = new ArrayList<String>();
+        while (c.moveToNext()) {
+            array.add(c.getString(0));
+        }
+        c.close();
+        return array;
+    }
+
+    public Muscle selectName(String name){
+        Cursor c = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE "+ NAME +" = ?", new String[] {name});
+        c.moveToFirst();
+        Muscle m = new Muscle(c.getInt(0),c.getString(1));
+        c.close();
+        return m;
+    }
+
 }

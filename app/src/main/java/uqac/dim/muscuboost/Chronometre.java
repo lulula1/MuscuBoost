@@ -59,9 +59,11 @@ public class Chronometre extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chronometer);
 
-        Intent bindIntent = new Intent(this, MonService.class);
-        setServiceConnection();
-        bindService(bindIntent, monServiceConnection, Context.BIND_AUTO_CREATE);
+        if(monService==null) {
+            Intent bindIntent = new Intent(this, MonService.class);
+            setServiceConnection();
+            bindService(bindIntent, monServiceConnection, Context.BIND_AUTO_CREATE);
+        }
 
 
         btnStart = (Button) findViewById(R.id.btnStart);
@@ -73,8 +75,6 @@ public class Chronometre extends AppCompatActivity {
         container = (LinearLayout) findViewById(R.id.container);
 
         sharedPreferences = this.getSharedPreferences("LOAD_PREF",MODE_PRIVATE);
-
-
 
         if(sharedPreferences.contains(Run))
              LoadPreferences();
@@ -114,12 +114,12 @@ public class Chronometre extends AppCompatActivity {
             public void onClick(View v) {
 
                 LayoutInflater inflater = (LayoutInflater) getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                View addView = inflater.inflate(R.layout.row,null);
+                View addView = inflater.inflate(R.layout.ligne_tour,null);
                 TextView txtTour = (TextView) addView.findViewById(R.id.txtTour);
                 TextView txtTemps = (TextView) addView.findViewById(R.id.txtTemps);
                 lap = LapChrono();
                 txtTour.setText("Tour :  "+String.format("%02d",lap));
-                CharSequence time = getTxtTimer();
+                CharSequence time = monService.getTxtTimer();
                 txtTemps.setText("Temps :  "+time);
                 container.addView(addView);
             }
@@ -129,7 +129,7 @@ public class Chronometre extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 ResetChrono();
-                arreterService();
+                //arreterService();
 
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.clear();
@@ -205,11 +205,6 @@ public class Chronometre extends AppCompatActivity {
         monService.ResumeChrono();
     }
 
-    public String getTxtTimer(){
-        String txtTimer = monService.getTxtTimer();
-        return txtTimer;
-    }
-
 /*
     @Override
     protected void onSaveInstanceState(Bundle outState){
@@ -272,15 +267,18 @@ public class Chronometre extends AppCompatActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        arreterService();
+        Log.i("DIM","CHRONOMETRE.ONDESTROY");
+
         if (mBound) {
             unbindService(monServiceConnection);
             mBound = false;
         }
 
+       /*
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
-        editor.commit();
+        editor.commit();*/
+        //SavePreferences();
     }
 
     @Override
