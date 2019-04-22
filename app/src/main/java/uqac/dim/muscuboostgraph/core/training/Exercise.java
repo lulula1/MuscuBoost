@@ -7,10 +7,11 @@ public class Exercise {
     private String name;
     private  String description;
 
-    public Exercise(long id, String name, Muscle muscle) {
+    public Exercise(long id, String name, Muscle muscle, String description) {
         this.id = id;
         this.muscle = muscle;
         this.name = name;
+        this.description = description;
     }
 
     public long getId() {

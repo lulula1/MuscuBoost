@@ -59,41 +59,36 @@ public class StatisticsDAO extends DAOBase {
     }
 
     public DataPoint[] averageWeightForEachDateWhereExercice(List<Integer> list){
-        StringBuilder where = new StringBuilder();
+        String where = new String();
         for(int i = 0; i < list.size()-1; i++){
-            where.append(list.get(i)).append(",");
+            where += list.get(i) + " , ";
         }
         if(list.size() > 0)
-            where.append(list.get(list.size() - 1));
+            where += list.get(list.size() - 1);
+
+        Log.i("DIM", where.toString());
 
         String query = "SELECT " + StatExerciseDAO.DATE_ENREGISTREMENT + ", AVG(" + StatisticsDAO.POIDS
                 + ") FROM " + StatisticsDAO.TABLE_NAME + ", " + StatExerciseDAO.TABLE_NAME
-                + " WHERE stat_exercise.stat_id = statistic.id AND " + StatExerciseDAO.EXERCISE_ID + " IN (?)";
+                + " WHERE " + StatExerciseDAO.STAT_ID + " = " + StatisticsDAO.KEY
+                + " AND " + StatExerciseDAO.EXERCISE_ID + " IN ( ? )"
+                + " GROUP BY " + StatExerciseDAO.DATE_ENREGISTREMENT;
 
-        Cursor c = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
+        Cursor c = db.rawQuery(query, new String[]{where});
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         DataPoint[] serie = new DataPoint[c.getCount()];
 
-        c.moveToFirst();
-        Log.i("DIM", ""+c.getDouble(1));
-        try {
-            serie[0] = new DataPoint(format.parse(c.getString(0)), c.getDouble(1));
-        } catch (ParseException e) {
-            e.printStackTrace();
+        int i = 0;
+        while (c.moveToNext() && c.getCount() != 0){
+            try {
+                serie[i] = new DataPoint(format.parse(c.getString(0)), c.getDouble(1));
+                Log.i("DIM", serie[i].getX() + "\t" + serie[i].getY());
+                i++;
+            }catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
-
-//        int i = 0;
-//        while (c.moveToNext() && c.getCount() != 0){
-//            try {
-//                Log.i("DIM", c.getString(0));
-//                serie[i] = new DataPoint(format.parse(c.getString(0)), c.getDouble(1));
-//                Log.i("DIM", c.getString(0) + "\t" + c.getDouble(1));
-//                i++;
-//            }catch (ParseException e) {
-//                e.printStackTrace();
-//            }
-//        }
 
         c.close();
         return serie;

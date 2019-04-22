@@ -3,11 +3,13 @@ package uqac.dim.muscuboostgraph;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 
 import java.io.IOException;
 
+import io.github.douglasjunior.androidSimpleTooltip.SimpleTooltip;
 import uqac.dim.muscuboostgraph.db.DatabaseHandler;
 import uqac.dim.muscuboostgraph.graph.ListOptionGraph;
 
@@ -25,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
         DatabaseHandler db = new DatabaseHandler(getApplicationContext());
         try {
+            db.db_delete();
             db.createDatabase();
         } catch (IOException e) {
             e.printStackTrace();

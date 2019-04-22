@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,14 +12,21 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.DataPointInterface;
 import com.jjoe64.graphview.series.LineGraphSeries;
+import com.jjoe64.graphview.series.OnDataPointTapListener;
+import com.jjoe64.graphview.series.Series;
 
 import org.w3c.dom.Text;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import io.github.douglasjunior.androidSimpleTooltip.SimpleTooltip;
 import uqac.dim.muscuboostgraph.R;
 import uqac.dim.muscuboostgraph.core.training.Statistics;
 import uqac.dim.muscuboostgraph.db.ExerciseDAO;
@@ -91,20 +99,40 @@ public class Graphique extends Fragment {
         else{
 
         }
-        return inflater.inflate(R.layout.fragment_graphique, container, false);
+        return view;
     }
 
-    private View createGraphique(DataPoint[] seriesPoint){
-        View v = new View(getActivity());
-        if(seriesPoint.length == 0){
-            ((TextView)v).setText("Aucune donnée");
-        }
-        else{
-            LineGraphSeries<DataPoint> series = new LineGraphSeries<>(seriesPoint);
+    private GraphView createGraphique(DataPoint[] seriesPoint){
+        final GraphView v;
+        final LineGraphSeries<DataPoint> seriesGraph = new LineGraphSeries<>(seriesPoint);
 
-            v = new GraphView(getActivity());
-            ((GraphView)v).addSeries(series);
-        }
+        seriesGraph.setOnDataPointTapListener(new OnDataPointTapListener() {
+            @Override
+            public void onTap(Series series, DataPointInterface dataPoint) {
+
+            }
+        });
+
+        seriesGraph.setDrawDataPoints(true);
+        seriesGraph.setDataPointsRadius(12);
+        v = new GraphView(getActivity());
+        v.addSeries(seriesGraph);
+
+        v.getGridLabelRenderer().setLabelFormatter(
+                new DateAsXAxisLabelFormatter(getActivity(), new SimpleDateFormat("dd/MM/yyyy")));
+
+        v.getViewport().setMaxX(seriesPoint[seriesPoint.length-1].getX());
+        v.getViewport().setMinX(seriesPoint[0].getX());
+        v.getViewport().setMinY(0);
+        v.getViewport().setMaxY(120);
+
+        v.getViewport().setYAxisBoundsManual(true);
+        v.getViewport().setXAxisBoundsManual(true);
+
+        v.getGridLabelRenderer().setHorizontalAxisTitle("Date");
+        v.getGridLabelRenderer().setVerticalAxisTitle("Poids");
+        v.getGridLabelRenderer().setHorizontalLabelsVisible(true);
+        v.getGridLabelRenderer().setVerticalLabelsVisible(true);
 
         return v;
     }
