@@ -10,6 +10,7 @@ public class Exercise implements Serializable {
     private final long ID;
     private String name;
     private Muscle muscle;
+    private String description;
 
     /**
      * Creates an exercise.
@@ -18,10 +19,11 @@ public class Exercise implements Serializable {
      * @param name Name of the exercise
      * @param muscle Muscle involved in the exercise
      */
-    public Exercise(long id, String name, Muscle muscle) {
+    public Exercise(long id, String name, Muscle muscle,  String description) {
         ID = id;
         this.name = name;
         this.muscle = muscle;
+        this.description = description;
     }
 
     /**
@@ -61,12 +63,25 @@ public class Exercise implements Serializable {
     }
 
     /**
-     * Returns the muscle involved in the exercise.
+     * Returns the description involved in the exercise.
      *
-     * @return Muscle of the exercise
+     * @return Description of the exercise
      */
     public Muscle getMuscle() {
         return muscle;
+    }
+
+    public void setDescription (String description) {
+        this.description = description;
+    }
+
+    /**
+     * Returns the description involved in the exercise.
+     *
+     * @return description of the exercise
+     */
+    public String getDescription() {
+        return description;
     }
 
     /**
@@ -87,6 +102,11 @@ public class Exercise implements Serializable {
         return other.ID == ID
                 && other.name.equals(name)
                 && other.muscle.equals(muscle);
+    }
+
+    @Override
+    public String toString() {
+        return  name;
     }
 
 }

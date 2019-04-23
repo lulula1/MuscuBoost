@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    tools:context=".StatActivity">
+
+    <LinearLayout
+        android:id="@+id/choix_type_stat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/button_par_muscle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/par_muscle" />
+
+        <Button
+            android:id="@+id/button_par_exercice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/par_exercice" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_below="@id/choix_type_stat">
+
+        <FrameLayout
+            android:id="@+id/fragment_list_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="70">
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/fragment_graph_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="30">
+        </FrameLayout>
+    </LinearLayout>
+
+</RelativeLayout>
+

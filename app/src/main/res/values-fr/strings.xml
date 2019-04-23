@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <!-- Misc -->
     <string name="yes">Oui</string>
     <string name="no">Non</string>
@@ -9,7 +10,7 @@
     <string name="app_name">MuscuBoost</string>
     <string name="schedule_name">Planning</string>
     <string name="training_showcase_name">Entraînement</string>
-    <string name="train_name">Entraînement en cours</string>
+    <string name="train_name">Entraînement</string>
     <string name="chrono_name">Chronomètre</string>
     <string name="exercise_name">Exercices</string>
     <string name="add_exercise_name">Nouvel exercice</string>
@@ -59,6 +60,10 @@
     <string name="exercise">Exercice</string>
     <string name="training_over">Entraînement terminé !</string>
 
+    <string name="par_muscle">PAR MUSCLE</string>
+    <string name="par_exercice">PAR EXERCICE</string>
+    <string name="donnee_insuffisante">Données insufisante</string>
+
     <!-- Chronometer activity -->
     <string name="chrono_start">Débuter</string>
     <string name="chrono_pause">Pause</string>
@@ -72,4 +77,5 @@
     <string name="add_exercise_import_img">Importer image</string>
     <string name="add_exercise_remove_img">Retirer image</string>
     <string name="add_exercise_description_label">Description</string>
+
 </resources>

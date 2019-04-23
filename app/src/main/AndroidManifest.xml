@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="uqac.dim.muscuboost">
 
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
@@ -36,6 +36,11 @@
             android:name=".TrainActivity"
             android:label="@string/train_name"
             android:launchMode="singleTask" />
+
+        <service
+            android:name=".MonService"
+            android:enabled="true"
+            android:exported="true" />
         <activity
             android:name=".ChronoActivity"
             android:label="@string/chrono_name">
@@ -43,21 +48,24 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <activity
-            android:name=".ExerciseActivity"
-            android:label="@string/exercise_name">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
-        </activity>
-        <activity
-            android:name=".AddExerciseActivity"
-            android:label="@string/add_exercise_name">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ExerciseActivity" />
-        </activity>
 
+        <activity
+            android:name=".Chronometre"
+            android:label="Chronometer"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AjoutExercice.AddExerciceActivity"
+            android:label="Add exercise"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AjoutExercice.ListeExerciseFragment"
+            android:label="Exercises" />
+        <activity
+            android:name=".AjoutExercice.DetailExerciseActivity"
+            android:label="Détails" />
+        <activity android:name=".StatActivity"
+            android:screenOrientation="landscape"
+            android:label="Statistiques"></activity>
         <service
             android:name=".TrainService"
             android:enabled="true"

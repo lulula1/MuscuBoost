@@ -64,7 +64,9 @@
                     android:text="@string/main_chrono" />
             </LinearLayout>
 
-            <LinearLayout style="@style/main.wrapper">
+            <LinearLayout
+                style="@style/main.wrapper"
+                android:onClick="startStatistic">
 
                 <ImageView
                     android:id="@+id/imgStats"
