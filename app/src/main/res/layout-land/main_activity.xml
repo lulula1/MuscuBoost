@@ -69,6 +69,7 @@
                 <ImageView
                     android:id="@+id/imgStats"
                     style="@style/main.icon"
+                    android:onClick="clickStatistique"
                     app:srcCompat="@drawable/icon_graph" />
 
                 <TextView

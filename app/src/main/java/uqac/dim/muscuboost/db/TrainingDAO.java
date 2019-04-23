@@ -19,11 +19,6 @@ public class TrainingDAO extends DAOSingleKey<Training> {
     public static final String KEY = "id";
     public static final String NAME = "name";
 
-    public static final String TABLE_CREATE =
-            "CREATE TABLE " + TABLE_NAME + " ("
-                    + KEY + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                    + NAME + " VARCHAR(30) NOT NULL );";
-
     public TrainingDAO(Context context) {
         super(context, TABLE_NAME, KEY);
     }

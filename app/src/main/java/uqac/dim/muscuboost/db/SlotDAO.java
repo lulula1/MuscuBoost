@@ -22,16 +22,6 @@ public class SlotDAO extends DAOSingleKey<ScheduleSlot> {
     public static final String MINUTE = "minute";
     public static final String TRAINING_ID = "training_id";
 
-    public static final String TABLE_CREATE =
-            "CREATE TABLE " + TABLE_NAME + " ("
-                    + KEY + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                    + DAY + " INTEGER,"
-                    + HOUR + " INTEGER,"
-                    + MINUTE + " INTEGER NOT NULL,"
-                    + TRAINING_ID + " INTEGER,"
-                    + "FOREIGN KEY (" + TRAINING_ID + ") REFERENCES "
-                    + TrainingDAO.TABLE_NAME + "(" + TrainingDAO.KEY + ") ON DELETE CASCADE );";
-
     public SlotDAO(Context context) {
         super(context, TABLE_NAME, KEY);
     }
