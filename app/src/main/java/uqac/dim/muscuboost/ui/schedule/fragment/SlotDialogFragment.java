@@ -1,8 +1,12 @@
 package uqac.dim.muscuboost.ui.schedule.fragment;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.text.format.DateFormat;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -22,7 +26,10 @@ import uqac.dim.muscuboost.R;
 import uqac.dim.muscuboost.core.schedule.Day;
 import uqac.dim.muscuboost.core.schedule.ISlottable;
 import uqac.dim.muscuboost.core.training.Training;
+import uqac.dim.muscuboost.db.SlotDAO;
 import uqac.dim.muscuboost.db.TrainingDAO;
+import uqac.dim.muscuboost.ui.dialog.ConfirmDialog;
+import uqac.dim.muscuboost.ui.dialog.EditTextDialog;
 
 public class SlotDialogFragment extends BottomSheetDialogFragment {
 
@@ -57,22 +64,14 @@ public class SlotDialogFragment extends BottomSheetDialogFragment {
     public void onStart() {
         super.onStart();
 
-        final int MAX_SLOTS_SHOWN = 5;
-
         daysSpinner.setAdapter(new ArrayAdapter<>(getContext(),
                 android.R.layout.simple_spinner_dropdown_item, getWrappedWeek()));
 
         timePicker.setIs24HourView(DateFormat.is24HourFormat(getContext()));
 
-        if(slottables != null && !slottables.isEmpty()) {
-            slotsList.setAdapter(new ArrayAdapter<>(getContext(),
-                    android.R.layout.simple_list_item_single_choice, getWrappedSlottables()));
-            slotsList.setLayoutParams(new LinearLayout.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    Math.min(slottables.size(), MAX_SLOTS_SHOWN) * 100));
-            slotsList.setVisibility(View.VISIBLE);
-            emptyListText.setVisibility(View.GONE);
-        }
+        slotsList.setAdapter(new ArrayAdapter<>(getContext(),
+                android.R.layout.simple_list_item_single_choice, getWrappedSlottables()));
+        updateSlotsList();
 
         slotsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -80,6 +79,7 @@ public class SlotDialogFragment extends BottomSheetDialogFragment {
                 addBtn.setEnabled(true);
             }
         });
+        registerForContextMenu(slotsList);
 
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,7 +104,7 @@ public class SlotDialogFragment extends BottomSheetDialogFragment {
                         String trainingName = editText.getText().toString().trim();
                         editText.getText().clear();
 
-                        if(!trainingName.isEmpty()) {
+                        if (!trainingName.isEmpty()) {
                             TrainingDAO trainingDao = new TrainingDAO(getContext());
                             trainingDao.open();
 
@@ -113,11 +113,90 @@ public class SlotDialogFragment extends BottomSheetDialogFragment {
                                     (ArrayAdapter<Wrapper<Training>>) slotsList.getAdapter();
                             adapter.add(new Wrapper<>(training, training.getName()));
                             adapter.notifyDataSetChanged();
+                            updateSlotsList();
 
                             trainingDao.close();
                         }
                     }
                 });
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                                    ContextMenu.ContextMenuInfo menuInfo) {
+        final int CONTEXT_MENU_RENAME = 0;
+        final int CONTEXT_MENU_DELETE = 1;
+
+        menu.add(Menu.NONE, CONTEXT_MENU_RENAME, Menu.NONE, "Rename");
+        menu.add(Menu.NONE, CONTEXT_MENU_DELETE, Menu.NONE, "Delete");
+
+        MenuItem.OnMenuItemClickListener onMenuItemClickListener =
+           new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                final ArrayAdapter adapter = (ArrayAdapter<Wrapper<?>>) slotsList.getAdapter();
+                int itemPosition = ((AdapterView.AdapterContextMenuInfo) item.getMenuInfo())
+                        .position;
+                final Wrapper<?> wrapper = (Wrapper<?>) adapter.getItem(itemPosition);
+                if(wrapper == null) return false;
+                final Training training = (Training) wrapper.getItem();
+
+                if (training == null)
+                    return false;
+
+                final SlotDAO slotDao = new SlotDAO(getContext());
+                final TrainingDAO trainingDao = new TrainingDAO(getContext());
+                slotDao.open();
+                trainingDao.open();
+                switch (item.getItemId()) {
+                    case CONTEXT_MENU_RENAME:
+                        new EditTextDialog(getContext())
+                                .setTitle(R.string.rename_training)
+                                .setText(training.getName())
+                                .setOnSubmitListener(new EditTextDialog.OnSubmitListener() {
+                                    @Override
+                                    public void onSubmit(String value) {
+                                        value = value.trim();
+                                        if(!value.isEmpty()) {
+                                            training.setName(value);
+                                            trainingDao.update(training);
+                                            trainingDao.close();
+                                            adapter.clear();
+                                            adapter.addAll(getWrappedSlottables());
+                                            adapter.notifyDataSetChanged();
+                                        }
+                                    }
+                                })
+                                .show();
+                        break;
+                    case CONTEXT_MENU_DELETE:
+                        DialogInterface.OnClickListener onClickListener =
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        trainingDao.delete(training.getId());
+                                        adapter.remove(wrapper);
+                                        trainingDao.close();
+                                        adapter.notifyDataSetChanged();
+                                    }
+                                };
+                        if(slotDao.isTrainingInUse(training.getId()))
+                            new ConfirmDialog(getContext())
+                                    .setTitle(R.string.confirm_delete_title)
+                                    .setMessage(R.string.training_in_use)
+                                    .setPositiveListener(onClickListener)
+                                    .show();
+                        else
+                            onClickListener.onClick(null, 0);
+                        break;
+                }
+                slotDao.close();
+                return true;
+            }
+        };
+
+        for (int i = 0; i < menu.size(); i++)
+            menu.getItem(i).setOnMenuItemClickListener(onMenuItemClickListener);
     }
 
     public void setSlottables(List<? extends ISlottable> slottables) {
@@ -128,9 +207,21 @@ public class SlotDialogFragment extends BottomSheetDialogFragment {
         onSlotSubmit = callback;
     }
 
+    private void updateSlotsList() {
+        final int MAX_SLOTS_SHOWN = 5;
+        boolean showList = !slotsList.getAdapter().isEmpty();
+
+        if (showList)
+            slotsList.setLayoutParams(new LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    Math.min(slotsList.getAdapter().getCount(), MAX_SLOTS_SHOWN) * 100));
+        slotsList.setVisibility(showList ? View.VISIBLE : View.GONE);
+        emptyListText.setVisibility(showList ? View.GONE : View.VISIBLE);
+    }
+
     private List<Wrapper<Day>> getWrappedWeek() {
         List<Wrapper<Day>> weekWrappers = new ArrayList<>();
-        for(Day day : Day.getWeek()) {
+        for (Day day : Day.getWeek()) {
             int nameResId = getResources()
                     .getIdentifier(day.toString(), "string", getContext().getPackageName());
             weekWrappers.add(new Wrapper<>(day, getResources().getString(nameResId)));
@@ -140,8 +231,8 @@ public class SlotDialogFragment extends BottomSheetDialogFragment {
 
     private List<Wrapper<ISlottable>> getWrappedSlottables() {
         List<Wrapper<ISlottable>> slottableWrappers = new ArrayList<>();
-        if(slottables != null)
-            for(ISlottable slottable : slottables)
+        if (slottables != null)
+            for (ISlottable slottable : slottables)
                 slottableWrappers.add(new Wrapper<>(slottable, slottable.getSlotLabel()));
         return slottableWrappers;
     }

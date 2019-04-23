@@ -34,7 +34,18 @@ public class AbstractDialog<T extends AbstractDialog<T>> implements DialogInterf
     }
 
     public T setTitle(int resid) {
-        return setTitle(context.getString(resid));
+        builder.setTitle(resid);
+        return (T) this;
+    }
+
+    public T setMessage(String message) {
+        builder.setMessage(message);
+        return (T) this;
+    }
+
+    public T setMessage(int resid) {
+        builder.setMessage(resid);
+        return (T) this;
     }
 
     public void show() {

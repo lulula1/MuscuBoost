@@ -2,8 +2,7 @@
 <resources>
     <!-- Misc -->
     <string name="yes">Oui</string>
-    <string name="no">Non</string>
-    <string name="ok">Ok</string>
+    <string name="ok">OK</string>
     <string name="cancel">Annuler</string>
     <string name="confirm_delete_title">Voulez-vous vraiment supprimer ?</string>
     <string name="error_occurred">Une erreur est survenue</string>
@@ -45,7 +44,9 @@
     <string name="add">Ajouter</string>
     <string name="save">Sauvegarder</string>
     <string name="add_slot_empty_slot_list">Aucun entraînement disponible</string>
-    <string name="new_training">Nouveau entraînement</string>s
+    <string name="new_training">Nouveau entraînement</string>
+    <string name="rename_training">Renommer l\'entraînement :</string>
+    <string name="training_in_use">Cet entraînement est actuellement utilisé dans votre planning.</string>
 
     <!-- Training showcase activity -->
     <string name="training_empty_exercise_list">Aucun exercice</string>

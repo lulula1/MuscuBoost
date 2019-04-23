@@ -97,4 +97,9 @@ public class SlotDAO extends DAOSingleKey<ScheduleSlot> {
         return slots;
     }
 
+    public boolean isTrainingInUse(long trainingId) {
+        return !getAll(SlotDAO.TRAINING_ID + " = ?",
+                new String[]{String.valueOf(trainingId)}).isEmpty();
+    }
+
 }

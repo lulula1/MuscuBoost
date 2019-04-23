@@ -2,8 +2,7 @@
 <resources>
     <!-- Misc -->
     <string name="yes">Yes</string>
-    <string name="no">No</string>
-    <string name="ok">Ok</string>
+    <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="confirm_delete_title">Do you really want to delete ?</string>
     <string name="error_occurred">An error occurred</string>
@@ -46,6 +45,8 @@
     <string name="save">Save</string>
     <string name="add_slot_empty_slot_list">No training available</string>
     <string name="new_training">New training name</string>
+    <string name="rename_training">Rename training :</string>
+    <string name="training_in_use">This training is currently in use in your schedule.</string>
 
     <!-- Training showcase activity -->
     <string name="training_empty_exercise_list">Not any exercise</string>
