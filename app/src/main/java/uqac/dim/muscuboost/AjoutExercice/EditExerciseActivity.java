@@ -15,21 +15,21 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 import uqac.dim.muscuboost.R;
 import uqac.dim.muscuboost.core.training.Exercise;
 import uqac.dim.muscuboost.core.training.Muscle;
+import uqac.dim.muscuboost.db.DatabaseHandler;
 import uqac.dim.muscuboost.db.ExerciseDAO;
 import uqac.dim.muscuboost.db.MuscleDAO;
 
 import android.widget.AdapterView.OnItemSelectedListener;
 
-
-public class AddExerciceActivity  extends AppCompatActivity implements OnItemSelectedListener{
-
-    private Button btnImport, btnRemove, btnAdd, btnCancel ;
+public class EditExerciseActivity extends AppCompatActivity implements OnItemSelectedListener{
+    private Button btnImport, btnRemove, btnEdit, btnCancel ;
     private TextView txtTitre;
     private TextView txtDescription;
     private ImageView selectedImg;
@@ -37,21 +37,22 @@ public class AddExerciceActivity  extends AppCompatActivity implements OnItemSel
     private ExerciseDAO Exercise_datasource;
     private MuscleDAO Muscle_datasource;
     private String s;
-
-
+    private Exercise exercise;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.exercice_add_fragment);
+        setContentView(R.layout.exercise_edit);
 
         btnImport = findViewById(R.id.import_img);
         btnRemove = findViewById(R.id.remove_img);
-        btnAdd = findViewById(R.id.edit_exercice);
+        btnEdit = findViewById(R.id.edit_exercice);
         btnCancel = findViewById(R.id.cancel_addExercice);
         selectedImg = findViewById(R.id.selected);
         txtTitre = findViewById(R.id.editTxt_exercise_title);
         txtDescription = findViewById(R.id.editTxt_exercise_description);
+
+
 
         Muscle_datasource = new MuscleDAO(this);
         Muscle_datasource.open();
@@ -59,11 +60,20 @@ public class AddExerciceActivity  extends AppCompatActivity implements OnItemSel
         Exercise_datasource = new ExerciseDAO(this);
         Exercise_datasource.open();
 
+        Bundle extras = getIntent().getExtras();
+        exercise = (Exercise) extras.getSerializable("ExerciceParam");
+
+
+        txtTitre.setText(exercise.getName());
+        txtDescription.setText(exercise.getDescription());
+
         Spinner spinner = (Spinner) findViewById(R.id.muscles_spinner);
         spinner.setOnItemSelectedListener(this);
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, Muscle_datasource.selectAllName());
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(dataAdapter);
+
+
 
         /*
         btnImport.setOnClickListener(new View.OnClickListener() {
@@ -86,23 +96,19 @@ public class AddExerciceActivity  extends AppCompatActivity implements OnItemSel
         });
         */
 
-        btnAdd.setOnClickListener(new View.OnClickListener() {
+        btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), txtTitre.getText().toString(), Toast.LENGTH_LONG).show();
-                if (txtTitre.getText().toString().matches("") || txtDescription.getText().toString().matches("")) {
-                    Toast.makeText(getApplicationContext(), "Veuillez tout remplir", Toast.LENGTH_LONG).show();
-                //} else if (Exercise_datasource.selectName(txtTitre.getText().toString())!=null){
-                    //Toast.makeText(getApplicationContext(), "Exercice déjà existant", Toast.LENGTH_LONG).show();
-                }else{
-                    Muscle m = Muscle_datasource.selectName(s);
-                    Exercise exercise = Exercise_datasource.insert(txtTitre.getText().toString(), m, txtDescription.getText().toString());
+                //if (Exercise_datasource.selectName(txtTitre.getText().toString())!=null) {
+                  //  Toast.makeText(getApplicationContext(), "Exercice déjà existant", Toast.LENGTH_LONG).show();
+                //}else {
+                    exercise.setName(txtTitre.getText().toString());
+                    exercise.setDescription(txtDescription.getText().toString());
                     Intent returnIntent = new Intent();
-                    returnIntent.putExtra("resultFromAddExercice",exercise.getName());
-                    setResult(Activity.RESULT_OK,returnIntent);
+                    returnIntent.putExtra("resultFromEditExercise", exercise);
+                    setResult(Activity.RESULT_OK, returnIntent);
                     finish();
-                    Toast.makeText(getApplicationContext(), "Exercice ajouter avec succes",Toast.LENGTH_LONG).show();
-                }
+                //}
             }
         });
 
@@ -169,3 +175,5 @@ public class AddExerciceActivity  extends AppCompatActivity implements OnItemSel
         // TODO Auto-generated method stub
     }
 }
+
+

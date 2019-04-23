@@ -15,6 +15,7 @@
 
         <Button
             android:id="@+id/button_par_muscle"
+            style="@style/schedule.addSlot.add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -22,6 +23,7 @@
 
         <Button
             android:id="@+id/button_par_exercice"
+            style="@style/schedule.addSlot.add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"

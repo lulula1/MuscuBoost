@@ -39,8 +39,12 @@ public class ExerciseDAO extends DAOSingleKey<Exercise> {
     }
 
     public void delete(Exercise exercise) {
-        String[] whereArgs = {String.valueOf(exercise.getId())};
-        db.delete(TABLE_NAME, KEY + " = ?", whereArgs);
+        try {
+            String[] whereArgs = {String.valueOf(exercise.getId())};
+            db.delete(TABLE_NAME, KEY + " = ?", whereArgs);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public Exercise insert(String name, Muscle muscle, String description) {

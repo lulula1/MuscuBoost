@@ -48,14 +48,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-
-        <activity
-            android:name=".Chronometre"
-            android:label="Chronometer"
-            android:screenOrientation="portrait" />
         <activity
             android:name=".AjoutExercice.AddExerciceActivity"
             android:label="Add exercise"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AjoutExercice.EditExerciseActivity"
+            android:label="Edit exercise"
             android:screenOrientation="portrait" />
         <activity
             android:name=".AjoutExercice.ListeExerciseFragment"

@@ -1,4 +1,4 @@
-package uqac.dim.muscuboostgraph.graph;
+package uqac.dim.muscuboost.graph;
 
 import android.graphics.Color;
 import android.os.Bundle;
