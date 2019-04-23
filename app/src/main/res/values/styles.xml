@@ -41,6 +41,12 @@
         <item name="android:textColor">@android:color/white</item>
     </style>
 
+    <style name="edittext">
+        <item name="android:backgroundTint">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textColorHint">@android:color/darker_gray</item>
+    </style>
+
     <style name="main" />
 
     <style name="main.wrapper">
@@ -163,14 +169,11 @@
         <item name="android:textColor">@android:color/darker_gray</item>
     </style>
 
-    <style name="schedule.addSlot.newTrainingEditText">
+    <style name="schedule.addSlot.newTrainingEditText" parent="edittext">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_weight">1</item>
-        <item name="android:backgroundTint">@color/colorPrimary</item>
         <item name="android:padding">8dp</item>
-        <item name="android:textColor">@color/colorPrimary</item>
-        <item name="android:textColorHint">@android:color/darker_gray</item>
     </style>
 
     <style name="schedule.addSlot.newTrainingSubmit">

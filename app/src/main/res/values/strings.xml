@@ -3,6 +3,9 @@
     <!-- Misc -->
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancel</string>
+    <string name="confirm_delete_title">Do you really want to delete ?</string>
     <string name="error_occurred">An error occurred</string>
 
     <!-- Activity names -->
@@ -33,7 +36,6 @@
     <string name="empty_row">Rest</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
-    <string name="confirm_delete_title">Do you really want to delete ?</string>
 
     <!-- Add/Edit slot dialog -->
     <string name="add_slot_new">New</string>
@@ -50,7 +52,6 @@
     <string name="training_start">Start training</string>
     <string name="new_exercises">New exercises</string>
     <string name="no_exercise_available">No exercise available</string>
-    <string name="cancel">Cancel</string>
 
     <!-- Train activity -->
     <string name="notif_training">Training</string>
