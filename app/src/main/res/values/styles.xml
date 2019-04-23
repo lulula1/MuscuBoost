@@ -289,4 +289,19 @@
         <item name="android:paddingEnd">24dp</item>
     </style>
 
+    <style name="chrono" />
+
+    <style name="chrono.timer">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:layout_marginTop">64dp</item>
+        <item name="android:textSize">40sp</item>
+    </style>
+
+    <style name="chrono.button" parent="button">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+    </style>
 </resources>

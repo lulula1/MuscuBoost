@@ -10,6 +10,7 @@
     <string name="schedule_name">Planning</string>
     <string name="training_showcase_name">Entraînement</string>
     <string name="train_name">Entraînement en cours</string>
+    <string name="chrono_name">Chronomètre</string>
     <string name="exercise_name">Exercices</string>
     <string name="add_exercise_name">Nouvel exercice</string>
 
@@ -57,6 +58,13 @@
     <string name="series">Série</string>
     <string name="exercise">Exercice</string>
     <string name="training_over">Entraînement terminé !</string>
+
+    <!-- Chronometer activity -->
+    <string name="chrono_start">Débuter</string>
+    <string name="chrono_pause">Pause</string>
+    <string name="chrono_lap">Tour</string>
+    <string name="chrono_resume">Reprendre</string>
+    <string name="chrono_reset">Réinitialiser</string>
 
     <!-- Add exercise activity -->
     <string name="add_exercise_name_label">Nom</string>
