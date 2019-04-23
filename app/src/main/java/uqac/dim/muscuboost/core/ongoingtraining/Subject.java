@@ -11,14 +11,14 @@ public interface Subject {
      * Registers an Observe in the observers list.
      * Registered observers will be notified when notifyUpdate is called.
      *
-     * @param observer TODO
+     * @param observer Observer to be registered
      */
     void register(Observer observer);
 
     /**
      * Unregisters an Observer from the observers list.
      *
-     * @param observer TODO
+     * @param observer Observer to be unregistered
      */
     void unregister(Observer observer);
 

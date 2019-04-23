@@ -38,16 +38,21 @@
             android:launchMode="singleTask" />
         <activity
             android:name=".ChronoActivity"
-            android:label="@string/chrono_name"
-            android:screenOrientation="portrait" />
+            android:label="@string/chrono_name">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
         <activity
             android:name=".ExerciseActivity"
-            android:label="@string/exercise_name"
-            android:screenOrientation="portrait" />
+            android:label="@string/exercise_name">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
         <activity
             android:name=".AddExerciseActivity"
-            android:label="@string/add_exercise_name"
-            android:screenOrientation="portrait">
+            android:label="@string/add_exercise_name">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ExerciseActivity" />

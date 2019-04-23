@@ -26,8 +26,6 @@ public class AddExerciseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_exercice_fragment);
-        if(getActionBar() != null)
-            getActionBar().setHomeButtonEnabled(true);
 
         btnImport = findViewById(R.id.import_img);
         btnRemove = findViewById(R.id.remove_img);

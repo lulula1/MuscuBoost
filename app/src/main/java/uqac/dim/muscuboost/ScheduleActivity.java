@@ -71,22 +71,6 @@ public class ScheduleActivity extends AppCompatActivity {
         });
 
         schedule = new Schedule();
-
-        // TODO - Remove test values
-        /*ScheduleSlot legs = slotDao.insert(Day.MONDAY, 19, 0, trainingDao.insert("Jambes"));
-        ScheduleSlot pectorals = slotDao.insert(Day.TUESDAY, 19, 0, trainingDao.insert("Pectoraux"));
-        ScheduleSlot arms = slotDao.insert(Day.THURSDAY, 19, 0, trainingDao.insert("Bras"));
-        ScheduleSlot back = slotDao.insert(Day.FRIDAY, 19, 0, trainingDao.insert("Dos"));
-        ScheduleSlot shoulders = slotDao.insert(Day.SUNDAY, 17, 0, trainingDao.insert("Epaules"));
-
-        uqac.dim.muscuboost.db.TrainingExerciseDAO trainingExerciseDao =
-                new uqac.dim.muscuboost.db.TrainingExerciseDAO(this);
-        trainingExerciseDao.open();
-        trainingExerciseDao.insert(pectorals.getId(), 1);
-        trainingExerciseDao.insert(arms.getId(), 2);
-        trainingExerciseDao.insert(arms.getId(), 3);
-        trainingExerciseDao.insert(shoulders.getId(), 4);
-        trainingExerciseDao.close();*/
     }
 
     @Override
