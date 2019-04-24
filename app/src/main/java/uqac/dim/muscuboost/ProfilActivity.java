@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +27,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import uqac.dim.muscuboost.core.person.Body;
+import uqac.dim.muscuboost.core.person.EditBodyDetailsDialogFragment;
 import uqac.dim.muscuboost.core.person.Person;
 import uqac.dim.muscuboost.db.BodyDAO;
 import uqac.dim.muscuboost.db.PersonDAO;
@@ -37,7 +39,7 @@ public class ProfilActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.profil_activity);
+        setContentView(R.layout.activity_profil);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -54,10 +56,10 @@ public class ProfilActivity extends AppCompatActivity {
         prenom.setText(person.getSurname());
         age.setText(person.calculAge() + " ans");
 
-        BodyDAO bodyDao = new BodyDAO(getApplicationContext());
-        bodyDao.open();
-        Body body = bodyDao.selectLast();
-        bodyDao.close();
+        BodyDAO bodyDAO = new BodyDAO(getApplicationContext());
+        bodyDAO.open();
+        Body body = bodyDAO.selectLast();
+        bodyDAO.close();
 
         masse = findViewById(R.id.masse);
         taille = findViewById(R.id.taille);
@@ -67,20 +69,20 @@ public class ProfilActivity extends AppCompatActivity {
         masse.setText(body.getMasse() + " kg");
         taille.setText(body.getTaille() + " cm");
         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        date_saisie.setText(getString(R.string.latest_input) + " " + df.format(body.getDate_enregistrement()));
+        date_saisie.setText("Dernière donnée saisie le " + df.format(body.getDate_enregistrement()));
         imc.setText(""+ body.calculIMC());
 
         RelativeLayout relativeLayout = findViewById(R.id.graph_imc_container);
-        bodyDao = new BodyDAO(getApplicationContext());
-        bodyDao.open();
-        if(bodyDao.nbValeur() < 5){
+        bodyDAO = new BodyDAO(getApplicationContext());
+        bodyDAO.open();
+        if(bodyDAO.nbValeur() < 5){
             TextView tv = new TextView(getApplicationContext());
-            tv.setText(R.string.graphic_insufficient_data);
+            tv.setText("Nombre de données insuffisants pour un graphique");
             tv.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             relativeLayout.addView(tv);
         }
         else{
-            relativeLayout.addView(createGraphique(bodyDao.getAll()));
+            relativeLayout.addView(createGraphique(bodyDAO.getAll()));
         }
 
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -148,8 +150,8 @@ public class ProfilActivity extends AppCompatActivity {
         v.getGridLabelRenderer().setHumanRounding(false);
         v.getGridLabelRenderer().setNumHorizontalLabels(3);
 
-        seriesGraph.setTitle(getString(R.string.weight));
-        serieMoyenne.setTitle(getString(R.string.global_average));
+        seriesGraph.setTitle("Masse");
+        serieMoyenne.setTitle("Moyenne globale");
         v.getLegendRenderer().setVisible(true);
         v.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.BOTTOM);
 
@@ -172,7 +174,7 @@ public class ProfilActivity extends AppCompatActivity {
 
         nom.setText(person.getName());
         prenom.setText(person.getSurname());
-        age.setText(person.calculAge() + " " + getString(R.string.years));
+        age.setText(person.calculAge() + " ans");
 
         BodyDAO bodyDAO = new BodyDAO(getApplicationContext());
         bodyDAO.open();
@@ -187,20 +189,20 @@ public class ProfilActivity extends AppCompatActivity {
         masse.setText(body.getMasse() + " kg");
         taille.setText(body.getTaille() + " cm");
         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        date_saisie.setText(getString(R.string.latest_input) + " " + df.format(body.getDate_enregistrement()));
+        date_saisie.setText("Dernière donnée saisie le " + df.format(body.getDate_enregistrement()));
         imc.setText(""+ body.calculIMC());
 
-        RelativeLayout relativeLayout = findViewById(R.id.graph_imc_container);
+        FrameLayout frameLayout = findViewById(R.id.graph_imc_container);
         bodyDAO = new BodyDAO(getApplicationContext());
         bodyDAO.open();
         if(bodyDAO.nbValeur() < 5){
             TextView tv = new TextView(getApplicationContext());
-            tv.setText(R.string.graphic_insufficient_data);
+            tv.setText("Nombre de données insuffisants pour un graphique");
             tv.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-            relativeLayout.addView(tv);
+            frameLayout.addView(tv);
         }
         else{
-            relativeLayout.addView(createGraphique(bodyDAO.getAll()));
+            frameLayout.addView(createGraphique(bodyDAO.getAll()));
         }
     }
 
