@@ -20,6 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/txtView_description"
         android:paddingLeft="10dp"
+        android:paddingBottom="5dp"
         android:text="Principale muscle sollicité :"
         android:textColor="@android:color/black"
         android:textSize="24sp" />
@@ -27,12 +28,13 @@
     <TextView
         android:id="@+id/txtView_muscle"
         android:layout_width="match_parent"
-        android:layout_height="52dp"
+        android:layout_height="44dp"
         android:layout_below="@+id/txtView_description"
         android:paddingLeft="10dp"
         android:textAlignment="viewStart"
         android:textColor="@android:color/black"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/textView2"
@@ -40,6 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/titre"
         android:paddingLeft="10dp"
+        android:paddingBottom="5dp"
         android:text="Réalisation du mouvement :"
         android:textColor="@android:color/black"
         android:textSize="24sp" />
