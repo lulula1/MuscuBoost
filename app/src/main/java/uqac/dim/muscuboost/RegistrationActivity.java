@@ -1,33 +1,82 @@
 package uqac.dim.muscuboost;
 
+import android.app.DatePickerDialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.Calendar;
 
 import uqac.dim.muscuboost.db.BodyDAO;
 import uqac.dim.muscuboost.db.PersonDAO;
 
 public class RegistrationActivity extends AppCompatActivity {
 
-    EditText nom, prenom, dateNaissance, masse, taille;
+    private Button date;
+    private EditText nom, prenom, masse, taille;
+    TextView dateNaissance;
+
+    private int jour, mois, annee;
+    private DatePickerDialog.OnDateSetListener dateSetListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.registration_activity);
+        setContentView(R.layout.activity_inscription);
 
         nom = findViewById(R.id.editText_name);
         prenom = findViewById(R.id.editText_surname);
-        dateNaissance = findViewById(R.id.editText_date_naissance);
         masse = findViewById(R.id.editText_masse);
         taille = findViewById(R.id.editText_taille);
+        date = findViewById(R.id.button_date_naissance);
+        dateNaissance = findViewById(R.id.tv_dateNaissance);
+
+        dateNaissance.setVisibility(View.GONE);
+
+        Calendar cal = Calendar.getInstance();
+
+        jour = cal.get(Calendar.DAY_OF_MONTH);
+        mois = cal.get(Calendar.MONTH);
+        annee = cal.get(Calendar.YEAR);
+
+        date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("DIM", " clicker");
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(
+                        RegistrationActivity.this,
+                        android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                        dateSetListener,
+                        annee, mois, jour);
+                datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                datePickerDialog.show();
+            }
+        });
+
+        dateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                dateNaissance.setVisibility(View.VISIBLE);
+                dateNaissance.setText(String.format("%02d", dayOfMonth)+ "/"+String.format("%02d", month)+"/"+year);
+
+                date.setText("Modifier");
+                date.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+
+                jour = dayOfMonth;
+                mois = month;
+                annee = year;
+            }
+        };
 
         Button inscription = findViewById(R.id.button_inscription);
         inscription.setOnClickListener(new View.OnClickListener() {
@@ -36,38 +85,33 @@ public class RegistrationActivity extends AppCompatActivity {
 
                 if(nom.getText().toString().equals("")
                         || prenom.getText().toString().equals("")
-                        || dateNaissance.getText().toString().equals("")
                         || masse.getText().toString().equals("")
                         || taille.getText().toString().equals("")){
-                    Toast.makeText(getApplicationContext(), "Saisie des données incomplètes", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Saisie des données imcoplète", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-                    Date d = new Date();
-                    try {
-                        d = df.parse(dateNaissance.getText().toString());
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                    PersonDAO personDao = new PersonDAO(getApplicationContext());
-                    personDao.open();
-                    personDao.insert(nom.getText().toString(), prenom.getText().toString(), d);
-                    personDao.close();
 
-                    BodyDAO bodyDao = new BodyDAO(getApplicationContext());
-                    bodyDao.open();
-                    bodyDao.insert(Double.parseDouble(masse.getText().toString()), Double.parseDouble(taille.getText().toString()));
-                    bodyDao.close();
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.set(annee, mois-1,jour);
+
+
+
+                    PersonDAO personDAO = new PersonDAO(getApplicationContext());
+                    personDAO.open();
+                    personDAO.insert(nom.getText().toString(), prenom.getText().toString(), calendar.getTime());
+                    personDAO.close();
+
+                    BodyDAO bodyDAO = new BodyDAO(getApplicationContext());
+                    bodyDAO.open();
+                    bodyDAO.insert(Double.parseDouble(masse.getText().toString()), Double.parseDouble(taille.getText().toString()));
+                    bodyDAO.close();
                     finish();
                 }
             }
         });
-
     }
 
     @Override
-    public void onBackPressed(){
-        // Cancel back pressed
+    public void onBackPressed() {
     }
-
 }

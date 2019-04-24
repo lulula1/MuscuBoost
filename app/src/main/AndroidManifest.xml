@@ -76,13 +76,13 @@
                 android:value=".MainActivity" />
         </activity>
         <activity
-            android:name=".RegistrationActivity"
-            android:label="@string/registration_name" />
-        <activity
             android:name=".ProfilActivity"
             android:label="@string/profil_name"
             android:theme="@style/AppTheme.NoActionBar" />
-
+        <activity
+            android:name=".RegistrationActivity"
+            android:label="@string/profil_name"
+            android:theme="@style/AppTheme.NoActionBar" />
         <service
             android:name=".TrainService"
             android:enabled="true"
