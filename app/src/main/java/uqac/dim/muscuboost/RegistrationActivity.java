@@ -67,7 +67,7 @@ public class RegistrationActivity extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 dateNaissance.setVisibility(View.VISIBLE);
-                dateNaissance.setText(String.format("%02d", dayOfMonth)+ "/"+String.format("%02d", month)+"/"+year);
+                dateNaissance.setText(String.format("%02d", dayOfMonth+1)+ "/"+String.format("%02d", month+1)+"/"+year);
 
                 date.setText("Modifier");
                 date.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
