@@ -3,11 +3,13 @@ package uqac.dim.muscuboost.db;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 
 import com.jjoe64.graphview.series.DataPoint;
 
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,23 +72,25 @@ public class StatisticsDAO extends DAOSingleKey<Statistics> {
     public DataPoint[] getAvgRepCountForEachDate(int exerciseId) {
         String query = "SELECT " + StatExerciseDAO.RECORD_DATE + ", AVG(" + StatisticsDAO.REP_COUNT + ")"
                 + " FROM " + TABLE_NAME + " S INNER JOIN " + StatExerciseDAO.TABLE_NAME + " Se"
-                + " ON S." + KEY + " = Se." + StatExerciseDAO.STAT_ID
+                + " ON " + KEY + " = Se." + StatExerciseDAO.STAT_ID
                 + " WHERE " + StatExerciseDAO.EXERCISE_ID + " = ? "
-                + " GROUP BY " + StatExerciseDAO.RECORD_DATE + ";";
+                + " GROUP BY " + StatExerciseDAO.RECORD_DATE;
         return getAvg(query, new String[]{String.valueOf(exerciseId)});
     }
 
     private DataPoint[] getAvg(String query, String[] whereArgs) {
         Cursor c = db.rawQuery(query, whereArgs);
 
-        DateFormat format = DateFormat.getDateInstance();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd"); // a pas toucher
         DataPoint[] dataPoint = new DataPoint[c.getCount()];
 
+        Log.i("DIM", ""+c.getCount());
         int i = 0;
         while (c.moveToNext()) {
             try {
-                dataPoint[i++] = new DataPoint(format.parse(c.getString(0)),
+                dataPoint[i] = new DataPoint(format.parse(c.getString(0)),
                         c.getDouble(1));
+                i++;
             } catch (ParseException e) {
                 e.printStackTrace();
             }

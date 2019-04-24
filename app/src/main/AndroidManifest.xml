@@ -69,7 +69,8 @@
             android:label="@string/details_name" />
         <activity
             android:name=".StatActivity"
-            android:label="@string/statistics_name">
+            android:label="@string/statistics_name"
+            android:screenOrientation="landscape">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
