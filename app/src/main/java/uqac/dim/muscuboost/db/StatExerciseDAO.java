@@ -4,7 +4,9 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import uqac.dim.muscuboost.core.training.Exercise;
@@ -23,11 +25,12 @@ public class StatExerciseDAO extends DAOBase {
     }
 
     public void insert(long trainingId, long exerciseId, long statisticsId) {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         ContentValues values = new ContentValues();
         values.put(TRAINING_ID, trainingId);
         values.put(EXERCISE_ID, exerciseId);
         values.put(STAT_ID, statisticsId);
-        values.put(RECORD_DATE, "0000-00-00");
+        values.put(RECORD_DATE, df.format(new Date()));
         db.insert(TABLE_NAME, null, values);
     }
 

@@ -10,20 +10,20 @@ import uqac.dim.muscuboost.db.ExerciseDAO;
 
 public class ExerciseDetailsActivity extends AppCompatActivity {
 
-    private ExerciseDAO Exercisedatasource;
+    private ExerciseDAO exerciseDao;
 
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.exercise_details_activity);
 
-        Exercisedatasource = new ExerciseDAO(this);
-        Exercisedatasource.open();
+        exerciseDao = new ExerciseDAO(this);
+        exerciseDao.open();
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             String titre = extras.getString("titre");
-            Exercise exercise = Exercisedatasource.selectName(titre);
+            Exercise exercise = exerciseDao.selectName(titre);
             if (exercise != null){
                 // option #1 : Directement par le parent
                 setExercice(exercise);

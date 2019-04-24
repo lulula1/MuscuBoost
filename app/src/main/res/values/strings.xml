@@ -10,6 +10,8 @@
 
     <!-- Activity names -->
     <string name="app_name">MuscuBoost</string>
+    <string name="registration_name">Registration</string>
+    <string name="profil_name">Profil</string>
     <string name="schedule_name">Schedule</string>
     <string name="training_showcase_name">Training</string>
     <string name="train_name">Training in progress</string>
@@ -20,12 +22,22 @@
     <string name="statistics_name">Statistics</string>
 
     <!-- Main activity -->
+    <string name="registration">Registration</string>
+    <string name="registration_message">You must register before start</string>
+    <string name="signin">Sign in</string>
     <string name="main_training">My trainings</string>
     <string name="main_exercise">Exercises</string>
     <string name="main_stats">My statistics</string>
     <string name="main_details">My details</string>
     <string name="main_chrono">Chronometer</string>
     <string name="main_settings">Settings</string>
+
+    <!-- Profil activity -->
+    <string name="latest_input">Latest data inputted on the</string>
+    <string name="graphic_insufficient_data">Insufficient data for a graphic</string>
+    <string name="weight">Weight</string>
+    <string name="global_average">Global Average</string>
+    <string name="years">years</string>
 
     <!-- Schedule activity -->
     <string name="monday">Monday</string>

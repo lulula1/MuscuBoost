@@ -169,6 +169,7 @@ public class Graphique extends Fragment {
         v.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.BOTTOM);
 
         seriesGraph.setAnimated(true);
+        serieMoyenne.setAnimated(true);
 
         v.getGridLabelRenderer().setGridStyle(GridLabelRenderer.GridStyle.HORIZONTAL);
         return v;

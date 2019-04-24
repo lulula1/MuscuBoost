@@ -10,6 +10,8 @@
 
     <!-- Activity names -->
     <string name="app_name">MuscuBoost</string>
+    <string name="registration_name">Inscription</string>
+    <string name="profil_name">Profil</string>
     <string name="schedule_name">Planning</string>
     <string name="training_showcase_name">Entraînement</string>
     <string name="train_name">Entraînement en cours</string>
@@ -20,12 +22,22 @@
     <string name="statistics_name">Statistiques</string>
 
     <!-- Main activity -->
+    <string name="registration">Inscription</string>
+    <string name="registration_message">Inscrivez-vous avant de commencer</string>
+    <string name="signin">S\'inscrire</string>
     <string name="main_training">Mes entraînements</string>
     <string name="main_exercise">Exercices</string>
     <string name="main_stats">Mes statistiques</string>
     <string name="main_details">Mes informations</string>
     <string name="main_chrono">Chronomètre</string>
     <string name="main_settings">Paramètres</string>
+
+    <!-- Profil activity -->
+    <string name="latest_input">Dernière donnée saisie le</string>
+    <string name="graphic_insufficient_data">Nombre de données insuffisantes pour un graphique</string>
+    <string name="weight">Masse</string>
+    <string name="global_average">Moyenne globale</string>
+    <string name="years">ans</string>
 
     <!-- Schedule activity -->
     <string name="monday">Lundi</string>

@@ -22,14 +22,11 @@ import java.io.InputStream;
 
 import uqac.dim.muscuboost.R;
 import uqac.dim.muscuboost.core.training.Exercise;
-import uqac.dim.muscuboost.core.training.Muscle;
 import uqac.dim.muscuboost.db.ExerciseDAO;
 import uqac.dim.muscuboost.db.MuscleDAO;
 
-
-public class AddExerciseActivity extends AppCompatActivity implements OnItemSelectedListener{
-
-    private Button btnImport, btnRemove, btnAdd, btnCancel ;
+public class EditExerciseActivity extends AppCompatActivity implements OnItemSelectedListener{
+    private Button btnImport, btnRemove, btnEdit, btnCancel ;
     private TextView txtTitre;
     private TextView txtDescription;
     private ImageView selectedImg;
@@ -37,21 +34,22 @@ public class AddExerciseActivity extends AppCompatActivity implements OnItemSele
     private ExerciseDAO exerciseDao;
     private MuscleDAO muscleDao;
     private String s;
-
-
+    private Exercise exercise;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.add_exercise_fragment);
+        setContentView(R.layout.edit_exercise);
 
         btnImport = findViewById(R.id.import_img);
         btnRemove = findViewById(R.id.remove_img);
-        btnAdd = findViewById(R.id.edit_exercice);
+        btnEdit = findViewById(R.id.edit_exercice);
         btnCancel = findViewById(R.id.cancel_addExercice);
         selectedImg = findViewById(R.id.selected);
         txtTitre = findViewById(R.id.editTxt_exercise_title);
         txtDescription = findViewById(R.id.editTxt_exercise_description);
+
+
 
         muscleDao = new MuscleDAO(this);
         muscleDao.open();
@@ -59,12 +57,21 @@ public class AddExerciseActivity extends AppCompatActivity implements OnItemSele
         exerciseDao = new ExerciseDAO(this);
         exerciseDao.open();
 
+        Bundle extras = getIntent().getExtras();
+        exercise = (Exercise) extras.getSerializable("ExerciceParam");
+
+
+        txtTitre.setText(exercise.getName());
+        txtDescription.setText(exercise.getDescription());
+
         Spinner spinner = findViewById(R.id.muscles_spinner);
         spinner.setOnItemSelectedListener(this);
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, muscleDao.getAllName());
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(dataAdapter);
+
+
 
         /*
         btnImport.setOnClickListener(new View.OnClickListener() {
@@ -87,28 +94,27 @@ public class AddExerciseActivity extends AppCompatActivity implements OnItemSele
         });
         */
 
-        btnAdd.setOnClickListener(new View.OnClickListener() {
+        btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (txtTitre.getText().toString().trim().matches("")
-                  || txtDescription.getText().toString().trim().matches("")) {
-                    Toast.makeText(getApplicationContext(), "Veuillez tout remplir", Toast.LENGTH_LONG).show();
-                //} else if (exerciseDao.getName(txtTitre.getText().toString()) != null){
-                }else{
-                    Muscle m = muscleDao.getName(s);
-                    Exercise exercise = exerciseDao.insert(txtTitre.getText().toString(), m, txtDescription.getText().toString());
+                //if (exerciseDao.getName(txtTitre.getText().toString())!=null) {
+                  //  Toast.makeText(getApplicationContext(), "Exercice déjà existant", Toast.LENGTH_LONG).show();
+                //}else {
+                    exercise.setName(txtTitre.getText().toString());
+                    exercise.setDescription(txtDescription.getText().toString());
                     Intent returnIntent = new Intent();
-                    returnIntent.putExtra("resultFromAddExercice",exercise.getName());
-                    setResult(Activity.RESULT_OK,returnIntent);
+                    returnIntent.putExtra("resultFromEditExercise", exercise);
+                    setResult(Activity.RESULT_OK, returnIntent);
                     finish();
-                }
+                //}
             }
         });
 
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setResult(Activity.RESULT_CANCELED,new Intent());
+                Intent returnIntent = new Intent();
+                setResult(Activity.RESULT_CANCELED,returnIntent);
                 finish();
             }
         });
@@ -140,6 +146,7 @@ public class AddExerciseActivity extends AppCompatActivity implements OnItemSele
         }
     }
 
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -154,14 +161,15 @@ public class AddExerciseActivity extends AppCompatActivity implements OnItemSele
         muscleDao.close();
     }
 
+
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String item = parent.getItemAtPosition(position).toString();
         s=item;
     }
-
-    @Override
     public void onNothingSelected(AdapterView<?> arg0) {
+        // TODO Auto-generated method stub
     }
-
 }
+
+

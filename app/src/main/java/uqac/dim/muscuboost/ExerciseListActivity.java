@@ -1,5 +1,6 @@
 package uqac.dim.muscuboost;
 
+import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,11 +20,8 @@ import uqac.dim.muscuboost.ui.exercise.ExerciseDetailsActivity;
 public class ExerciseListActivity extends ListActivity {
 
     private ExerciseDAO exerciseDao;
-
-    public static ExerciseListActivity newInstance() {
-        ExerciseListActivity fragment = new ExerciseListActivity();
-        return fragment;
-    }
+    private List<Exercise> values;
+    private ArrayAdapter<Exercise> adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,9 +33,9 @@ public class ExerciseListActivity extends ListActivity {
         exerciseDao = new ExerciseDAO(this);
         exerciseDao.open();
 
-        List<Exercise> values = exerciseDao.getAll();
+        values = exerciseDao.getAll();
 
-        ArrayAdapter<Exercise> adapter = new ArrayAdapter<>(
+        adapter = new ArrayAdapter<>(
                 this, android.R.layout.simple_list_item_1, values);
         setListAdapter(adapter);
 
@@ -45,7 +43,8 @@ public class ExerciseListActivity extends ListActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getBaseContext(), AddExerciseActivity.class));
+                Intent intentAddExercice = new Intent(getBaseContext(), AddExerciseActivity.class);
+                startActivityForResult(intentAddExercice ,1);
             }
         });
 
@@ -55,6 +54,11 @@ public class ExerciseListActivity extends ListActivity {
     protected void onResume() {
         super.onResume();
         exerciseDao.open();
+        values = exerciseDao.getAll();
+
+        adapter = new ArrayAdapter<>(
+                this, android.R.layout.simple_list_item_1, values);
+        setListAdapter(adapter);
     }
 
     @Override
@@ -69,6 +73,30 @@ public class ExerciseListActivity extends ListActivity {
         Intent intent = new Intent(this, ExerciseDetailsActivity.class);
         intent.putExtra("titre", exercise.getName());
         startActivity(intent);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        exerciseDao = new ExerciseDAO(this);
+        exerciseDao.open();
+
+        if (requestCode == 1) {
+            if(resultCode == Activity.RESULT_OK){
+                String result=data.getStringExtra("resultFromAddExercice");
+                Exercise e = exerciseDao.selectName(result);
+                adapter.add(e);
+                adapter.notifyDataSetChanged();
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+            }
+        }else if(requestCode == 2) {
+            if(resultCode == Activity.RESULT_OK){
+                Exercise result= (Exercise) data.getSerializableExtra("resultFromDetailsExercise");
+                adapter.remove(result);
+                adapter.notifyDataSetChanged();
+            }
+        }
     }
 
 }

@@ -1,6 +1,8 @@
 package uqac.dim.muscuboost.ui.exercise;
 
+import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -15,15 +17,14 @@ import uqac.dim.muscuboost.db.ExerciseDAO;
 
 public class ExerciseDetailsFragment extends Fragment {
 
-    private ExerciseDAO Exercisedatasource;
-    private Exercise exercise;
+    private ExerciseDAO exerciseDao;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
-        Exercisedatasource = new ExerciseDAO(getActivity());
-        Exercisedatasource.open();
+        exerciseDao = new ExerciseDAO(getActivity());
+        exerciseDao.open();
      }
 
     @Override
@@ -43,26 +44,39 @@ public class ExerciseDetailsFragment extends Fragment {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.action_modifier:
-                Toast.makeText(getActivity(), "modifier", Toast.LENGTH_SHORT).show();
+                Exercise exercise = exerciseDao.selectName(((TextView) getView().findViewById(R.id.titre)).getText().toString());
+                Intent intentEditExercice = new Intent(getActivity(), EditExerciseActivity.class);
+                intentEditExercice.putExtra("ExerciceParam",exercise);
+                startActivityForResult(intentEditExercice ,3);
                 return true;
             case R.id.action_supprimer:
-                ExerciseListActivity l = new ExerciseListActivity().newInstance();
-                ArrayAdapter<Exercise> adapter = (ArrayAdapter<Exercise>) l.getListAdapter();
-                exercise = Exercisedatasource.selectName(((TextView) getView().findViewById(R.id.titre)).getText().toString());
-                Exercisedatasource.deleteName(exercise.getName());
-                if(adapter!= null){
-                    adapter.remove(exercise);
-                    adapter.notifyDataSetChanged();
-                    Toast.makeText(getActivity(), "casse la tete",Toast.LENGTH_LONG).show();
-                }
+                Exercise exercise1 = exerciseDao.selectName(((TextView) getView().findViewById(R.id.titre)).getText().toString());
+                exerciseDao.delete(exercise1);
+                Intent returnIntent = new Intent();
+                returnIntent.putExtra("resultFromDetailsExercise",exercise1);
+                getActivity().setResult(Activity.RESULT_OK,returnIntent);
+                getActivity().finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }*/
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        exerciseDao = new ExerciseDAO(getActivity());
+        exerciseDao.open();
+
+        if (requestCode == 3) {
+            if(resultCode == Activity.RESULT_OK){
+                Exercise result =(Exercise) data.getSerializableExtra("resultFromEditExercise");
+                setExercice(result);
+                exerciseDao.update(result);
+            }
+        }
+    }
+
     public void setExercice(Exercise exercise) {
-        this.exercise = exercise;
         ((TextView) getView().findViewById(R.id.titre)).setText(exercise.getName());
         ((TextView) getView().findViewById(R.id.txtView_description)).setText(exercise.getDescription());
         ((TextView) getView().findViewById(R.id.txtView_muscle)).setText(exercise.getMuscle().getName());
