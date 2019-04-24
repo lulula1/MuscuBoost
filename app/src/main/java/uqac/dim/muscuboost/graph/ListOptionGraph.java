@@ -89,7 +89,7 @@ public class ListOptionGraph extends ListFragment {
         Log.i("DIM", "Click sur Item - position : " + position);
         getActivity().getFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragment_graph_container, uqac.dim.muscuboostgraph.graph.Graphique.newInstance(getArguments().getInt("type"), ((TextView)view).getText().toString()))
+                .replace(R.id.fragment_graph_container, Graphique.newInstance(getArguments().getInt("type"), ((TextView)view).getText().toString()))
                 .addToBackStack(null)
                 .commit();
 

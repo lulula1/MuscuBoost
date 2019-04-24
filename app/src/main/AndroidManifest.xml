@@ -48,11 +48,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-
-        <activity
-            android:name=".Chronometre"
-            android:label="Chronometer"
-            android:screenOrientation="portrait" />
         <activity
             android:name=".AjoutExercice.AddExerciceActivity"
             android:label="Add exercise"
@@ -63,9 +58,22 @@
         <activity
             android:name=".AjoutExercice.DetailExerciseActivity"
             android:label="Détails" />
-        <activity android:name=".StatActivity"
+        <activity
+            android:name=".AjoutExercice.EditExerciseActivity"
+            android:label="Edit exercise"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".StatActivity"
             android:screenOrientation="landscape"
-            android:label="Statistiques"></activity>
+            android:label="Statistiques" />
+        <activity
+            android:name=".InscriptionActivity"
+            android:label="Inscription" />
+        <activity
+            android:name=".ProfilActivity"
+            android:label="@string/title_activity_profil"
+            android:theme="@style/AppTheme.NoActionBar" />
+
         <service
             android:name=".TrainService"
             android:enabled="true"

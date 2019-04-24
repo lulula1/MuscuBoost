@@ -1,4 +1,4 @@
-package uqac.dim.muscuboostgraph.graph;
+package uqac.dim.muscuboost.graph;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -171,6 +171,7 @@ public class Graphique extends Fragment {
         v.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.BOTTOM);
 
         seriesGraph.setAnimated(true);
+        serieMoyenne.setAnimated(true);
 
         v.getGridLabelRenderer().setGridStyle(GridLabelRenderer.GridStyle.HORIZONTAL);
         return v;

@@ -80,4 +80,7 @@
     <string name="add_exercise_remove_img">Retirer image</string>
     <string name="add_exercise_description_label">Description</string>
 
+    <!-- Profil activity -->
+    <string name="title_activity_profil">Profil</string>
+
 </resources>

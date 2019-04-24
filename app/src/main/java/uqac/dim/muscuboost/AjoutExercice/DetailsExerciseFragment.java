@@ -1,17 +1,16 @@
 package uqac.dim.muscuboost.AjoutExercice;
 
+
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,11 +19,9 @@ import uqac.dim.muscuboost.core.training.Exercise;
 import uqac.dim.muscuboost.db.ExerciseDAO;
 
 
-
 public class DetailsExerciseFragment extends Fragment {
 
     private ExerciseDAO Exercisedatasource;
-    private Exercise exercise;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +38,6 @@ public class DetailsExerciseFragment extends Fragment {
     }
 
     public void setExercice(Exercise exercise) {
-        this.exercise = exercise;
         ((TextView) getView().findViewById(R.id.titre)).setText(exercise.getName());
         ((TextView) getView().findViewById(R.id.txtView_description)).setText(exercise.getDescription());
         ((TextView) getView().findViewById(R.id.txtView_muscle)).setText(exercise.getMuscle().getName());
@@ -61,24 +57,40 @@ public class DetailsExerciseFragment extends Fragment {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.action_modifier:
-                Toast.makeText(getActivity(), "modifier", Toast.LENGTH_SHORT).show();
+                Exercise exercise = Exercisedatasource.selectName(((TextView) getView().findViewById(R.id.titre)).getText().toString());
+                Intent intentEditExercice = new Intent(getActivity(), EditExerciseActivity.class);
+                intentEditExercice.putExtra("ExerciceParam",exercise);
+                startActivityForResult(intentEditExercice ,3);
                 return true;
             case R.id.action_supprimer:
-                ListeExerciseFragment l = new ListeExerciseFragment().newInstance();
-                ArrayAdapter<Exercise> adapter = (ArrayAdapter<Exercise>) l.getListAdapter();
-                exercise = Exercisedatasource.selectName(((TextView) getView().findViewById(R.id.titre)).getText().toString());
-                Exercisedatasource.deleteName(exercise.getName());
-                if(adapter!= null){
-                    adapter.remove(exercise);
-                    adapter.notifyDataSetChanged();
-                    Toast.makeText(getActivity(), "casse la tete",Toast.LENGTH_LONG).show();
-                }
+                Exercise exercise1 = Exercisedatasource.selectName(((TextView) getView().findViewById(R.id.titre)).getText().toString());
+                Exercisedatasource.delete(exercise1);
+                Intent returnIntent = new Intent();
+                returnIntent.putExtra("resultFromDetailsExercise",exercise1);
+                getActivity().setResult(Activity.RESULT_OK,returnIntent);
+                getActivity().finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Exercisedatasource = new ExerciseDAO(getActivity());
+        Exercisedatasource.open();
+
+        if (requestCode == 3) {
+            if(resultCode == Activity.RESULT_OK){
+                Exercise result =(Exercise) data.getSerializableExtra("resultFromEditExercise");
+                setExercice(result);
+                Exercisedatasource.update(result);
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                Toast.makeText(getActivity(), "Canceled", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
 
 }
 

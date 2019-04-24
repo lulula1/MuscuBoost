@@ -78,7 +78,9 @@
                     android:text="@string/main_stats" />
             </LinearLayout>
 
-            <LinearLayout style="@style/main.wrapper">
+            <LinearLayout
+                style="@style/main.wrapper"
+                android:onClick="startProfil">
 
                 <ImageView
                     android:id="@+id/imageView5"
