@@ -192,17 +192,17 @@ public class ProfilActivity extends AppCompatActivity {
         date_saisie.setText("Dernière donnée saisie le " + df.format(body.getDate_enregistrement()));
         imc.setText(""+ body.calculIMC());
 
-        FrameLayout frameLayout = findViewById(R.id.graph_imc_container);
+        RelativeLayout relativeLayout = findViewById(R.id.graph_imc_container);
         bodyDAO = new BodyDAO(getApplicationContext());
         bodyDAO.open();
         if(bodyDAO.nbValeur() < 5){
             TextView tv = new TextView(getApplicationContext());
             tv.setText("Nombre de données insuffisants pour un graphique");
             tv.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-            frameLayout.addView(tv);
+            relativeLayout.addView(tv);
         }
         else{
-            frameLayout.addView(createGraphique(bodyDAO.getAll()));
+            relativeLayout.addView(createGraphique(bodyDAO.getAll()));
         }
     }
 
