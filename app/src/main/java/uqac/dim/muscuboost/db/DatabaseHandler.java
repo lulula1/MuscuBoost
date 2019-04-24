@@ -14,11 +14,10 @@ import java.io.OutputStream;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
 
-    private SQLiteDatabase myDataBase;
-    private final Context myContext;
+    private final Context context;
 
     // Database version
-    protected static final int VERSION = 41;
+    protected static final int VERSION = 60;
 
     // Database (file) name
     public static final String DATABASE_PATH = "/data/data/uqac.dim.muscuboost/databases/";
@@ -26,101 +25,67 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, VERSION);
-        this.myContext = context;
+        this.context = context;
     }
 
-    public void createDatabase() throws IOException {
+    public void createDatabase() {
+        boolean dbExists = checkDataBaseExists();
 
-        Log.i("DIM", "*********createDatabase***********");
-
-        boolean dbExist = checkDataBase();
-
-        if(dbExist) {
-            Log.i("DIM", "LA BD EXISTE");
-            // By calling this method here onUpgrade will be called on a
-            // writeable database, but only if the version number has been
-            // bumped
-            //onUpgrade(myDataBase, DATABASE_VERSION_old, DATABASE_VERSION);
-        }
-        else{
-            Log.i("DIM", "LA BD N'EXISTE PAS");
+        if (dbExists) {
+            Log.i("DIM", "DB EXISTS");
+        } else {
+            Log.i("DIM", "DB DOESN'T EXISTS");
             try {
-                this.getReadableDatabase();
+                super.getWritableDatabase();
                 this.close();
 
-                Log.i("DIM", "copydatabase");
                 copyDataBase();
-                Log.i("DIM", "copie effectue avec succes");
-            }
-            catch (IOException e){
+            } catch (IOException e) {
                 throw new Error("Error copying database");
             }
         }
     }
 
-    //Check database already exist or not
-    private boolean checkDataBase(){
-
-        Log.i("DIM", "checkDataBase");
-
-        boolean checkDB = false;
-
-        try{
-            String myPath = DATABASE_PATH + DATABASE_NAME;
-            Log.v("DIM", "myPath : " + myPath);
-
-            File dbfile = new File(myPath);
-            Log.v("DIM", "dbfile : " + dbfile);
-            checkDB = dbfile.exists();
-            Log.v("DIM", "checkDB : " + checkDB);
+    public boolean checkDataBaseExists() {
+        try {
+            File dbFile = new File(DATABASE_PATH + DATABASE_NAME);
+            return dbFile.exists();
+        } catch (SQLiteException e) {
+            e.printStackTrace();
+            return false;
         }
-        catch(SQLiteException e){
-            Log.v("DIM", "PAS SUPPOSE PASSER ICI JAMAIS");
-        }
-        return checkDB;
     }
 
-    //Copies your database from your local assets-folder to the just created empty database in the system folder
     private void copyDataBase() throws IOException {
+        String outputPath = DATABASE_PATH + DATABASE_NAME;
 
-        String outFileName = DATABASE_PATH + DATABASE_NAME;
-
-        Log.i("DIM", "outFileName : " + outFileName);
-        Log.i("DIM", "inFileName : " + DATABASE_NAME);
-
-        OutputStream myOutput = new FileOutputStream(outFileName);
-        InputStream myInput = myContext.getAssets().open(DATABASE_NAME);
-
-        Log.i("DIM", "myInput : " + myInput);
+        InputStream input = context.getAssets().open(DATABASE_NAME);
+        OutputStream output = new FileOutputStream(outputPath);
 
         byte[] buffer = new byte[1024];
         int length;
-        while ((length = myInput.read(buffer)) > 0) {
-            String test = "";
-            for (byte b:buffer)
-                test += (char)b;
-            Log.v("DIM", test);
+        while ((length = input.read(buffer)) > 0)
+            output.write(buffer, 0, length);
 
-            myOutput.write(buffer, 0, length);
-        }
-        myInput.close();
-        myOutput.flush();
-        myOutput.close();
+        input.close();
+        output.flush();
+        output.close();
     }
 
-    //delete database
-    public void db_delete(){
-
+    public void dbDelete() {
         File file = new File(DATABASE_PATH + DATABASE_NAME);
-        if(file.exists()){
-            file.delete();
-        }
+        if (file.exists())
+            if (!file.delete()) {
+                Log.i("DIM", "DB DELETE FAILED");
+                return;
+            }
+        Log.i("DIM", "DB DELETED");
     }
 
     @Override
     public void onConfigure(SQLiteDatabase db) {
         super.onConfigure(db);
-        if(!db.isReadOnly())
+        if (!db.isReadOnly())
             db.execSQL("PRAGMA foreign_keys = ON");
     }
 
@@ -133,6 +98,5 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
-
 
 }

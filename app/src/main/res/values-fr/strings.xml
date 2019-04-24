@@ -12,10 +12,12 @@
     <string name="app_name">MuscuBoost</string>
     <string name="schedule_name">Planning</string>
     <string name="training_showcase_name">Entraînement</string>
-    <string name="train_name">Entraînement</string>
+    <string name="train_name">Entraînement en cours</string>
     <string name="chrono_name">Chronomètre</string>
     <string name="exercise_name">Exercices</string>
     <string name="add_exercise_name">Nouvel exercice</string>
+    <string name="details_name">Détails</string>
+    <string name="statistics_name">Statistiques</string>
 
     <!-- Main activity -->
     <string name="main_training">Mes entraînements</string>
@@ -62,9 +64,10 @@
     <string name="exercise">Exercice</string>
     <string name="training_over">Entraînement terminé !</string>
 
-    <string name="par_muscle">PAR MUSCLE</string>
-    <string name="par_exercice">PAR EXERCICE</string>
-    <string name="donnee_insuffisante">Données insufisante</string>
+    <!-- Stat activity -->
+    <string name="by_muscle">Par muscle</string>
+    <string name="by_exercise">Par exercice</string>
+    <string name="insufficient_data">Données insuffisantes</string>
 
     <!-- Chronometer activity -->
     <string name="chrono_start">Débuter</string>

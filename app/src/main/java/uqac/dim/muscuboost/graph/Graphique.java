@@ -1,4 +1,4 @@
-package uqac.dim.muscuboostgraph.graph;
+package uqac.dim.muscuboost.graph;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -26,7 +26,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import uqac.dim.muscuboost.R;
-import uqac.dim.muscuboost.graph.ListOptionGraph;
 import uqac.dim.muscuboost.db.ExerciseDAO;
 import uqac.dim.muscuboost.db.MuscleDAO;
 import uqac.dim.muscuboost.db.StatisticsDAO;
@@ -63,7 +62,7 @@ public class Graphique extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_graphique, container, false);
+        View view = inflater.inflate(R.layout.graphique_fragment, container, false);
 
         int type = getArguments().getInt("type");
         String name = getArguments().getString("name");
@@ -80,9 +79,8 @@ public class Graphique extends Fragment {
             ed.open();
             sd.open();
 
-            seriesPoint = sd.averageWeightForEachDateWhereExercice(
-                    ed.selectAllIdWhereMuscle(
-                            md.selectIdOf(name)));
+            seriesPoint = sd.getAvgWeightForEachDate(
+                    ed.selectAllIdWhereMuscle((int) md.getId(name)));
 
             sd.close();
 
@@ -91,7 +89,7 @@ public class Graphique extends Fragment {
            ed.open();
            sd.open();
 
-           seriesPoint = sd.averageRepetitionForEachDateWhereExercice(
+           seriesPoint = sd.getAvgRepCountForEachDate(
                    ed.selectIdWhereName(name));
 
            sd.close();
@@ -102,7 +100,7 @@ public class Graphique extends Fragment {
 
         if(seriesPoint.length <= 5){
             TextView tv = new TextView(getActivity());
-            tv.setText(R.string.donnee_insuffisante);
+            tv.setText(R.string.insufficient_data);
             tv.setTextSize(20);
             relativeLayout.addView(tv);
         }

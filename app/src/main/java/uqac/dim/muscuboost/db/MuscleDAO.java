@@ -16,11 +16,6 @@ public class MuscleDAO extends DAOSingleKey<Muscle> {
     public static final String KEY = "id";
     public static final String NAME = "name";
 
-    public static final String TABLE_CREATE =
-            "CREATE TABLE " + TABLE_NAME + " ("
-                    + KEY + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                    + NAME + " VARCHAR(30) NOT NULL );";
-
     public MuscleDAO(Context context) {
         super(context, TABLE_NAME, KEY);
     }
@@ -30,11 +25,6 @@ public class MuscleDAO extends DAOSingleKey<Muscle> {
         values.put(MuscleDAO.NAME, name);
         long id = db.insert(MuscleDAO.TABLE_NAME, null, values);
         return new Muscle(id, name);
-    }
-
-    public void delete(Muscle muscle) {
-        String[] whereArgs = {String.valueOf(muscle.getId())};
-        db.delete(TABLE_NAME, KEY + " = ?", whereArgs);
     }
 
     @Override
@@ -57,42 +47,25 @@ public class MuscleDAO extends DAOSingleKey<Muscle> {
         return muscles;
     }
 
-    public List<String> selectAllName(){
-        Cursor c = db.rawQuery("SELECT " + NAME + " FROM " + TABLE_NAME , null);
-        List<String> array = new ArrayList<String>();
-        while (c.moveToNext()) {
-            array.add(c.getString(0));
-        }
-        c.close();
-        return array;
+    public List<String> getAllName() {
+        List<String> names = new ArrayList<>();
+        for(Muscle muscle : getAll())
+            names.add(muscle.getName());
+        return names;
     }
 
-    public Muscle selectName(String name){
-        Cursor c = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE "+ NAME +" = ?", new String[] {name});
-        c.moveToFirst();
-        Muscle m = new Muscle(c.getInt(0),c.getString(1));
-        c.close();
-        return m;
+    public Muscle getName(String name){
+        for(Muscle muscle : getAll())
+            if(muscle.getName().equals(name))
+                return muscle;
+        return null;
     }
 
-    public int selectIdOf(String name){
-        Cursor c = db.rawQuery("SELECT " + KEY + " FROM " + TABLE_NAME + " WHERE " + NAME + " = ?", new String[] {name});
-        c.moveToNext();
-        int res = c.getInt(0);
-        c.close();
-        return res;
-    }
-
-    public List<Muscle> select(String whereSQL, String[] whereArgs) {
-        Cursor c = db.rawQuery("SELECT * FROM " + TABLE_NAME + whereSQL, whereArgs);
-        List<Muscle> array = new ArrayList<>();
-        while (c.moveToNext()) {
-            long id = c.getLong(0);
-            String name = c.getString(1);
-            Muscle m = new Muscle((int)id, name);
-            array.add(m);
-        }
-        return array;
+    public long getId(String name){
+        for(Muscle muscle : getAll())
+            if(muscle.getName().equals(name))
+                return muscle.getId();
+        return -1;
     }
 
 }

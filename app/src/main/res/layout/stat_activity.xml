@@ -9,45 +9,48 @@
 
     <LinearLayout
         android:id="@+id/choix_type_stat"
+        style="?android:attr/buttonBarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <Button
             android:id="@+id/button_par_muscle"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/par_muscle" />
+            android:text="@string/by_muscle"
+            android:textColor="@color/colorPrimary" />
 
         <Button
             android:id="@+id/button_par_exercice"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/par_exercice" />
+            android:text="@string/by_exercise"
+            android:textColor="@color/colorPrimary" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:layout_below="@id/choix_type_stat">
+        android:layout_below="@id/choix_type_stat"
+        android:orientation="horizontal">
 
         <FrameLayout
             android:id="@+id/fragment_list_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="70">
-        </FrameLayout>
+            android:layout_weight="70"></FrameLayout>
 
         <FrameLayout
             android:id="@+id/fragment_graph_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="30">
-        </FrameLayout>
+            android:layout_weight="30"></FrameLayout>
     </LinearLayout>
 
 </RelativeLayout>

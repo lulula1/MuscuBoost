@@ -64,12 +64,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <LinearLayout style="@style/main.wrapper">
+            <LinearLayout
+                style="@style/main.wrapper"
+                android:onClick="startStatistic">
 
                 <ImageView
                     android:id="@+id/imgStats"
                     style="@style/main.icon"
-                    android:onClick="clickStatistique"
                     app:srcCompat="@drawable/icon_graph" />
 
                 <TextView

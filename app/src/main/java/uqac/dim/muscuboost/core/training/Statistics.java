@@ -1,35 +1,62 @@
 package uqac.dim.muscuboost.core.training;
 
+/**
+ * TODO
+ */
 public class Statistics {
 
-    private long id;
-    private double poids;
-    private int nb_rep;
+    private final Long ID;
+    private double weight;
+    private int repCount;
 
-    public Statistics(long id, double poids, int nb_rep){
-        this.id = id;
-        this.poids = poids;
-        this.nb_rep = nb_rep;
+    /**
+     * TODO
+     *
+     * @param id TODO
+     * @param weight TODO
+     * @param repCount TODO
+     */
+    public Statistics(Long id, double weight, int repCount) {
+        ID = id;
+        this.weight = weight;
+        this.repCount = repCount;
     }
 
-    public Statistics(double poids, int nb_rep){
-        this.poids = poids;
-        this.nb_rep = nb_rep;
+    /**
+     * TODO
+     *
+     * @param weight TODO
+     * @param repCount TODO
+     */
+    public Statistics(double weight, int repCount) {
+        this(null, weight, repCount);
     }
 
-    public long getId(){
-        return id;
+    /**
+     * TODO
+     *
+     * @return TODO
+     */
+    public long getId() {
+        return ID;
     }
 
-    public double getPoids() {
-        return poids;
+    /**
+     * TODO
+     *
+     * @return TODO
+     */
+    public double getWeight() {
+        return weight;
     }
 
-    public int getNb_rep() {
-        return nb_rep;
+    /**
+     * TODO
+     *
+     * @return TODO
+     */
+    public int getRepCount() {
+        return repCount;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
 }

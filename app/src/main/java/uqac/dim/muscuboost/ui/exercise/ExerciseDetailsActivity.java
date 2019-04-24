@@ -1,4 +1,4 @@
-package uqac.dim.muscuboost.AjoutExercice;
+package uqac.dim.muscuboost.ui.exercise;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,14 +8,14 @@ import uqac.dim.muscuboost.R;
 import uqac.dim.muscuboost.core.training.Exercise;
 import uqac.dim.muscuboost.db.ExerciseDAO;
 
-public class DetailExerciseActivity extends AppCompatActivity {
+public class ExerciseDetailsActivity extends AppCompatActivity {
 
     private ExerciseDAO Exercisedatasource;
 
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.details_exercice_activite);
+        setContentView(R.layout.exercise_details_activity);
 
         Exercisedatasource = new ExerciseDAO(this);
         Exercisedatasource.open();
@@ -29,7 +29,7 @@ public class DetailExerciseActivity extends AppCompatActivity {
                 setExercice(exercise);
 
                 // option #2 : Utiliser à nouveau le fragment
-                DetailsExerciseFragment fragment = (DetailsExerciseFragment) getFragmentManager()
+                ExerciseDetailsFragment fragment = (ExerciseDetailsFragment) getFragmentManager()
                         .findFragmentById(R.id.detailsExerciceFragment);
                 fragment.setExercice(exercise);
             }

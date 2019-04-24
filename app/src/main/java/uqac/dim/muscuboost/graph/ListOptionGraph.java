@@ -1,6 +1,5 @@
 package uqac.dim.muscuboost.graph;
 
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,7 +8,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -72,11 +70,11 @@ public class ListOptionGraph extends ListFragment {
             MuscleDAO md = new MuscleDAO(getActivity());
             md.open();
             ArrayAdapter<String> adapter = new ArrayAdapter<String>
-                    (getActivity(), android.R.layout.simple_list_item_1, md.selectAllName());
+                    (getActivity(), android.R.layout.simple_list_item_1, md.getAllName());
             setListAdapter(adapter);
             md.close();
         }
-        return inflater.inflate(R.layout.fragment_list_option_graph, container, false);
+        return inflater.inflate(R.layout.list_option_graph_fragment, container, false);
     }
 
     @Override
@@ -89,7 +87,7 @@ public class ListOptionGraph extends ListFragment {
         Log.i("DIM", "Click sur Item - position : " + position);
         getActivity().getFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragment_graph_container, uqac.dim.muscuboostgraph.graph.Graphique.newInstance(getArguments().getInt("type"), ((TextView)view).getText().toString()))
+                .replace(R.id.fragment_graph_container, uqac.dim.muscuboost.graph.Graphique.newInstance(getArguments().getInt("type"), ((TextView)view).getText().toString()))
                 .addToBackStack(null)
                 .commit();
 

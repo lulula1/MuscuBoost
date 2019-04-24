@@ -1,4 +1,4 @@
-package uqac.dim.muscuboost.AjoutExercice;
+package uqac.dim.muscuboost.ui.exercise;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -17,6 +17,7 @@ import android.widget.Toast;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
+import uqac.dim.muscuboost.ExerciseListActivity;
 import uqac.dim.muscuboost.R;
 import uqac.dim.muscuboost.core.training.Exercise;
 import uqac.dim.muscuboost.core.training.Muscle;
@@ -26,7 +27,7 @@ import uqac.dim.muscuboost.db.MuscleDAO;
 import android.widget.AdapterView.OnItemSelectedListener;
 
 
-public class AddExerciceActivity  extends AppCompatActivity implements OnItemSelectedListener{
+public class AddExerciseActivity extends AppCompatActivity implements OnItemSelectedListener{
 
     private Button btnImport, btnRemove, btnAdd, btnCancel ;
     private TextView txtTitre;
@@ -42,7 +43,7 @@ public class AddExerciceActivity  extends AppCompatActivity implements OnItemSel
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.exercice_add_fragment);
+        setContentView(R.layout.add_exercise_fragment);
 
         btnImport = findViewById(R.id.import_img);
         btnRemove = findViewById(R.id.remove_img);
@@ -60,7 +61,7 @@ public class AddExerciceActivity  extends AppCompatActivity implements OnItemSel
 
         Spinner spinner = (Spinner) findViewById(R.id.muscles_spinner);
         spinner.setOnItemSelectedListener(this);
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, Muscle_datasource.selectAllName());
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, Muscle_datasource.getAllName());
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(dataAdapter);
 
@@ -88,9 +89,9 @@ public class AddExerciceActivity  extends AppCompatActivity implements OnItemSel
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ListeExerciseFragment l = new ListeExerciseFragment().newInstance();
+                ExerciseListActivity l = new ExerciseListActivity().newInstance();
                 ArrayAdapter<Exercise> adapter = (ArrayAdapter<Exercise>) l.getListAdapter();
-                Muscle m = Muscle_datasource.selectName(s);
+                Muscle m = Muscle_datasource.getName(s);
                 Exercise exercise = Exercise_datasource.insert(txtTitre.getText().toString(), m, txtDescription.getText().toString());
                 adapter.add(exercise);
                 adapter.notifyDataSetChanged();
@@ -132,30 +133,28 @@ public class AddExerciceActivity  extends AppCompatActivity implements OnItemSel
         }
     }
 
-
     @Override
     protected void onResume() {
-
+        super.onResume();
         Exercise_datasource.open();
         Muscle_datasource.open();
-        super.onResume();
     }
 
     @Override
     protected void onPause() {
-
+        super.onPause();
         Exercise_datasource.close();
         Muscle_datasource.close();
-        super.onPause();
     }
-
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String item = parent.getItemAtPosition(position).toString();
         s=item;
     }
+
+    @Override
     public void onNothingSelected(AdapterView<?> arg0) {
-        // TODO Auto-generated method stub
     }
+
 }

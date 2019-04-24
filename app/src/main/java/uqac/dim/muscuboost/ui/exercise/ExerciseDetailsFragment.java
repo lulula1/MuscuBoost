@@ -1,27 +1,19 @@
-package uqac.dim.muscuboost.AjoutExercice;
+package uqac.dim.muscuboost.ui.exercise;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import uqac.dim.muscuboost.R;
 import uqac.dim.muscuboost.core.training.Exercise;
 import uqac.dim.muscuboost.db.ExerciseDAO;
 
-
-
-public class DetailsExerciseFragment extends Fragment {
+public class ExerciseDetailsFragment extends Fragment {
 
     private ExerciseDAO Exercisedatasource;
     private Exercise exercise;
@@ -36,17 +28,9 @@ public class DetailsExerciseFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.details_exercice, container, false);
+        View v = inflater.inflate(R.layout.exercise_details, container, false);
         return v;
     }
-
-    public void setExercice(Exercise exercise) {
-        this.exercise = exercise;
-        ((TextView) getView().findViewById(R.id.titre)).setText(exercise.getName());
-        ((TextView) getView().findViewById(R.id.txtView_description)).setText(exercise.getDescription());
-        ((TextView) getView().findViewById(R.id.txtView_muscle)).setText(exercise.getMuscle().getName());
-    }
-
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -54,9 +38,7 @@ public class DetailsExerciseFragment extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
-
-
-    @Override
+    /*@Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
@@ -64,7 +46,7 @@ public class DetailsExerciseFragment extends Fragment {
                 Toast.makeText(getActivity(), "modifier", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.action_supprimer:
-                ListeExerciseFragment l = new ListeExerciseFragment().newInstance();
+                ExerciseListActivity l = new ExerciseListActivity().newInstance();
                 ArrayAdapter<Exercise> adapter = (ArrayAdapter<Exercise>) l.getListAdapter();
                 exercise = Exercisedatasource.selectName(((TextView) getView().findViewById(R.id.titre)).getText().toString());
                 Exercisedatasource.deleteName(exercise.getName());
@@ -77,8 +59,14 @@ public class DetailsExerciseFragment extends Fragment {
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
+    }*/
 
+    public void setExercice(Exercise exercise) {
+        this.exercise = exercise;
+        ((TextView) getView().findViewById(R.id.titre)).setText(exercise.getName());
+        ((TextView) getView().findViewById(R.id.txtView_description)).setText(exercise.getDescription());
+        ((TextView) getView().findViewById(R.id.txtView_muscle)).setText(exercise.getMuscle().getName());
+    }
 
 }
 

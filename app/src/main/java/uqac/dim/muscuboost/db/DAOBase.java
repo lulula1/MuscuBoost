@@ -28,8 +28,4 @@ public abstract class DAOBase {
         return db;
     }
 
-    public DatabaseHandler getDatabaseHandler(){
-        return handler;
-    }
-
 }

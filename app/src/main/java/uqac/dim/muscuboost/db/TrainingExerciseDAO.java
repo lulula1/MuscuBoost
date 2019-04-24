@@ -44,9 +44,8 @@ public class TrainingExerciseDAO extends DAOBase {
     public void delete(long trainingId, long exerciseId) {
         String[] whereArgs = {String.valueOf(trainingId),
                 String.valueOf(exerciseId)};
-        db.delete(TrainingExerciseDAO.TABLE_NAME,
-                TrainingExerciseDAO.TRAINING_ID + " = ? AND "
-                        + TrainingExerciseDAO.EXERCISE_ID + " = ?", whereArgs);
+        db.delete(TABLE_NAME, TRAINING_ID + " = ? AND "
+                + EXERCISE_ID + " = ?", whereArgs);
     }
 
     public List<Exercise> getAllExercises(long trainingId) {
