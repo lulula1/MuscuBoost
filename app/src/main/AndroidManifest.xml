@@ -76,9 +76,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+
         <activity
             android:name=".ProfilActivity"
             android:label="@string/profil_name"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ParametersActivity"
+            android:label="Paramètres"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".RegistrationActivity"

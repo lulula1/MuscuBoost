@@ -1,12 +1,17 @@
 package uqac.dim.muscuboost;
 
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
+
+import java.io.IOException;
 
 
 import uqac.dim.muscuboost.db.DatabaseHandler;
@@ -16,6 +21,9 @@ import uqac.dim.muscuboost.db.PersonDAO;
 public class MainActivity extends AppCompatActivity {
 
 
+    private TextView bonjour;
+    private String name;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,10 +31,18 @@ public class MainActivity extends AppCompatActivity {
 
         DatabaseHandler db = new DatabaseHandler(getApplicationContext());
 
-
         //db.dbDelete();
         db.createDatabase();
 
+
+        bonjour = findViewById(R.id.bienvenue);
+
+        inscription();
+        chargerBonjour();
+
+    }
+
+    private void inscription(){
 
         PersonDAO personDAO = new PersonDAO(getApplicationContext());
         personDAO.open();
@@ -37,16 +53,47 @@ public class MainActivity extends AppCompatActivity {
                     .setCancelable(false)
                     .setPositiveButton("S'inscrire", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            startActivity(new Intent(getBaseContext(), RegistrationActivity.class));
+                            startActivityForResult(new Intent(getBaseContext() , RegistrationActivity.class),1);
                         }
                     });
 
             AlertDialog alertDialog = builder.create();
             alertDialog.show();
+
         }
+        personDAO.close();
 
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        if(requestCode == 1){
+            if(resultCode == Activity.RESULT_OK){
+                name = data.getStringExtra("surname");
+            }
+        }
+        else if(requestCode == 2){
+            if(resultCode == Activity.RESULT_OK) {
+                Log.i("DIM", "JE PASSE PAR INSCRIPTION");
+                inscription();
+            }
+        }
+    }
+
+    @Override
+    public void onResume() {
+        chargerBonjour();
+        super.onResume();
+    }
+
+    private void chargerBonjour() {
+        if(name == null)
+            bonjour.setVisibility(View.GONE);
+        else{
+            bonjour.setVisibility(View.VISIBLE);
+        }
+        bonjour.setText("Bonjour " + name);
+    }
 
 
     public void startChrono(View view) {
@@ -67,6 +114,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void startProfil(View v) {
         startActivity(new Intent(getBaseContext(), ProfilActivity.class));
+    }
+
+    public void startParameters(View v){
+        startActivityForResult(new Intent(getBaseContext(), ParametersActivity.class),2);
     }
 
 }

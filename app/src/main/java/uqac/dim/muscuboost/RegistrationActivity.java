@@ -1,6 +1,8 @@
 package uqac.dim.muscuboost;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -67,7 +69,7 @@ public class RegistrationActivity extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 dateNaissance.setVisibility(View.VISIBLE);
-                dateNaissance.setText(String.format("%02d", dayOfMonth+1)+ "/"+String.format("%02d", month+1)+"/"+year);
+                dateNaissance.setText(String.format("%02d", dayOfMonth)+ "/"+String.format("%02d", month)+"/"+year);
 
                 date.setText("Modifier");
                 date.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
@@ -92,7 +94,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 else {
 
                     Calendar calendar = Calendar.getInstance();
-                    calendar.set(annee, mois-1,jour);
+                    calendar.set(annee, mois,jour);
 
 
 
@@ -105,6 +107,10 @@ public class RegistrationActivity extends AppCompatActivity {
                     bodyDAO.open();
                     bodyDAO.insert(Double.parseDouble(masse.getText().toString()), Double.parseDouble(taille.getText().toString()));
                     bodyDAO.close();
+
+                    Intent returnIntent = new Intent();
+                    returnIntent.putExtra("surname", prenom.getText().toString());
+                    setResult(Activity.RESULT_OK, returnIntent);
                     finish();
                 }
             }

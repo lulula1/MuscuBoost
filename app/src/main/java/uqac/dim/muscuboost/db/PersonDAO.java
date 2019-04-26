@@ -60,6 +60,14 @@ public class PersonDAO extends DAOBase {
         return new Person(nom, prenom, date_birth);
     }
 
+    public String selectName(){
+        Cursor c = db.rawQuery("SELECT " + SURNAME + " FROM " + TABLE_NAME, null );
+        c.moveToFirst();
+        String surname = c.getString(0);
+        c.close();
+        return surname;
+    }
+
     public boolean isRegistered(){
         Cursor c = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
         int count = c.getCount();

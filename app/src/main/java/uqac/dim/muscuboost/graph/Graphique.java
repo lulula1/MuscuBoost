@@ -105,13 +105,19 @@ public class Graphique extends Fragment {
             relativeLayout.addView(tv);
         }
         else{
-            relativeLayout.addView(createGraphique(seriesPoint));
+
+            if(type == ListOptionGraph.TYPE_MUSCLE){
+                relativeLayout.addView(createGraphiqueMuscle(seriesPoint));
+            }
+            else if (type == ListOptionGraph.TYPE_EXERCICE){
+                relativeLayout.addView(createGraphiqueExercice(seriesPoint));
+            }
         }
 
         return view;
     }
 
-    private GraphView createGraphique(DataPoint[] seriesPoint){
+    private GraphView createGraphiqueMuscle(DataPoint[] seriesPoint){
         GraphView v;
         LineGraphSeries<DataPoint> seriesGraph = new LineGraphSeries<>(seriesPoint);
 
@@ -164,6 +170,70 @@ public class Graphique extends Fragment {
         v.getGridLabelRenderer().setNumHorizontalLabels(3);
 
         seriesGraph.setTitle("Poid moyen/jours");
+        serieMoyenne.setTitle("Moyenne globale");
+        v.getLegendRenderer().setVisible(true);
+        v.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.BOTTOM);
+
+        seriesGraph.setAnimated(true);
+        serieMoyenne.setAnimated(true);
+
+        v.getGridLabelRenderer().setGridStyle(GridLabelRenderer.GridStyle.HORIZONTAL);
+        return v;
+    }
+
+    private GraphView createGraphiqueExercice(DataPoint[] seriesPoint){
+        GraphView v;
+        LineGraphSeries<DataPoint> seriesGraph = new LineGraphSeries<>(seriesPoint);
+
+        double moyenne = 0;
+        for (DataPoint aSeriesPoint : seriesPoint) {
+            moyenne += aSeriesPoint.getY();
+        }
+        moyenne /= seriesPoint.length;
+
+        LineGraphSeries<DataPoint> serieMoyenne = new LineGraphSeries<>(new DataPoint[]{
+                new DataPoint(seriesGraph.getLowestValueX(), moyenne),
+                new DataPoint(seriesGraph.getHighestValueX(), moyenne)
+        });
+
+        seriesGraph.setOnDataPointTapListener(new OnDataPointTapListener() {
+            @Override
+            public void onTap(Series series, DataPointInterface dataPoint) {
+                DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                Toast toast = Toast.makeText(getActivity(), "Date : "+ df.format(new Date((long)dataPoint.getX()))
+                        + "\nNombre de série moyen : " + dataPoint.getY(), Toast.LENGTH_LONG);
+                TextView tv = toast.getView().findViewById(android.R.id.message);
+                if( tv != null) tv.setGravity(Gravity.CENTER);
+                toast.show();
+            }
+        });
+
+        seriesGraph.setDrawDataPoints(true);
+        seriesGraph.setDataPointsRadius(12);
+
+        serieMoyenne.setColor(Color.RED);
+
+        v = new GraphView(getActivity());
+        v.addSeries(seriesGraph);
+        v.addSeries(serieMoyenne);
+
+        v.getGridLabelRenderer().setLabelFormatter(
+                new DateAsXAxisLabelFormatter(getActivity(), new SimpleDateFormat("dd/MM/yyyy")));
+
+        v.getViewport().setMaxX(seriesGraph.getHighestValueX());
+        v.getViewport().setMinX(seriesGraph.getLowestValueX());
+        v.getViewport().setMinY(0);
+        v.getViewport().setMaxY(seriesGraph.getHighestValueY()*1.10);
+
+        v.getViewport().setYAxisBoundsManual(true);
+        v.getViewport().setXAxisBoundsManual(true);
+
+        v.getViewport().setScalable(true);
+        v.getViewport().setScalableY(true);
+        v.getGridLabelRenderer().setHumanRounding(false);
+        v.getGridLabelRenderer().setNumHorizontalLabels(3);
+
+        seriesGraph.setTitle("Nombre de série moyen/jours");
         serieMoyenne.setTitle("Moyenne globale");
         v.getLegendRenderer().setVisible(true);
         v.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.BOTTOM);

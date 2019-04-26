@@ -3,6 +3,7 @@ package uqac.dim.muscuboost.db;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 
 import com.jjoe64.graphview.series.DataPoint;
 
@@ -50,6 +51,7 @@ public class BodyDAO extends DAOBase {
         while(c.moveToNext()){
             try {
                 datas[i] = new DataPoint(df.parse(c.getString(0)), c.getDouble(1));
+                Log.i("DIM", datas[i].getX()+"\t"+datas[i].getY());
                 i++;
             } catch (ParseException e) {
                 e.printStackTrace();

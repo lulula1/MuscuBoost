@@ -12,7 +12,22 @@
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:id="@+id/bienvenue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 style="@style/main.wrapper"
@@ -99,7 +114,9 @@
                     android:text="@string/main_details" />
             </LinearLayout>
 
-            <LinearLayout style="@style/main.wrapper">
+            <LinearLayout
+                style="@style/main.wrapper"
+                android:onClick="startParameters">
 
                 <ImageView
                     android:id="@+id/imgParam"

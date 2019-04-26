@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -70,7 +72,7 @@ public class ProfilActivity extends AppCompatActivity {
         taille.setText(body.getTaille() + " cm");
         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         date_saisie.setText("Dernière donnée saisie le " + df.format(body.getDate_enregistrement()));
-        imc.setText(""+ body.calculIMC());
+        imc.setText(String.format("%.2f",body.calculIMC()));
 
         RelativeLayout relativeLayout = findViewById(R.id.graph_imc_container);
         bodyDAO = new BodyDAO(getApplicationContext());
@@ -83,8 +85,11 @@ public class ProfilActivity extends AppCompatActivity {
         }
         else{
             relativeLayout.addView(createGraphique(bodyDAO.getAll()));
+            relativeLayout.setLayoutParams(new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    400));
         }
-
+        bodyDAO.close();
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,17 +107,6 @@ public class ProfilActivity extends AppCompatActivity {
         GraphView v;
         LineGraphSeries<DataPoint> seriesGraph = new LineGraphSeries<>(datas);
 
-        double moyenne = 0;
-        for (DataPoint aSeriesPoint : datas) {
-            moyenne += aSeriesPoint.getY();
-        }
-        moyenne /= datas.length;
-
-        LineGraphSeries<DataPoint> serieMoyenne = new LineGraphSeries<>(new DataPoint[]{
-                new DataPoint(seriesGraph.getLowestValueX(), moyenne),
-                new DataPoint(seriesGraph.getHighestValueX(), moyenne)
-        });
-
         seriesGraph.setOnDataPointTapListener(new OnDataPointTapListener() {
             @Override
             public void onTap(Series series, DataPointInterface dataPoint) {
@@ -128,11 +122,8 @@ public class ProfilActivity extends AppCompatActivity {
         seriesGraph.setDrawDataPoints(true);
         seriesGraph.setDataPointsRadius(12);
 
-        serieMoyenne.setColor(Color.RED);
-
         v = new GraphView(getApplicationContext());
         v.addSeries(seriesGraph);
-        v.addSeries(serieMoyenne);
 
         v.getGridLabelRenderer().setLabelFormatter(
                 new DateAsXAxisLabelFormatter(getApplicationContext(), new SimpleDateFormat("dd/MM/yyyy")));
@@ -145,18 +136,15 @@ public class ProfilActivity extends AppCompatActivity {
         v.getViewport().setYAxisBoundsManual(true);
         v.getViewport().setXAxisBoundsManual(true);
 
-        v.getViewport().setScalable(true);
-        v.getViewport().setScalableY(true);
         v.getGridLabelRenderer().setHumanRounding(false);
         v.getGridLabelRenderer().setNumHorizontalLabels(3);
 
-        seriesGraph.setTitle("Masse");
-        serieMoyenne.setTitle("Moyenne globale");
+        seriesGraph.setTitle("Masse/date");
+
         v.getLegendRenderer().setVisible(true);
         v.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.BOTTOM);
 
         seriesGraph.setAnimated(true);
-        serieMoyenne.setAnimated(true);
 
         v.getGridLabelRenderer().setGridStyle(GridLabelRenderer.GridStyle.HORIZONTAL);
         return v;
@@ -190,7 +178,7 @@ public class ProfilActivity extends AppCompatActivity {
         taille.setText(body.getTaille() + " cm");
         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         date_saisie.setText("Dernière donnée saisie le " + df.format(body.getDate_enregistrement()));
-        imc.setText(""+ body.calculIMC());
+        imc.setText(String.format("%.2f",body.calculIMC()));
 
         RelativeLayout relativeLayout = findViewById(R.id.graph_imc_container);
         bodyDAO = new BodyDAO(getApplicationContext());
@@ -203,6 +191,9 @@ public class ProfilActivity extends AppCompatActivity {
         }
         else{
             relativeLayout.addView(createGraphique(bodyDAO.getAll()));
+            relativeLayout.setLayoutParams(new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    400));
         }
     }
 
