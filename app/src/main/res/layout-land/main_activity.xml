@@ -14,6 +14,24 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <TextView
+                android:id="@+id/welcome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="sans-serif"
+                android:padding="4dp"
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="32sp"
+                android:textStyle="bold"
+                android:visibility="visible" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
             <LinearLayout
                 style="@style/main.wrapper"
                 android:onClick="startTraining">
@@ -64,12 +82,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <LinearLayout style="@style/main.wrapper">
+            <LinearLayout
+                style="@style/main.wrapper"
+                android:onClick="startStatistic">
 
                 <ImageView
                     android:id="@+id/imgStats"
                     style="@style/main.icon"
-                    android:onClick="clickStatistique"
                     app:srcCompat="@drawable/icon_graph" />
 
                 <TextView

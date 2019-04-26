@@ -10,6 +10,7 @@
 
     <!-- Activity names -->
     <string name="app_name">MuscuBoost</string>
+    <string name="settings_name">Settings</string>
     <string name="registration_name">Registration</string>
     <string name="profil_name">Profil</string>
     <string name="schedule_name">Schedule</string>
@@ -22,6 +23,7 @@
     <string name="statistics_name">Statistics</string>
 
     <!-- Main activity -->
+    <string name="hello">Hello</string>
     <string name="registration">Registration</string>
     <string name="registration_message">You must register before start</string>
     <string name="signin">Sign in</string>
@@ -38,6 +40,10 @@
     <string name="weight">Weight</string>
     <string name="global_average">Global Average</string>
     <string name="years">years</string>
+
+    <!-- Settings activity -->
+    <string name="erase_data">Erase data</string>
+    <string name="erase_data_message">This will delete your whole data&#8230;\nAre you really sure ?</string>
 
     <!-- Schedule activity -->
     <string name="monday">Monday</string>

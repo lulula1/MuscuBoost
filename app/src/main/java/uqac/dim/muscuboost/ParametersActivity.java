@@ -1,7 +1,6 @@
 package uqac.dim.muscuboost;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -9,9 +8,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import java.io.IOException;
-
 import uqac.dim.muscuboost.db.DatabaseHandler;
+import uqac.dim.muscuboost.ui.dialog.ConfirmDialog;
 
 public class ParametersActivity extends AppCompatActivity {
 
@@ -20,23 +18,16 @@ public class ParametersActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_parameters);
+        setContentView(R.layout.parameters_activity);
 
         reinit = findViewById(R.id.button_reinit);
         reinit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(ParametersActivity.this)
-                        .setTitle("Suppression des données")
-                        .setMessage("Cela entrainera la suppression de l'ensemble de vos données...\nEn êtes vous certain ?")
-                        .setCancelable(true)
-                        .setNegativeButton("Non", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                            }
-                        })
-                        .setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+                new ConfirmDialog(ParametersActivity.this)
+                        .setTitle(R.string.erase_data)
+                        .setMessage(R.string.erase_data_message)
+                        .setPositiveListener(new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 DatabaseHandler db = new DatabaseHandler(getApplicationContext());
                                 db.dbDelete();
@@ -46,10 +37,7 @@ public class ParametersActivity extends AppCompatActivity {
                                 setResult(Activity.RESULT_OK, returnIntent);
                                 finish();
                             }
-                        });
-
-                AlertDialog alertDialog = builder.create();
-                alertDialog.show();
+                        }).show();
             }
         });
     }

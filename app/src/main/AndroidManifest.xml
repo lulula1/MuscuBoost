@@ -76,19 +76,23 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-
         <activity
             android:name=".ProfilActivity"
             android:label="@string/profil_name"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ParametersActivity"
-            android:label="Paramètres"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="@string/settings_name"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
         <activity
             android:name=".RegistrationActivity"
             android:label="@string/profil_name"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <service
             android:name=".TrainService"
             android:enabled="true"

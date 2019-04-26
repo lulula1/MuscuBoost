@@ -12,7 +12,8 @@
         style="@style/button"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:text="Réinitialiser les données"
+        android:backgroundTint="@android:color/holo_red_dark"
+        android:text="@string/erase_data"
         android:textAppearance="@style/button"
         android:textSize="18sp" />
 </LinearLayout>

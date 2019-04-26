@@ -1,6 +1,5 @@
 package uqac.dim.muscuboost;
 
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -11,17 +10,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import java.io.IOException;
-
-
 import uqac.dim.muscuboost.db.DatabaseHandler;
 import uqac.dim.muscuboost.db.PersonDAO;
 
 
 public class MainActivity extends AppCompatActivity {
 
-
-    private TextView bonjour;
     private String name;
 
     @Override
@@ -34,12 +28,7 @@ public class MainActivity extends AppCompatActivity {
         //db.dbDelete();
         db.createDatabase();
 
-
-        bonjour = findViewById(R.id.bienvenue);
-
         inscription();
-        chargerBonjour();
-
     }
 
     private void inscription(){
@@ -62,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
 
         }
         personDAO.close();
-
     }
 
     @Override
@@ -71,8 +59,7 @@ public class MainActivity extends AppCompatActivity {
             if(resultCode == Activity.RESULT_OK){
                 name = data.getStringExtra("surname");
             }
-        }
-        else if(requestCode == 2){
+        } else if(requestCode == 2){
             if(resultCode == Activity.RESULT_OK) {
                 Log.i("DIM", "JE PASSE PAR INSCRIPTION");
                 inscription();
@@ -87,12 +74,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void chargerBonjour() {
-        if(name == null)
-            bonjour.setVisibility(View.GONE);
-        else{
-            bonjour.setVisibility(View.VISIBLE);
-        }
-        bonjour.setText("Bonjour " + name);
+        TextView bonjour = findViewById(R.id.welcome);
+        bonjour.setVisibility(name == null ? View.GONE : View.VISIBLE);
+        bonjour.setText(getString(R.string.hello) + " " + name);
     }
 
 
