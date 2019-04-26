@@ -86,6 +86,10 @@
     <string name="by_muscle">Par muscle</string>
     <string name="by_exercise">Par exercice</string>
     <string name="insufficient_data">Données insuffisantes</string>
+    <string name="toast_by_muscle">Date : %s\nPoids moyen : %s lbs</string>
+    <string name="toast_by_exercise">Date : %s\nNombre de séries moyen : %s</string>
+    <string name="series_title_by_muscle">Poid moyen/jours</string>
+    <string name="series_title_by_exercise">Nombre de séries moyen/jours</string>
 
     <!-- Chronometer activity -->
     <string name="chrono_start">Débuter</string>
