@@ -79,7 +79,7 @@ public class Graphique extends Fragment {
             sd.open();
 
             seriesPoint = sd.getAvgWeightForEachDate(
-                    ed.selectAllIdWhereMuscle((int) md.getId(name)));
+                    ed.getAllIdFromMuscleId(md.getId(name)));
 
             sd.close();
 
@@ -89,7 +89,7 @@ public class Graphique extends Fragment {
            sd.open();
 
            seriesPoint = sd.getAvgRepCountForEachDate(
-                   ed.selectIdWhereName(name));
+                   (int) ed.getIdFromName(name));
 
            sd.close();
 

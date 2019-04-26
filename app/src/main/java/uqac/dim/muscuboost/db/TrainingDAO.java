@@ -61,7 +61,7 @@ public class TrainingDAO extends DAOSingleKey<Training> {
 
     @Override
     public List<Training> getAll(String whereSQL, String[] whereArgs) {
-        Cursor c = getGetAllCursor(whereSQL, whereArgs);
+        Cursor c = getGetAllCursor(whereSQL, whereArgs, NAME);
 
         List<Training> trainings = new ArrayList<>();
         while (c.moveToNext()) {
@@ -73,15 +73,6 @@ public class TrainingDAO extends DAOSingleKey<Training> {
         return trainings;
     }
 
-    @Override
-    protected Cursor getGetAllCursor(String whereSQL, String[] whereArgs) {
-        return db.rawQuery("SELECT * "
-                        + "FROM " + TABLE_NAME
-                        + (whereSQL != null ? " WHERE " + whereSQL : " ")
-                        + "ORDER BY " + NAME
-                        + ";",
-                whereArgs);
-    }
 }
 
 

@@ -93,7 +93,7 @@ public class AddExerciseActivity extends AppCompatActivity implements OnItemSele
                 if (txtTitre.getText().toString().trim().matches("")
                   || txtDescription.getText().toString().trim().matches("")) {
                     Toast.makeText(getApplicationContext(), "Veuillez tout remplir", Toast.LENGTH_LONG).show();
-                //} else if (exerciseDao.getName(txtTitre.getText().toString()) != null){
+                //} else if (exerciseDao.getFromName(txtTitre.getText().toString()) != null){
                 }else{
                     Muscle m = muscleDao.getName(s);
                     Exercise exercise = exerciseDao.insert(txtTitre.getText().toString(), m, txtDescription.getText().toString());

@@ -35,12 +35,17 @@ public abstract class DAOSingleKey<T> extends DAOBase {
         return !array.isEmpty() ? array.get(0) : null;
     }
 
-    protected Cursor getGetAllCursor(String whereSQL, String[] whereArgs) {
+    protected Cursor getGetAllCursor(String whereSQL, String[] whereArgs, String orderBy) {
         return db.rawQuery("SELECT * "
                         + "FROM " + TABLE_NAME
                         + (whereSQL != null ? " WHERE " + whereSQL : "")
+                        + (orderBy != null ? " ORDER BY " + orderBy : "")
                         + ";",
                 whereArgs);
+    }
+
+    protected Cursor getGetAllCursor(String whereSQL, String[] whereArgs) {
+        return getGetAllCursor(whereSQL, whereArgs, null);
     }
 
 }

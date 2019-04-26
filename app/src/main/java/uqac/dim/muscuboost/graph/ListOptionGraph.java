@@ -62,7 +62,7 @@ public class ListOptionGraph extends ListFragment {
             ExerciseDAO ed = new ExerciseDAO(getActivity());
             ed.open();
             ArrayAdapter<String> adapter = new ArrayAdapter<String>
-                    (getActivity(), android.R.layout.simple_list_item_1, ed.selectAllName());
+                    (getActivity(), android.R.layout.simple_list_item_1, ed.getAllNames());
             setListAdapter(adapter);
             ed.close();
         }

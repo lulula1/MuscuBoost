@@ -45,14 +45,14 @@ public class ExerciseDetailsFragment extends Fragment {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.action_modifier:
-                Exercise exercise = exerciseDao.selectName(((TextView) getView().findViewById(R.id.titre)).getText().toString());
+                Exercise exercise = exerciseDao.getFromName(((TextView) getView().findViewById(R.id.titre)).getText().toString());
                 Intent intentEditExercice = new Intent(getActivity(), EditExerciseActivity.class);
                 intentEditExercice.putExtra("ExerciceParam",exercise);
                 startActivityForResult(intentEditExercice ,3);
                 return true;
             case R.id.action_supprimer:
-                Exercise exercise1 = exerciseDao.selectName(((TextView) getView().findViewById(R.id.titre)).getText().toString());
-                exerciseDao.delete(exercise1);
+                Exercise exercise1 = exerciseDao.getFromName(((TextView) getView().findViewById(R.id.titre)).getText().toString());
+                exerciseDao.delete(exercise1.getId());
                 Intent returnIntent = new Intent();
                 returnIntent.putExtra("resultFromDetailsExercise",exercise1);
                 getActivity().setResult(Activity.RESULT_OK,returnIntent);

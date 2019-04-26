@@ -81,17 +81,13 @@ public class ExerciseListActivity extends ListActivity {
         exerciseDao = new ExerciseDAO(this);
         exerciseDao.open();
 
-        if (requestCode == 1) {
-            if(resultCode == Activity.RESULT_OK){
+        if(resultCode == Activity.RESULT_OK) {
+            if (requestCode == 1) {
                 String result=data.getStringExtra("resultFromAddExercice");
-                Exercise e = exerciseDao.selectName(result);
+                Exercise e = exerciseDao.getFromName(result);
                 adapter.add(e);
                 adapter.notifyDataSetChanged();
-            }
-            if (resultCode == Activity.RESULT_CANCELED) {
-            }
-        }else if(requestCode == 2) {
-            if(resultCode == Activity.RESULT_OK){
+            }else if(requestCode == 2) {
                 Exercise result= (Exercise) data.getSerializableExtra("resultFromDetailsExercise");
                 adapter.remove(result);
                 adapter.notifyDataSetChanged();

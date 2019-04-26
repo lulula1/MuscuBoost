@@ -38,11 +38,6 @@ public class ExerciseDAO extends DAOSingleKey<Exercise> {
         muscleDao.close();
     }
 
-    public void delete(Exercise exercise) {
-        String[] whereArgs = {String.valueOf(exercise.getId())};
-        db.delete(TABLE_NAME, KEY + " = ?", whereArgs);
-    }
-
     public Exercise insert(String name, Muscle muscle, String description) {
         ContentValues value = new ContentValues();
         value.put(NAME, name);
@@ -64,58 +59,50 @@ public class ExerciseDAO extends DAOSingleKey<Exercise> {
 
     @Override
     public List<Exercise> getAll(String whereSQL, String[] whereArgs) {
-        Cursor c = getGetAllCursor(whereSQL, whereArgs);
-        List<Exercise> exercices = new ArrayList<>();
+        Cursor c = getGetAllCursor(whereSQL, whereArgs, NAME);
+        List<Exercise> exercises = new ArrayList<>();
         while (c.moveToNext()) {
             long id = c.getLong(c.getColumnIndex(KEY));
             String name = c.getString(c.getColumnIndex(NAME));
             long muscleId = c.getLong(c.getColumnIndex(MUSCLE_ID));
             String description = c.getString(c.getColumnIndex(DESCRIPTION));
             Muscle muscle = muscleDao.get(muscleId);
-            exercices.add(new Exercise(id, name, muscle, description));
+            exercises.add(new Exercise(id, name, muscle, description));
         }
-        return exercices;
+        return exercises;
     }
 
-    public List<String> selectAllName(){
-        Cursor c = db.rawQuery("SELECT " + NAME + " FROM " + TABLE_NAME , null);
-        List<String> array = new ArrayList<String>();
-        while (c.moveToNext()) {
-            array.add(c.getString(0));
-        }
-        c.close();
-        return array;
+    public List<String> getAllNames() {
+        List<String> names = new ArrayList<>();
+        for(Exercise exercise : getAll())
+            names.add(exercise.getName());
+        return names;
     }
 
-    public Exercise selectName(String name){
-        Cursor c = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE "+ NAME +" = ?", new String[] {name});
+    public Exercise getFromName(String name) {
+        Cursor c = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE "+ NAME +" = ?;",
+                new String[] {name});
         c.moveToFirst();
-        Muscle m = muscleDao.get(c.getInt(2));
-        Exercise e = new Exercise(c.getInt(0),c.getString(1),m,c.getString(3));
+        long id = c.getInt(c.getColumnIndex(KEY));
+        String exName = c.getString(c.getColumnIndex(NAME));
+        Muscle muscle = muscleDao.get(c.getInt(c.getColumnIndex(MUSCLE_ID)));
+        String description = c.getString(c.getColumnIndex(DESCRIPTION));
         c.close();
-        return e;
+        return new Exercise(id, exName, muscle, description);
     }
 
-    public void deleteName(String name){
-        Cursor c = db.rawQuery("DELETE FROM " + TABLE_NAME + " WHERE "+ NAME +" = ?", new String[] {name});
-        c.close();
-    }
-
-    public List<Integer> selectAllIdWhereMuscle(int id){
-        Cursor c = db.rawQuery("SELECT " + KEY + " FROM " + TABLE_NAME + " WHERE " + MUSCLE_ID + " = ? ", new String[] {""+id} );
-        List<Integer> array = new ArrayList<Integer>();
-        while (c.moveToNext()){
+    public List<Integer> getAllIdFromMuscleId(long id){
+        Cursor c = db.rawQuery("SELECT " + KEY + " FROM " + TABLE_NAME
+                + " WHERE " + MUSCLE_ID + " = ?;", new String[] {String.valueOf(id)} );
+        List<Integer> array = new ArrayList<>();
+        while (c.moveToNext())
             array.add(c.getInt(0));
-        }
         c.close();
         return array;
     }
 
-    public int selectIdWhereName(String name){
-        Cursor c = db.rawQuery("SELECT " + KEY + " FROM " + TABLE_NAME + " WHERE " + NAME + " = ?", new String[]{name});
-        c.moveToFirst();
-        int result = c.getInt(0);
-        c.close();
-        return result;
+    public long getIdFromName(String name){
+        Exercise exercise = getFromName(name);
+        return exercise != null ? exercise.getId() : -1;
     }
 }

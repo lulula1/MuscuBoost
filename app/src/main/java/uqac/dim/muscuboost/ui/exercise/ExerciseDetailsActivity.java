@@ -23,7 +23,7 @@ public class ExerciseDetailsActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             String titre = extras.getString("titre");
-            Exercise exercise = exerciseDao.selectName(titre);
+            Exercise exercise = exerciseDao.getFromName(titre);
             if (exercise != null){
                 // option #1 : Directement par le parent
                 setExercice(exercise);

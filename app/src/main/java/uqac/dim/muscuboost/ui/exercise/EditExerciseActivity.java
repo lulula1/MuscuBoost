@@ -97,7 +97,7 @@ public class EditExerciseActivity extends AppCompatActivity implements OnItemSel
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //if (exerciseDao.getName(txtTitre.getText().toString())!=null) {
+                //if (exerciseDao.getFromName(txtTitre.getText().toString())!=null) {
                   //  Toast.makeText(getApplicationContext(), "Exercice déjà existant", Toast.LENGTH_LONG).show();
                 //}else {
                     exercise.setName(txtTitre.getText().toString());
