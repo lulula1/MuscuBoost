@@ -10,98 +10,132 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/training_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:textColor="@color/colorPrimary"
-            android:textSize="28sp" />
-
-        <View style="@style/hr" />
-
-        <TableLayout
+        <LinearLayout
             android:id="@+id/training_panel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:stretchColumns="0,1">
+            android:orientation="vertical">
 
-            <TableRow>
+            <TextView
+                android:id="@+id/training_name"
+                style="@style/trainingShowcase.name" />
 
-                <TextView
-                    android:id="@+id/series_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center_horizontal"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="24sp" />
+            <View style="@style/hr" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="8dp">
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:stretchColumns="0,1">
+
+                <TableRow>
 
                     <TextView
-                        android:id="@+id/exercise_name"
-                        android:layout_width="match_parent"
+                        android:id="@+id/series_count"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:gravity="center_horizontal"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
                         android:textColor="@color/colorPrimary"
                         android:textSize="24sp" />
 
-                    <TextView
-                        android:id="@+id/muscle_name"
-                        android:layout_width="match_parent"
+                    <LinearLayout
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:gravity="center_horizontal"
-                        android:textColor="@android:color/darker_gray"
-                        android:textSize="16sp" />
+                        android:orientation="vertical"
+                        android:padding="8dp">
 
-                    <TextView
-                        android:id="@+id/exercise_count"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_horizontal" />
-                </LinearLayout>
-            </TableRow>
+                        <TextView
+                            android:id="@+id/exercise_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="24sp" />
 
-            <TableRow>
+                        <TextView
+                            android:id="@+id/muscle_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:gravity="center_horizontal"
+                            android:textColor="@android:color/darker_gray"
+                            android:textSize="16sp" />
 
-                <FrameLayout>
+                        <TextView
+                            android:id="@+id/exercise_count"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal" />
+                    </LinearLayout>
+                </TableRow>
 
-                    <Button
-                        style="@style/train.btn"
-                        android:drawableStart="@drawable/baseline_exposure_plus_1_white_24"
-                        android:onClick="nextSeries"
-                        android:text="@string/series" />
-                </FrameLayout>
+                <TableRow>
 
-                <FrameLayout>
+                    <FrameLayout>
 
-                    <Button
-                        style="@style/train.btn"
-                        android:drawableStart="@drawable/baseline_fast_forward_white_24"
-                        android:onClick="nextExercise"
-                        android:text="@string/exercise" />
-                </FrameLayout>
-            </TableRow>
-        </TableLayout>
+                        <Button
+                            style="@style/train.btn"
+                            android:drawableStart="@drawable/baseline_exposure_plus_1_white_24"
+                            android:onClick="nextSeries"
+                            android:text="@string/series" />
+                    </FrameLayout>
+
+                    <FrameLayout>
+
+                        <Button
+                            style="@style/train.btn"
+                            android:drawableStart="@drawable/baseline_fast_forward_white_24"
+                            android:onClick="nextExercise"
+                            android:text="@string/exercise" />
+                    </FrameLayout>
+                </TableRow>
+            </TableLayout>
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/end_panel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:padding="16dp"
             android:visibility="gone">
 
-            <!-- TODO -->
+            <TextView
+                style="@style/trainingShowcase.name"
+                android:text="@string/training_over"
+                android:textStyle="bold" />
+
+            <View style="@style/hr" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/statistics"
+                android:textColor="@color/colorPrimary" />
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
+                android:layout_weight="1">
+
+                <LinearLayout
+                    android:id="@+id/exercise_recap"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
+            </ScrollView>
+
+            <Button
+                style="@style/button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="saveQuitTraining"
+                android:text="@string/save_quit" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

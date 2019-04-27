@@ -1,19 +1,27 @@
 package uqac.dim.muscuboost;
 
 import android.content.ComponentName;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import java.util.Map;
 
 import uqac.dim.muscuboost.core.ongoingtraining.Observer;
 import uqac.dim.muscuboost.core.ongoingtraining.OngoingTraining;
 import uqac.dim.muscuboost.core.training.Exercise;
+import uqac.dim.muscuboost.core.training.Statistics;
 import uqac.dim.muscuboost.core.training.Training;
+import uqac.dim.muscuboost.ui.dialog.ConfirmDialog;
+import uqac.dim.muscuboost.ui.train.StatRecapView;
 
 public class TrainActivity extends AppCompatActivity implements ServiceConnection, Observer {
 
@@ -31,10 +39,8 @@ public class TrainActivity extends AppCompatActivity implements ServiceConnectio
 
         Training training = (Training) getIntent().getSerializableExtra(EXTRA_TRAINING);
 
-        if(getSupportActionBar() != null) {
+        if(getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeAsUpIndicator(R.drawable.baseline_close_white_24);
-        }
 
         Intent intent = new Intent(getBaseContext(), TrainService.class);
         if(training != null)
@@ -68,11 +74,26 @@ public class TrainActivity extends AppCompatActivity implements ServiceConnectio
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.train_menu, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                // TODO - Confirm closing/training ending
-                stopTraining();
+                finish();
+                return true;
+            case R.id.stop:
+                new ConfirmDialog(this)
+                        .setTitle(R.string.stop_training_confirm)
+                        .setPositiveListener(new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                stopTraining();
+                            }
+                        }).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -93,7 +114,7 @@ public class TrainActivity extends AppCompatActivity implements ServiceConnectio
             updateExercise();
             updateSeries();
         }else {
-            setTrainingOverPanel(true);
+            setTrainingOverPanel();
         }
     }
 
@@ -117,9 +138,21 @@ public class TrainActivity extends AppCompatActivity implements ServiceConnectio
                 .setText(getString(R.string.series) + " #" + series);
     }
 
-    private void setTrainingOverPanel(boolean visible) {
-        findViewById(R.id.end_panel).setVisibility(visible ? View.VISIBLE : View.GONE);
-        findViewById(R.id.training_panel).setVisibility(!visible ? View.VISIBLE : View.GONE);
+    private void setTrainingOverPanel() {
+        LinearLayout trainingPanel = findViewById(R.id.training_panel);
+        LinearLayout endPanel = findViewById(R.id.end_panel);
+
+        trainingPanel.setVisibility(View.GONE);
+        endPanel.setVisibility(View.VISIBLE);
+
+        LinearLayout statRecap = endPanel.findViewById(R.id.exercise_recap);
+        statRecap.removeAllViews();
+
+        Map<Exercise, Statistics> exerciseStats = service
+                .getOngoingTraining().getDoneExerciseStats();
+        for(Map.Entry<Exercise, Statistics> entry : exerciseStats.entrySet())
+            statRecap.addView(
+                    new StatRecapView(getBaseContext(), entry.getKey(), entry.getValue()));
     }
 
     public void nextExercise(View view) {
@@ -128,6 +161,11 @@ public class TrainActivity extends AppCompatActivity implements ServiceConnectio
 
     public void nextSeries(View view) {
         service.nextSeries();
+    }
+
+    public void saveQuitTraining(View view) {
+        service.saveStats();
+        stopTraining();
     }
 
     public void stopTraining() {

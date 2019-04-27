@@ -1,10 +1,13 @@
 package uqac.dim.muscuboost.core.ongoingtraining;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import uqac.dim.muscuboost.core.training.Exercise;
+import uqac.dim.muscuboost.core.training.Statistics;
 import uqac.dim.muscuboost.core.training.Training;
 
 /**
@@ -14,8 +17,8 @@ public class OngoingTraining {
 
     private Training training;
     private Exercise currentExercise;
-    private int series;
-    private List<Exercise> doneExercises = new ArrayList<>();
+    private Statistics currentExerciseStats;
+    private Map<Exercise, Statistics> doneExerciseStats = new LinkedHashMap<>();
 
     /**
      * Creates an ongoing training.
@@ -28,7 +31,7 @@ public class OngoingTraining {
         // TODO - Don't oblige the currentExercise to be the first training exercise
         if(!training.getExercises().isEmpty())
             currentExercise = training.getExercises().get(0);
-        series = 1;
+        currentExerciseStats = new Statistics();
     }
 
     /**
@@ -41,12 +44,30 @@ public class OngoingTraining {
     }
 
     /**
+     * Defines the current exercise lifted weight.
+     *
+     * @param weight New lifted weight of the current exercise
+     */
+    public void setWeight(double weight) {
+        currentExerciseStats.setWeight(weight);
+    }
+
+    /**
+     * Returns the current exercise lifted weight.
+     *
+     * @return Lifted weight of the current exercise
+     */
+    public double getWeight() {
+        return currentExerciseStats.getWeight();
+    }
+
+    /**
      * Returns the current exercise series count.
      *
      * @return Series count of the current exercise
      */
     public int getSeries() {
-        return series;
+        return currentExerciseStats.getRepCount();
     }
 
     /**
@@ -64,7 +85,7 @@ public class OngoingTraining {
      * @return True if the training has ended, false otherwise
      */
     public boolean isTrainingOver() {
-        return getCurrentExercise() == null;
+        return currentExercise == null;
     }
 
     /**
@@ -82,7 +103,16 @@ public class OngoingTraining {
      * @return Count of done exercises
      */
     public int getDoneExercisesCount() {
-        return doneExercises.size();
+        return doneExerciseStats.size();
+    }
+
+    /**
+     * Returns the done exercises associated to their statistics.
+     *
+     * @return Done exercise associated to their statistics
+     */
+    public Map<Exercise, Statistics> getDoneExerciseStats() {
+        return doneExerciseStats;
     }
 
     /**
@@ -90,11 +120,11 @@ public class OngoingTraining {
      */
     public void nextExercise() {
         if(!isTrainingOver()) {
-            doneExercises.add(currentExercise);
-            if(doneExercises.size() < training.getExercises().size()) {
+            doneExerciseStats.put(currentExercise, currentExerciseStats);
+            if(doneExerciseStats.size() < training.getExercises().size()) {
                 // TODO - Don't oblige the currentExercise to be the next training exercise
-                currentExercise = training.getExercises().get(doneExercises.size());
-                series = 1;
+                currentExercise = training.getExercises().get(doneExerciseStats.size());
+                currentExerciseStats = new Statistics();
             }else {
                 currentExercise = null;
             }
@@ -106,7 +136,8 @@ public class OngoingTraining {
      */
     public void nextSeries() {
         if(!isTrainingOver())
-            series++;
+            currentExerciseStats.setRepCount(
+                    currentExerciseStats.getRepCount() + 1);
     }
 
 }

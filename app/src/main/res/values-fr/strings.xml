@@ -7,6 +7,7 @@
     <string name="cancel">Annuler</string>
     <string name="confirm_delete_title">Voulez-vous vraiment supprimer ?</string>
     <string name="error_occurred">Une erreur est survenue</string>
+    <string name="unit">lbs</string>
 
     <!-- Activity names -->
     <string name="app_name">MuscuBoost</string>
@@ -81,15 +82,19 @@
     <string name="series">Série</string>
     <string name="exercise">Exercice</string>
     <string name="training_over">Entraînement terminé !</string>
+    <string name="stop_training">Stop training</string>
+    <string name="stop_training_confirm">Voulez-vous mettre fin à l\'entraînemet ?</string>
+    <string name="statistics">Statistiques</string>
+    <string name="lifted_weight">Lifted weight</string>
+    <string name="series_count">Series count</string>
+    <string name="save_quit">Sauvegarder &amp; quitter</string>
 
     <!-- Stat activity -->
     <string name="by_muscle">Par muscle</string>
     <string name="by_exercise">Par exercice</string>
     <string name="insufficient_data">Données insuffisantes</string>
-    <string name="toast_by_muscle">Date : %s\nPoids moyen : %s lbs</string>
-    <string name="toast_by_exercise">Date : %s\nNombre de séries moyen : %s</string>
-    <string name="series_title_by_muscle">Poid moyen/jours</string>
-    <string name="series_title_by_exercise">Nombre de séries moyen/jours</string>
+    <string name="graphic_toast">Date : %s\nPoids moyen : %s lbs</string>
+    <string name="graphic_series_title">Poid moyen/jours</string>
 
     <!-- Chronometer activity -->
     <string name="chrono_start">Débuter</string>

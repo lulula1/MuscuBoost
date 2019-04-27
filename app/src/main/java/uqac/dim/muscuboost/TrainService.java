@@ -13,11 +13,16 @@ import android.os.IBinder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import uqac.dim.muscuboost.core.ongoingtraining.Observer;
 import uqac.dim.muscuboost.core.ongoingtraining.OngoingTraining;
 import uqac.dim.muscuboost.core.ongoingtraining.Subject;
+import uqac.dim.muscuboost.core.training.Exercise;
+import uqac.dim.muscuboost.core.training.Statistics;
 import uqac.dim.muscuboost.core.training.Training;
+import uqac.dim.muscuboost.db.StatExerciseDAO;
+import uqac.dim.muscuboost.db.StatisticsDAO;
 
 public class TrainService extends Service implements Subject {
 
@@ -37,9 +42,15 @@ public class TrainService extends Service implements Subject {
     private PendingIntent nextSeriePending;
     private PendingIntent nextExercisePending;
 
+    private StatisticsDAO statsDao = new StatisticsDAO(this);
+    private StatExerciseDAO statExerciseDao = new StatExerciseDAO(this);
+
     @Override
     public void onCreate() {
         super.onCreate();
+        statsDao.open();
+        statExerciseDao.open();
+
         notifManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         registerReceiver(trainReceiver, new IntentFilter(NOTIF_ACTION));
     }
@@ -65,6 +76,9 @@ public class TrainService extends Service implements Subject {
         super.onDestroy();
         unregisterReceiver(trainReceiver);
         stopForeground(true);
+
+        statsDao.close();
+        statExerciseDao.close();
     }
 
     @Override
@@ -161,6 +175,18 @@ public class TrainService extends Service implements Subject {
     void nextExercise() {
         ongoingTraining.nextExercise();
         update();
+    }
+
+    void saveStats() {
+        Map<Exercise, Statistics> exerciseStats = ongoingTraining.getDoneExerciseStats();
+        for(Map.Entry<Exercise, Statistics> entry : exerciseStats.entrySet()) {
+            Exercise exercise = entry.getKey();
+            Statistics stats = entry.getValue();
+
+            stats = statsDao.insert(stats.getWeight(), stats.getRepCount());
+            statExerciseDao.insert(ongoingTraining.getTraining().getId(),
+                    exercise.getId(), stats.getId());
+        }
     }
 
     class TrainBinder extends Binder {

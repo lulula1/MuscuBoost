@@ -28,7 +28,10 @@ public class StatisticsDAO extends DAOSingleKey<Statistics> {
 
     public Statistics insert(double weight, int repCount) {
         ContentValues values = new ContentValues();
-        values.put(WEIGHT, weight);
+        if(weight >= 0)
+            values.put(WEIGHT, weight);
+        else
+            values.putNull(WEIGHT);
         values.put(REP_COUNT, repCount);
         long id = db.insert(TABLE_NAME, null, values);
         return new Statistics(id, weight, repCount);
@@ -61,12 +64,12 @@ public class StatisticsDAO extends DAOSingleKey<Statistics> {
         for (int i = 0; i < exerciseIds.size(); i++)
             where.append(exerciseIds.get(i) + (i < exerciseIds.size()-1 ? ", " : ""));
 
-        String query = "SELECT " + StatExerciseDAO.RECORD_DATE + ", AVG(" + StatisticsDAO.WEIGHT + ")"
+        String query = "SELECT " + StatExerciseDAO.RECORD_DATE + ", AVG(" + WEIGHT + ")"
                 + " FROM " + TABLE_NAME + " S INNER JOIN " + StatExerciseDAO.TABLE_NAME + " Se"
                 + " ON S." + KEY + " = Se." + StatExerciseDAO.STAT_ID
-                + " WHERE Se." + StatExerciseDAO.EXERCISE_ID + " IN ( " + where.toString() + " )"
+                + " WHERE " + WEIGHT + " IS NOT NULL"
+                + "   AND Se." + StatExerciseDAO.EXERCISE_ID + " IN ( " + where.toString() + " )"
                 + " GROUP BY " + StatExerciseDAO.RECORD_DATE + ";";
-        System.out.println(query);
         return getAvg(query, null);
     }
 
@@ -75,7 +78,7 @@ public class StatisticsDAO extends DAOSingleKey<Statistics> {
     }
 
     public DataPoint[] getAvgRepCountForEachDate(long exerciseId) {
-        String query = "SELECT " + StatExerciseDAO.RECORD_DATE + ", AVG(" + StatisticsDAO.REP_COUNT + ")"
+        String query = "SELECT " + StatExerciseDAO.RECORD_DATE + ", AVG(" + REP_COUNT + ")"
                 + " FROM " + TABLE_NAME + " S INNER JOIN " + StatExerciseDAO.TABLE_NAME + " Se"
                 + " ON " + KEY + " = Se." + StatExerciseDAO.STAT_ID
                 + " WHERE " + StatExerciseDAO.EXERCISE_ID + " = ? "
