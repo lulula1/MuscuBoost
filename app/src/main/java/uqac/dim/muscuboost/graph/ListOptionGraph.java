@@ -13,8 +13,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import uqac.dim.muscuboost.R;
+import uqac.dim.muscuboost.core.Identifiable;
+import uqac.dim.muscuboost.core.training.Exercise;
+import uqac.dim.muscuboost.core.training.Muscle;
+import uqac.dim.muscuboost.db.DAOSingleKey;
 import uqac.dim.muscuboost.db.ExerciseDAO;
 import uqac.dim.muscuboost.db.MuscleDAO;
+import uqac.dim.muscuboost.ui.Wrapper;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -58,19 +63,32 @@ public class ListOptionGraph extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        if(getArguments().getInt("type") == 1){
+
+        if(getArguments().getInt("type") == TYPE_EXERCICE){
             ExerciseDAO ed = new ExerciseDAO(getActivity());
             ed.open();
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>
-                    (getActivity(), android.R.layout.simple_list_item_1, ed.getAllNames());
+            ArrayAdapter<Wrapper<Exercise>> adapter = new ArrayAdapter<>
+                    (getActivity(), android.R.layout.simple_list_item_1, Wrapper.wrap(ed.getAll(),
+                            new Wrapper.GetItemNameListener<Exercise>() {
+                                @Override
+                                public String getItemName(Exercise item) {
+                                    return item.getName();
+                                }
+                            }));
             setListAdapter(adapter);
             ed.close();
         }
         else{
             MuscleDAO md = new MuscleDAO(getActivity());
             md.open();
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>
-                    (getActivity(), android.R.layout.simple_list_item_1, md.getAllName());
+            ArrayAdapter<Wrapper<Muscle>> adapter = new ArrayAdapter<>
+                    (getActivity(), android.R.layout.simple_list_item_1, Wrapper.wrap(md.getAll(),
+                            new Wrapper.GetItemNameListener<Muscle>() {
+                                @Override
+                                public String getItemName(Muscle item) {
+                                    return item.getName();
+                                }
+                            }));
             setListAdapter(adapter);
             md.close();
         }
@@ -87,7 +105,10 @@ public class ListOptionGraph extends ListFragment {
         Log.i("DIM", "Click sur Item - position : " + position);
         getActivity().getFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragment_graph_container, Graphique.newInstance(getArguments().getInt("type"), ((TextView)view).getText().toString()))
+                .replace(R.id.fragment_graph_container,
+                        Graphique.newInstance(getArguments().getInt("type"),
+                                ((Wrapper<Identifiable>) listView.getAdapter().getItem(position))
+                                        .getItem().getId()))
                 .addToBackStack(null)
                 .commit();
 

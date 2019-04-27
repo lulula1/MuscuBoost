@@ -42,11 +42,11 @@ public class Graphique extends Fragment {
      * @return A new instance of fragment Graphique.
      */
     // TODO: Rename and change types and number of parameters
-    public static Graphique newInstance(int type, String name) {
+    public static Graphique newInstance(int type, long id) {
         Graphique fragment = new Graphique();
         Bundle args = new Bundle();
         args.putInt("type", type);
-        args.putString("name", name);
+        args.putLong("id", id);
         fragment.setArguments(args);
         return fragment;
     }
@@ -64,7 +64,7 @@ public class Graphique extends Fragment {
         View view = inflater.inflate(R.layout.graphique_fragment, container, false);
 
         int type = getArguments().getInt("type");
-        String name = getArguments().getString("name");
+        long id = getArguments().getLong("id");
 
         DataPoint[] seriesPoint;
 
@@ -79,7 +79,7 @@ public class Graphique extends Fragment {
             sd.open();
 
             seriesPoint = sd.getAvgWeightForEachDate(
-                    ed.getAllIdFromMuscleId(md.getId(name)));
+                    ed.getAllIdFromMuscleId(id));
 
             sd.close();
 
@@ -88,8 +88,7 @@ public class Graphique extends Fragment {
            ed.open();
            sd.open();
 
-           seriesPoint = sd.getAvgRepCountForEachDate(
-                   (int) ed.getIdFromName(name));
+           seriesPoint = sd.getAvgWeightForEachDate(id);
 
            sd.close();
 
@@ -97,27 +96,20 @@ public class Graphique extends Fragment {
 
         RelativeLayout relativeLayout = view.findViewById(R.id.graphique_container);
 
-        if(seriesPoint.length <= 5){
+        if(seriesPoint.length <= 1){
             TextView tv = new TextView(getActivity());
             tv.setText(R.string.insufficient_data);
             tv.setTextSize(20);
             relativeLayout.addView(tv);
         }
         else{
-
-            if(type == ListOptionGraph.TYPE_MUSCLE){
-                relativeLayout.addView(createGraphiqueMuscle(seriesPoint));
-            }
-            else if (type == ListOptionGraph.TYPE_EXERCICE){
-                relativeLayout.addView(createGraphiqueExercice(seriesPoint));
-            }
+            relativeLayout.addView(createGraphique(seriesPoint));
         }
 
         return view;
     }
 
-    private GraphView createGraphique(DataPoint[] seriesPoint,
-                                      final String toastText, String seriesTitle){
+    private GraphView createGraphique(DataPoint[] seriesPoint) {
         GraphView v;
         LineGraphSeries<DataPoint> seriesGraph = new LineGraphSeries<>(seriesPoint);
 
@@ -136,7 +128,7 @@ public class Graphique extends Fragment {
             @Override
             public void onTap(Series series, DataPointInterface dataPoint) {
                 DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-                String toastTextValue = String.format(toastText,
+                String toastTextValue = String.format(getString(R.string.graphic_toast),
                 df.format(new Date((long)dataPoint.getX())), dataPoint.getY());
                 toast.setText(toastTextValue);
                 TextView tv = toast.getView().findViewById(android.R.id.message);
@@ -171,7 +163,7 @@ public class Graphique extends Fragment {
         v.getGridLabelRenderer().setHumanRounding(false);
         v.getGridLabelRenderer().setNumHorizontalLabels(3);
 
-        seriesGraph.setTitle(seriesTitle);
+        seriesGraph.setTitle(getString(R.string.graphic_series_title));
         serieMoyenne.setTitle(getString(R.string.global_average));
         v.getLegendRenderer().setVisible(true);
         v.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.BOTTOM);
@@ -181,16 +173,6 @@ public class Graphique extends Fragment {
 
         v.getGridLabelRenderer().setGridStyle(GridLabelRenderer.GridStyle.HORIZONTAL);
         return v;
-    }
-
-    private GraphView createGraphiqueMuscle(DataPoint[] seriesPoint){
-        return createGraphique(seriesPoint,
-                getString(R.string.toast_by_muscle), getString(R.string.series_title_by_muscle));
-    }
-
-    private GraphView createGraphiqueExercice(DataPoint[] seriesPoint){
-        return createGraphique(seriesPoint,
-                getString(R.string.toast_by_exercise), getString(R.string.series_title_by_exercise));
     }
 
 }

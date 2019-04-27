@@ -2,10 +2,12 @@ package uqac.dim.muscuboost.core.training;
 
 import java.io.Serializable;
 
+import uqac.dim.muscuboost.core.Identifiable;
+
 /**
  * A training exercise that is associated to a muscle.
  */
-public class Exercise implements Serializable {
+public class Exercise implements Identifiable, Serializable {
 
     private final long ID;
     private String name;
@@ -31,6 +33,7 @@ public class Exercise implements Serializable {
      *
      * @return Id of the exercise
      */
+    @Override
     public long getId() {
         return ID;
     }

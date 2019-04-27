@@ -1,15 +1,17 @@
 package uqac.dim.muscuboost.core.training;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import uqac.dim.muscuboost.core.Identifiable;
 import uqac.dim.muscuboost.core.schedule.ISlottable;
 
 /**
  * A training that contains exercises.
  * It can be slotted in a {@link uqac.dim.muscuboost.core.schedule.ScheduleSlot}.
  */
-public class Training implements ISlottable {
+public class Training implements Identifiable, ISlottable, Serializable {
 
     private final long ID;
     private String name;
@@ -44,6 +46,7 @@ public class Training implements ISlottable {
      *
      * @return Id of the training
      */
+    @Override
     public long getId() {
         return ID;
     }

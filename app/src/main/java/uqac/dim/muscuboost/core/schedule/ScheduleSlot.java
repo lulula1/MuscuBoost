@@ -2,10 +2,12 @@ package uqac.dim.muscuboost.core.schedule;
 
 import java.io.Serializable;
 
+import uqac.dim.muscuboost.core.Identifiable;
+
 /**
  * A temporal slot of a schedule.
  */
-public class ScheduleSlot implements Serializable {
+public class ScheduleSlot implements Identifiable, Serializable {
 
     private final long ID;
     private Day day;
@@ -44,6 +46,7 @@ public class ScheduleSlot implements Serializable {
      *
      * @return Id of the slot
      */
+    @Override
     public long getId() {
         return ID;
     }

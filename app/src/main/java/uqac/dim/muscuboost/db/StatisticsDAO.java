@@ -7,10 +7,10 @@ import android.util.Log;
 
 import com.jjoe64.graphview.series.DataPoint;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import uqac.dim.muscuboost.core.training.Statistics;
@@ -56,20 +56,25 @@ public class StatisticsDAO extends DAOSingleKey<Statistics> {
         db.update(TABLE_NAME, values, KEY + " = ?", whereArgs);
     }
 
-    public DataPoint[] getAvgWeightForEachDate(List<Integer> list) {
+    public DataPoint[] getAvgWeightForEachDate(List<Long> exerciseIds) {
         StringBuilder where = new StringBuilder();
-        for (int i = 0; i < list.size(); i++)
-            where.append(list.get(i) + (i < list.size()-1 ? ", " : ""));
+        for (int i = 0; i < exerciseIds.size(); i++)
+            where.append(exerciseIds.get(i) + (i < exerciseIds.size()-1 ? ", " : ""));
 
         String query = "SELECT " + StatExerciseDAO.RECORD_DATE + ", AVG(" + StatisticsDAO.WEIGHT + ")"
                 + " FROM " + TABLE_NAME + " S INNER JOIN " + StatExerciseDAO.TABLE_NAME + " Se"
                 + " ON S." + KEY + " = Se." + StatExerciseDAO.STAT_ID
-                + " WHERE " + StatExerciseDAO.EXERCISE_ID + " IN ( " + where.toString() + " )"
+                + " WHERE Se." + StatExerciseDAO.EXERCISE_ID + " IN ( " + where.toString() + " )"
                 + " GROUP BY " + StatExerciseDAO.RECORD_DATE + ";";
+        System.out.println(query);
         return getAvg(query, null);
     }
 
-    public DataPoint[] getAvgRepCountForEachDate(int exerciseId) {
+    public DataPoint[] getAvgWeightForEachDate(long exerciseId) {
+        return getAvgWeightForEachDate(Collections.singletonList(exerciseId));
+    }
+
+    public DataPoint[] getAvgRepCountForEachDate(long exerciseId) {
         String query = "SELECT " + StatExerciseDAO.RECORD_DATE + ", AVG(" + StatisticsDAO.REP_COUNT + ")"
                 + " FROM " + TABLE_NAME + " S INNER JOIN " + StatExerciseDAO.TABLE_NAME + " Se"
                 + " ON " + KEY + " = Se." + StatExerciseDAO.STAT_ID

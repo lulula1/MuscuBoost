@@ -1,4 +1,4 @@
-package uqac.dim.muscuboost.core.person;
+package uqac.dim.muscuboost.ui.exercise;
 
 import android.app.Dialog;
 import android.support.design.widget.BottomSheetDialogFragment;

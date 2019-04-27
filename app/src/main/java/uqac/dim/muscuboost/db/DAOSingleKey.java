@@ -5,7 +5,9 @@ import android.database.Cursor;
 
 import java.util.List;
 
-public abstract class DAOSingleKey<T> extends DAOBase {
+import uqac.dim.muscuboost.core.Identifiable;
+
+public abstract class DAOSingleKey<T extends Identifiable> extends DAOBase {
 
     private final String TABLE_NAME;
     private final String KEY;

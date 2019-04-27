@@ -1,11 +1,9 @@
 package uqac.dim.muscuboost.core.schedule;
 
-import java.io.Serializable;
-
 /**
  * An element that can be included in a ScheduleSlot.
  */
-public interface ISlottable extends Serializable {
+public interface ISlottable {
 
     /**
      * Returns the slotted element's label.

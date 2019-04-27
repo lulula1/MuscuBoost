@@ -37,7 +37,7 @@ public class PersonDAO extends DAOBase {
         ContentValues values = new ContentValues();
         values.put(NAME, person.getName());
         values.put(SURNAME, person.getSurname());
-        values.put(DATE_BIRTH, df.format(person.getDate_naissance()));
+        values.put(DATE_BIRTH, df.format(person.getBirthDate()));
         String[] whereArgs = {String.valueOf(person.getName())};
         db.update(TABLE_NAME, values, NAME + " = ?", whereArgs);
     }

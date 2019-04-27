@@ -3,7 +3,6 @@ package uqac.dim.muscuboost.db;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,13 +71,6 @@ public class ExerciseDAO extends DAOSingleKey<Exercise> {
         return exercises;
     }
 
-    public List<String> getAllNames() {
-        List<String> names = new ArrayList<>();
-        for(Exercise exercise : getAll())
-            names.add(exercise.getName());
-        return names;
-    }
-
     public Exercise getFromName(String name) {
         Cursor c = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE "+ NAME +" = ?;",
                 new String[] {name});
@@ -91,18 +83,14 @@ public class ExerciseDAO extends DAOSingleKey<Exercise> {
         return new Exercise(id, exName, muscle, description);
     }
 
-    public List<Integer> getAllIdFromMuscleId(long id){
+    public List<Long> getAllIdFromMuscleId(long id){
         Cursor c = db.rawQuery("SELECT " + KEY + " FROM " + TABLE_NAME
                 + " WHERE " + MUSCLE_ID + " = ?;", new String[] {String.valueOf(id)} );
-        List<Integer> array = new ArrayList<>();
+        List<Long> array = new ArrayList<>();
         while (c.moveToNext())
-            array.add(c.getInt(0));
+            array.add(c.getLong(0));
         c.close();
         return array;
     }
 
-    public long getIdFromName(String name){
-        Exercise exercise = getFromName(name);
-        return exercise != null ? exercise.getId() : -1;
-    }
 }

@@ -30,6 +30,7 @@ import uqac.dim.muscuboost.db.SlotDAO;
 import uqac.dim.muscuboost.db.TrainingDAO;
 import uqac.dim.muscuboost.ui.dialog.ConfirmDialog;
 import uqac.dim.muscuboost.ui.dialog.EditTextDialog;
+import uqac.dim.muscuboost.ui.Wrapper;
 
 public class SlotDialogFragment extends BottomSheetDialogFragment {
 
@@ -64,8 +65,19 @@ public class SlotDialogFragment extends BottomSheetDialogFragment {
     public void onStart() {
         super.onStart();
 
+        List<Wrapper<Day>> wrappedWeek = Wrapper.wrap(Day.getWeek(),
+            new Wrapper.GetItemNameListener<Day>() {
+                @Override
+                public String getItemName(Day item) {
+                    int nameResId = getResources()
+                            .getIdentifier(item.toString(),
+                                    "string", getContext().getPackageName());
+                    return getResources().getString(nameResId);
+                }
+            });
+
         daysSpinner.setAdapter(new ArrayAdapter<>(getContext(),
-                android.R.layout.simple_spinner_dropdown_item, getWrappedWeek()));
+                android.R.layout.simple_spinner_dropdown_item, wrappedWeek));
 
         timePicker.setIs24HourView(DateFormat.is24HourFormat(getContext()));
 
@@ -217,16 +229,6 @@ public class SlotDialogFragment extends BottomSheetDialogFragment {
                     Math.min(slotsList.getAdapter().getCount(), MAX_SLOTS_SHOWN) * 100));
         slotsList.setVisibility(showList ? View.VISIBLE : View.GONE);
         emptyListText.setVisibility(showList ? View.GONE : View.VISIBLE);
-    }
-
-    private List<Wrapper<Day>> getWrappedWeek() {
-        List<Wrapper<Day>> weekWrappers = new ArrayList<>();
-        for (Day day : Day.getWeek()) {
-            int nameResId = getResources()
-                    .getIdentifier(day.toString(), "string", getContext().getPackageName());
-            weekWrappers.add(new Wrapper<>(day, getResources().getString(nameResId)));
-        }
-        return weekWrappers;
     }
 
     private List<Wrapper<ISlottable>> getWrappedSlottables() {

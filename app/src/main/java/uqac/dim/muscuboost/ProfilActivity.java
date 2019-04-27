@@ -1,14 +1,11 @@
 package uqac.dim.muscuboost;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -29,10 +26,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import uqac.dim.muscuboost.core.person.Body;
-import uqac.dim.muscuboost.core.person.EditBodyDetailsDialogFragment;
 import uqac.dim.muscuboost.core.person.Person;
 import uqac.dim.muscuboost.db.BodyDAO;
 import uqac.dim.muscuboost.db.PersonDAO;
+import uqac.dim.muscuboost.ui.exercise.EditBodyDetailsDialogFragment;
 
 public class ProfilActivity extends AppCompatActivity {
 
@@ -56,7 +53,7 @@ public class ProfilActivity extends AppCompatActivity {
 
         nom.setText(person.getName());
         prenom.setText(person.getSurname());
-        age.setText(person.calculAge() + " ans");
+        age.setText(person.computeAge() + " ans");
 
         BodyDAO bodyDAO = new BodyDAO(getApplicationContext());
         bodyDAO.open();
@@ -162,7 +159,7 @@ public class ProfilActivity extends AppCompatActivity {
 
         nom.setText(person.getName());
         prenom.setText(person.getSurname());
-        age.setText(person.calculAge() + " ans");
+        age.setText(person.computeAge() + " ans");
 
         BodyDAO bodyDAO = new BodyDAO(getApplicationContext());
         bodyDAO.open();
