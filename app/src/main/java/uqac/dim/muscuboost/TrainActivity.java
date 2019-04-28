@@ -80,18 +80,6 @@ public class TrainActivity extends AppCompatActivity implements ServiceConnectio
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        statisticsDAO.open();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        statisticsDAO.close();
-    }
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
         if(serviceBound)

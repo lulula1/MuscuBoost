@@ -43,7 +43,8 @@ public class StatRecapView extends LinearLayout {
         repCountView = findViewById(R.id.rep_count);
 
         exerciseNameView.setText(exercise.getName());
-        weightEdit.setHint(String.valueOf(previousStatistics.getWeight()));
+        if(previousStatistics != null)
+            weightEdit.setHint(String.valueOf(previousStatistics.getWeight()));
 
         updateWeight(statistics.getWeight());
         updateRepCount(statistics.getRepCount());

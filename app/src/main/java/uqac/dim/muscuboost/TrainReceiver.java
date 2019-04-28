@@ -30,7 +30,6 @@ public class TrainReceiver extends BroadcastReceiver {
             default:
                 return;
         }
-        trainService.update();
     }
 
 }
