@@ -16,8 +16,8 @@ public class ExerciseTest {
     public void setUp() {
         biceps = new Muscle(0, "Biceps");
         triceps = new Muscle(1, "Triceps");
-        exercise1 = new Exercise(0, "Exercise1", biceps);
-        exercise2 = new Exercise(10, "Exercise2", triceps);
+        exercise1 = new Exercise(0, "Exercise1", biceps, "Description");
+        exercise2 = new Exercise(10, "Exercise2", triceps, "Description");
     }
 
     @Test
@@ -54,14 +54,14 @@ public class ExerciseTest {
 
     @Test
     public void equalsTest() {
-        assertEquals(exercise1, new Exercise(0, "Exercise1", biceps));
+        assertEquals(exercise1, new Exercise(0, "Exercise1", biceps, "Description"));
         assertEquals(exercise1, new Exercise(0, "Exercise1",
-                new Muscle(0, "Biceps")));
+                new Muscle(0, "Biceps"), "Description"));
         assertNotEquals(exercise1, null);
         assertNotEquals(exercise1, new Object());
-        assertNotEquals(exercise1, new Exercise(1, "Exercise1", biceps));
-        assertNotEquals(exercise1, new Exercise(0, "Exercise2", biceps));
-        assertNotEquals(exercise1, new Exercise(0, "Exercise1", triceps));
+        assertNotEquals(exercise1, new Exercise(1, "Exercise1", biceps, "Description"));
+        assertNotEquals(exercise1, new Exercise(0, "Exercise2", biceps, "Description"));
+        assertNotEquals(exercise1, new Exercise(0, "Exercise1", triceps, "Description"));
     }
 
 }

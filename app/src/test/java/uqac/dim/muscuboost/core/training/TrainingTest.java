@@ -15,7 +15,7 @@ public class TrainingTest {
 
     @Before
     public void setUp() {
-        exercise = new Exercise(0, "Exercise", new Muscle(0, "Biceps"));
+        exercise = new Exercise(0, "Exercise", new Muscle(0, "Biceps"), "Description");
         training1 = new Training(0, "Training1");
         training2 = new Training(10, "Training2");
     }

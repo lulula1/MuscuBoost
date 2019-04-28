@@ -21,8 +21,8 @@ public class OngoingTrainingTest {
 
     @Before
     public void setUp() {
-        exercise1 = new Exercise(0, "Exercise", null);
-        exercise2 = new Exercise(1, "Exercise2", null);
+        exercise1 = new Exercise(0, "Exercise", null, "Description");
+        exercise2 = new Exercise(1, "Exercise2", null, "Description");
         training = new Training(0, "Training1", Arrays.asList(exercise1, exercise2));
         ongoingTraining = new OngoingTraining(training);
         ongoingTrainingEmpty = new OngoingTraining(new Training(1, "Training2"));
