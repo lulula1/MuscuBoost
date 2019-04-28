@@ -107,4 +107,23 @@ public class StatisticsDAO extends DAOSingleKey<Statistics> {
         return dataPoint;
     }
 
+    public Statistics getLatestStatistics(long exerciseId) {
+        Statistics stats = null;
+        Cursor c = db.rawQuery("SELECT *"
+                        + " FROM " + TABLE_NAME
+                        + " S INNER JOIN " + StatExerciseDAO.TABLE_NAME + " Se"
+                        + " ON S." + KEY + " = Se." + StatExerciseDAO.STAT_ID
+                        + " WHERE " + StatExerciseDAO.EXERCISE_ID + " = ?"
+                        + " ORDER BY " + StatExerciseDAO.RECORD_DATE + " DESC"
+                        + ";",
+                new String[]{String.valueOf(exerciseId)});
+        if(c.moveToFirst()) {
+            long id = c.getLong(c.getColumnIndex(StatisticsDAO.KEY));
+            double weight = c.getDouble(c.getColumnIndex(StatisticsDAO.WEIGHT));
+            int repCount = c.getInt(c.getColumnIndex(StatisticsDAO.REP_COUNT));
+            stats = new Statistics(id, weight, repCount);
+        }
+        return stats;
+    }
+
 }

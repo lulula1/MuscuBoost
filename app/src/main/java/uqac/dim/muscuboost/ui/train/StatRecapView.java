@@ -20,11 +20,14 @@ public class StatRecapView extends LinearLayout {
 
     private Exercise exercise;
     private Statistics statistics;
+    private Statistics previousStatistics;
 
-    public StatRecapView(Context context, Exercise exercise, Statistics statistics) {
+    public StatRecapView(Context context, Exercise exercise, Statistics statistics,
+                         Statistics previousStatistics) {
         super(context);
         this.exercise = exercise;
         this.statistics = statistics;
+        this.previousStatistics = previousStatistics;
 
         render();
     }
@@ -40,6 +43,7 @@ public class StatRecapView extends LinearLayout {
         repCountView = findViewById(R.id.rep_count);
 
         exerciseNameView.setText(exercise.getName());
+        weightEdit.setHint(String.valueOf(previousStatistics.getWeight()));
 
         updateWeight(statistics.getWeight());
         updateRepCount(statistics.getRepCount());
@@ -57,7 +61,6 @@ public class StatRecapView extends LinearLayout {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 try {
                     statistics.setWeight(Double.parseDouble(s.toString()));
-                    weightEdit.setHint(String.valueOf(statistics.getWeight()));
                 }catch(NumberFormatException e) {
                     // The value is not a double, don't do anything
                 }
@@ -82,7 +85,6 @@ public class StatRecapView extends LinearLayout {
     private void updateWeight(double weight) {
         String weightStr = String.valueOf(weight);
         weightEdit.setText(weight >= 0 ? weightStr : "");
-        weightEdit.setHint(weight >= 0 ? weightStr : "n/a");
     }
 
     private void updateRepCount(int repCount) {

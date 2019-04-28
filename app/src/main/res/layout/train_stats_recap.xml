@@ -48,9 +48,11 @@
 
                 <EditText
                     android:id="@+id/weight"
+                    style="@style/edittext"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
+                    android:hint="@string/na"
                     android:inputType="numberDecimal"
                     android:minWidth="32dp" />
 

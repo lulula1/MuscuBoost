@@ -10,8 +10,7 @@
         android:id="@+id/training_panel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="8dp">
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/training_name"
@@ -21,7 +20,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:padding="8dp">
 
             <TextView
                 android:id="@+id/series_count"
@@ -40,12 +40,17 @@
                 android:text="@string/series" />
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/latest_series_count"
+            style="@style/train.latest_stats" />
+
         <View style="@style/hr" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="8dp">
 
             <TextView
                 android:id="@+id/exercise_name"
@@ -76,6 +81,43 @@
                 android:onClick="nextExercise"
                 android:text="@string/exercise" />
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ddd"
+            android:layout_marginTop="24dp"
+            android:padding="4dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="@string/type_lifted_weight"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/weight"
+                style="@style/edittext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="32dp"
+                android:textAlignment="center"
+                android:inputType="numberDecimal" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                android:text="@string/unit"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/latest_weight"
+            style="@style/train.latest_stats" />
     </LinearLayout>
 
     <LinearLayout

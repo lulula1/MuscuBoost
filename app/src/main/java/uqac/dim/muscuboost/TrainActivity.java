@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -20,6 +21,7 @@ import uqac.dim.muscuboost.core.ongoingtraining.OngoingTraining;
 import uqac.dim.muscuboost.core.training.Exercise;
 import uqac.dim.muscuboost.core.training.Statistics;
 import uqac.dim.muscuboost.core.training.Training;
+import uqac.dim.muscuboost.db.StatisticsDAO;
 import uqac.dim.muscuboost.ui.dialog.ConfirmDialog;
 import uqac.dim.muscuboost.ui.train.StatRecapView;
 
@@ -32,10 +34,26 @@ public class TrainActivity extends AppCompatActivity implements ServiceConnectio
     private TrainService service;
     private boolean serviceBound = false;
 
+    private StatisticsDAO statisticsDAO = new StatisticsDAO(this);
+
+    private LinearLayout trainingPanel;
+    private LinearLayout endPanel;
+    private LinearLayout statRecap;
+    private TextView trainingNameView;
+    private TextView exerciseNameView;
+    private TextView muscleNameView;
+    private TextView exerciseCountView;
+    private TextView seriesCountView;
+    private EditText weightEdit;
+    private TextView latestWeightView;
+    private TextView latestSeriesCountView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.train_activity);
+
+        statisticsDAO.open();
 
         Training training = (Training) getIntent().getSerializableExtra(EXTRA_TRAINING);
 
@@ -47,6 +65,30 @@ public class TrainActivity extends AppCompatActivity implements ServiceConnectio
             intent.putExtra(TrainService.EXTRA_TRAINING, training);
         startService(intent);
         getApplicationContext().bindService(intent, this, BIND_AUTO_CREATE);
+
+        trainingPanel = findViewById(R.id.training_panel);
+        endPanel = findViewById(R.id.end_panel);
+        statRecap = findViewById(R.id.exercise_recap);
+        trainingNameView = findViewById(R.id.training_name);
+        exerciseNameView = findViewById(R.id.exercise_name);
+        muscleNameView = findViewById(R.id.muscle_name);
+        exerciseCountView = findViewById(R.id.exercise_count);
+        seriesCountView = findViewById(R.id.series_count);
+        weightEdit = findViewById(R.id.weight);
+        latestWeightView = findViewById(R.id.latest_weight);
+        latestSeriesCountView = findViewById(R.id.latest_series_count);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        statisticsDAO.open();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        statisticsDAO.close();
     }
 
     @Override
@@ -104,8 +146,7 @@ public class TrainActivity extends AppCompatActivity implements ServiceConnectio
         String trainingName = ongoingTraining.getTraining().getName();
         if(getSupportActionBar() != null)
             getSupportActionBar().setSubtitle(trainingName);
-        ((TextView) findViewById(R.id.training_name))
-                .setText(trainingName);
+        trainingNameView.setText(trainingName);
     }
 
     @Override
@@ -113,6 +154,8 @@ public class TrainActivity extends AppCompatActivity implements ServiceConnectio
         if(!ongoingTraining.isTrainingOver()) {
             updateExercise();
             updateSeries();
+            if(ongoingTraining.getSeries() <= 1)
+                setupStats();
         }else {
             setTrainingOverPanel();
         }
@@ -121,12 +164,9 @@ public class TrainActivity extends AppCompatActivity implements ServiceConnectio
     private void updateExercise() {
         Exercise exercise = ongoingTraining.getCurrentExercise();
         if(exercise != null) {
-            ((TextView) findViewById(R.id.exercise_name))
-                    .setText(exercise.getName());
-            ((TextView) findViewById(R.id.muscle_name))
-                    .setText(exercise.getMuscle().getName());
-            ((TextView) findViewById(R.id.exercise_count))
-                    .setText(getString(R.string.exercise) + " "
+            exerciseNameView.setText(exercise.getName());
+            muscleNameView.setText(exercise.getMuscle().getName());
+            exerciseCountView.setText(getString(R.string.exercise) + " "
                             + (ongoingTraining.getDoneExercisesCount() + 1)
                             + "/" + ongoingTraining.getExerciseCount());
         }
@@ -134,28 +174,48 @@ public class TrainActivity extends AppCompatActivity implements ServiceConnectio
 
     private void updateSeries() {
         int series = ongoingTraining.getSeries();
-        ((TextView) findViewById(R.id.series_count))
-                .setText(getString(R.string.series) + " #" + series);
+        seriesCountView.setText(getString(R.string.series) + " #" + series);
+    }
+
+    private void setupStats() {
+        long exerciseId = ongoingTraining.getCurrentExercise().getId();
+        Statistics latestStats = statisticsDAO.getLatestStatistics(exerciseId);
+
+        if(latestStats != null) {
+            weightEdit.setHint(String.valueOf(latestStats.getWeight()));
+            latestWeightView.setText(String.format(getString(R.string.latest_weight),
+                    String.valueOf(latestStats.getWeight())));
+            latestSeriesCountView.setText(String.format(getString(R.string.latest_series_count),
+                    String.valueOf(latestStats.getRepCount())));
+        }else {
+            weightEdit.setHint("n/a");
+            latestWeightView.setVisibility(View.GONE);
+            latestSeriesCountView.setVisibility(View.GONE);
+        }
     }
 
     private void setTrainingOverPanel() {
-        LinearLayout trainingPanel = findViewById(R.id.training_panel);
-        LinearLayout endPanel = findViewById(R.id.end_panel);
-
         trainingPanel.setVisibility(View.GONE);
         endPanel.setVisibility(View.VISIBLE);
 
-        LinearLayout statRecap = endPanel.findViewById(R.id.exercise_recap);
         statRecap.removeAllViews();
 
         Map<Exercise, Statistics> exerciseStats = service
                 .getOngoingTraining().getDoneExerciseStats();
         for(Map.Entry<Exercise, Statistics> entry : exerciseStats.entrySet())
             statRecap.addView(
-                    new StatRecapView(getBaseContext(), entry.getKey(), entry.getValue()));
+                    new StatRecapView(getBaseContext(), entry.getKey(), entry.getValue(),
+                            statisticsDAO.getLatestStatistics(entry.getKey().getId())));
     }
 
     public void nextExercise(View view) {
+        try {
+            ongoingTraining.setWeight(
+                    Double.parseDouble(weightEdit.getText().toString()));
+        }catch(NumberFormatException e) {
+            // The value is not a double, don't do anything
+        }
+        weightEdit.getText().clear();
         service.nextExercise();
     }
 

@@ -9,9 +9,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import uqac.dim.muscuboost.core.training.Exercise;
-import uqac.dim.muscuboost.core.training.Training;
-
 public class StatExerciseDAO extends DAOBase {
     public static final String TABLE_NAME = "stat_exercise";
 

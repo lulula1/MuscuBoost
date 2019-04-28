@@ -8,6 +8,7 @@
     <string name="confirm_delete_title">Voulez-vous vraiment supprimer ?</string>
     <string name="error_occurred">Une erreur est survenue</string>
     <string name="unit">lbs</string>
+    <string name="na">n/a</string>
 
     <!-- Activity names -->
     <string name="app_name">MuscuBoost</string>
@@ -81,6 +82,9 @@
     <string name="notif_training_desc">Notification lors d\'un entraînement en cours</string>
     <string name="series">Série</string>
     <string name="exercise">Exercice</string>
+    <string name="latest_series_count">Lors du dernier entraînement : %s séries</string>
+    <string name="latest_weight">Lors du dernier entraînement : %s lbs</string>
+    <string name="type_lifted_weight">Saisissez la masse soulevée :</string>
     <string name="training_over">Entraînement terminé !</string>
     <string name="stop_training">Stop training</string>
     <string name="stop_training_confirm">Voulez-vous mettre fin à l\'entraînemet ?</string>

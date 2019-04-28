@@ -45,6 +45,7 @@
         <item name="android:backgroundTint">@color/colorPrimary</item>
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:textColorHint">@android:color/darker_gray</item>
+        <item name="android:textCursorDrawable">@null</item>
     </style>
 
     <style name="main" />
@@ -290,6 +291,13 @@
         <item name="android:drawablePadding">8dp</item>
         <item name="android:paddingStart">24dp</item>
         <item name="android:paddingEnd">24dp</item>
+    </style>
+
+    <style name="train.latest_stats">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textStyle">italic</item>
     </style>
 
     <style name="chrono" />
